@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Rectangle part -->
+    <item android:bottom="100dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="@color/light_blue"
+                android:endColor="@color/light_blue_finish"
+                android:angle="0"/>
+        </shape>
+    </item>
+
+    <!-- Semicircle part -->
+    <item>
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="@color/light_blue"
+                android:endColor="@color/light_blue_finish"
+                android:angle="0"/>
+        </shape>
+    </item>
+</layer-list>

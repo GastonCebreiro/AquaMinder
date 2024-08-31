@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">AquaMinder</string>
+
+    <string name="fragment_login_btn_login">Ingresar</string>
+    <string name="fragment_login_text_register">¿No tenés una cuenta?</string>
+    <string name="fragment_login_btn_register">Registrate</string>
+    <string name="fragment_login_btn_forgot_password">Olvidé mi contraseña</string>
+    <string name="fragment_login_btn_keep_values">Guardar usuario y contraseña</string>
+    <string name="fragment_login_title">Aqua Minder</string>
+    <string name="fragment_login_name_ask">Usuario</string>
+    <string name="fragment_login_password_ask">Contraseña</string>
+
+    <string name="fragment_new_user_btn_register">Crea una\nCuenta</string>
+    <string name="fragment_new_user_name_ask">Nombre de Usuario</string>
+    <string name="fragment_new_user_mail_ask">Correo electrónico</string>
+    <string name="fragment_new_user_password_ask">Contraseña</string>
+    <string name="fragment_new_user_btn_save">Registrar</string>
+    <string name="fragment_new_user_text_login">¿Ya tenés una cuenta?</string>
+    <string name="fragment_new_user_btn_login">Ingresar</string>
+
+    <string name="fragment_irrigation_zones_title">Zonas de Riego</string>
+    <string name="fragment_irrigation_zones_subtitle">Seleccione la zona de riego</string>
+    <string name="fragment_irrigation_zones_subtitle_b">Agregue una nueva zona de riego</string>
+    <string name="fragment_irrigation_zones_item_name">Nombre:</string>
+    <string name="fragment_irrigation_zones_item_name_b">asd%s</string>
+    <string name="fragment_irrigation_zones_item_id">ID:</string>
+    <string name="fragment_irrigation_zones_item_id_b">%s</string>
+
+    <string name="error_msg_invalid_password">Clave Incorrecta</string>
+    <string name="error_msg_enter_password">Ingrese una clave</string>
+    <string name="error_msg_enter_name">Ingrese un nombre</string>
+    <string name="error_msg_enter_mail">Ingrese un mail</string>
+    <string name="error_msg_login_succesfull">¡Login Exitoso!</string>
+    <string name="error_msg_new_user_name">Ingrese un Nombre de Usuario</string>
+    <string name="error_msg_new_user_email">Ingrese un Mail Válido</string>
+    <string name="error_msg_new_user_password">Ingrese una Clave Numerica de 6 dígitos</string>
+    <string name="error_msg_new_user_register">Usuario Registrado!</string>
+    <string name="error_msg_new_user_not_found">El usuario no se encuentra registrado</string>
+    <string name="error_msg_new_user_empty_value">Los datos del usuario están incompletos</string>
+    <string name="error_msg_unknown">Ha ocurrido un error: </string>
+
+    <string name="error_msg_ir_empty_list">No tiene niguna Zona de Riego configurada</string>
+    <string name="error_msg_enter_card_code">Ingrese un codigo de seguridad valido</string>
+    <string name="error_msg_enter_card_date">Ingrese una fecha de vencimiento valida</string>
+    <string name="error_msg_enter_card_name">Ingrese un nombre valido</string>
+    <string name="error_msg_invalid_card_name">El nombre de la tarjeta no corresponde al usuario</string>
+    <string name="error_msg_card_unknown">El tipo de tarjeta es desconocida</string>
+
+    <string name="success_msg_user_registered">¡Usuario Registrado!</string>
+    <string name="success_msg_card_registered">Tarjeta Registrada!</string>
+    <string name="success_msg_payment_registered">Pago Registrado!</string>
+
+</resources>
