@@ -12,10 +12,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.aquaminder.R
+import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentLoginBinding
 import com.example.aquaminder.feature_login.presentation.view_model.LoginViewModel
 import com.example.aquaminder.feature_login.utils.LoginState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -58,43 +60,56 @@ class LoginFragment : Fragment() {
 
 
         lifecycleScope.launchWhenStarted {
-            viewModel.loginState.collect { loginState ->
-                when (loginState) {
-                    is LoginState.Success -> {
-                        cleanErrors()
-                        showMessage(loginState.msg)
-                        navToMainActivity()
-                    }
-                    is LoginState.Error -> {
-                        cleanErrors()
-                        showMessage(loginState.errorMsg)
-                    }
-                    is LoginState.WrongName -> {
-                        setUserNameError(loginState.errorMsg)
-                        showMessage(loginState.errorMsg)
-                    }
-                    is LoginState.WrongPassword -> {
-                        setUserPasswordError(loginState.errorMsg)
-                        showMessage(loginState.errorMsg)
-                    }
-                    is LoginState.UsernameNotFound -> {
-                        setUserNameError(loginState.errorMsg)
-                        showMessage(loginState.errorMsg)
-                    }
-                    is LoginState.UserSavedValues -> {
-                        setUserSavedName(loginState.name)
-                        setUserSavedPassword(loginState.password)
-                    }
-                    is LoginState.KeepValues -> {
-                        setCheckBoxKeepValues(loginState.isChecked)
-                    }
-                    is LoginState.NewPasswordSent -> {
-                        showMessage(loginState.msg)
-                    }
-                    is LoginState.Loading -> {
-                        binding.progressBar.isVisible = loginState.isLoading
-                    }
+            launch {
+                viewModel.isLoading.collect { isLoading ->
+                    binding.progressBar.isVisible = isLoading
                 }
+            }
+
+            launch {
+                viewModel.loginState
+                    .collect { loginState ->
+                        when (loginState) {
+                            is LoginState.Success -> {
+                                cleanErrors()
+                                showMessage(loginState.msg)
+                                navToMainActivity()
+                            }
+
+                            is LoginState.Error -> {
+                                cleanErrors()
+                                showErrorMessage(loginState.errorMsg)
+                            }
+
+                            is LoginState.WrongName -> {
+                                setUserNameError(loginState.errorMsg)
+                            }
+
+                            is LoginState.WrongPassword -> {
+                                setUserPasswordError(loginState.errorMsg)
+                            }
+
+                            is LoginState.UsernameNotFound -> {
+                                setUserNameError(loginState.errorMsg)
+                            }
+
+                            is LoginState.UserSavedValues -> {
+                                setUserSavedName(loginState.name)
+                                setUserSavedPassword(loginState.password)
+                            }
+
+                            is LoginState.KeepValues -> {
+                                setCheckBoxKeepValues(loginState.isChecked)
+                            }
+
+                            is LoginState.NewPasswordSent -> {
+                                showMessage(loginState.msg)
+                            }
+
+                            is LoginState.Idle -> {}
+                        }
+                        viewModel.updateViewState(LoginState.Idle)
+                    }
             }
         }
     }
@@ -163,6 +178,13 @@ class LoginFragment : Fragment() {
 
     private fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showErrorMessage(message: String) {
+        DialogUtils.showErrorDialog(
+            context = requireContext(),
+            titleText = message,
+        )
     }
 
     private fun navToMainActivity() {

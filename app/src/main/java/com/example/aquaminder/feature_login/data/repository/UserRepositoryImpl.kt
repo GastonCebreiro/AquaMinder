@@ -1,31 +1,41 @@
 package com.example.aquaminder.feature_login.data.repository
 
+import com.example.aquaminder.core.data.remote.WebService
 import com.example.aquaminder.core.utils.SharedPreferencesUtil
 import com.example.aquaminder.feature_login.data.local.dao.UserDao
-import com.example.aquaminder.feature_login.data.local.entity.toDomainModel
 import com.example.aquaminder.feature_login.data.remote.model.response.NewPasswordResponseNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.response.toDomainModel
 import com.example.aquaminder.feature_login.domain.model.UserDomainModel
-import com.example.aquaminder.feature_login.domain.model.response.NewPasswordResponseDomainModel
+import com.example.aquaminder.feature_login.domain.model.request.LoginUserRequestDomainModel
 import com.example.aquaminder.feature_login.domain.model.request.NewPasswordRequestDomainModel
-import com.example.aquaminder.feature_login.domain.model.toEntity
+import com.example.aquaminder.feature_login.domain.model.request.NewUserRequestDomainModel
+import com.example.aquaminder.feature_login.domain.model.request.toNetworkEntity
+import com.example.aquaminder.feature_login.domain.model.response.LoginUserResponseDomainModel
+import com.example.aquaminder.feature_login.domain.model.response.NewPasswordResponseDomainModel
+import com.example.aquaminder.feature_login.domain.model.response.NewUserResponseDomainModel
 import com.example.aquaminder.feature_login.domain.repository.UserRepository
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
+    private val webService: WebService,
     private val sharedPreferences: SharedPreferencesUtil
 ) : UserRepository {
 
-    override suspend fun getUser(
-        name: String,
-    ): UserDomainModel? =
-        userDao.getUser(name)?.toDomainModel()
+    override suspend fun loginUser(
+        user: LoginUserRequestDomainModel,
+    ): LoginUserResponseDomainModel {
+//        userDao.getUser(name)?.toDomainModel()
+        return webService.loginUser(user.toNetworkEntity()).toDomainModel()
+    }
 
-    override suspend fun insertUser(
-        user: UserDomainModel
-    ) {
-        userDao.insertUser(user.toEntity())
+
+    override suspend fun registerUser(
+        user: NewUserRequestDomainModel
+    ): NewUserResponseDomainModel {
+        // TODO GC DELETE APPDATABASE and DA0
+//        userDao.insertUser(user.toEntity())
+        return webService.registerUser(user.toNetworkEntity()).toDomainModel()
     }
 
     override fun saveUserLogged(user: UserDomainModel) {

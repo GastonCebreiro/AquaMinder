@@ -1,20 +1,20 @@
 package com.example.aquaminder.feature_login.presentation.view_model
 
 import android.content.res.Resources
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aquaminder.R
+import com.example.aquaminder.core.utils.AppError
+import com.example.aquaminder.core.utils.ResultEvent
+import com.example.aquaminder.feature_login.domain.model.request.NewPasswordRequestDomainModel
 import com.example.aquaminder.feature_login.domain.use_case.AskNewPasswordUseCase
 import com.example.aquaminder.feature_login.domain.use_case.GetKeepValuesUseCase
 import com.example.aquaminder.feature_login.domain.use_case.GetUserLoggedUseCase
 import com.example.aquaminder.feature_login.domain.use_case.GetUserUseCase
 import com.example.aquaminder.feature_login.domain.use_case.SaveKeepValuesUseCase
 import com.example.aquaminder.feature_login.domain.use_case.SaveUserLoggedUseCase
-import com.example.aquaminder.feature_login.utils.LoginEvent
 import com.example.aquaminder.feature_login.utils.LoginState
-import com.example.aquaminder.feature_login.utils.NewPasswordEvent
-import com.example.aquaminder.core.utils.ResultEvent
-import com.example.aquaminder.feature_login.domain.model.request.NewPasswordRequestDomainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,11 +33,18 @@ class LoginViewModel @Inject constructor(
     private val getKeepValuesUseCase: GetKeepValuesUseCase,
 ) : ViewModel() {
 
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading(false))
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
     val loginState: StateFlow<LoginState> = _loginState
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    fun updateViewState(viewState: LoginState) {
+        _loginState.value = viewState
+    }
 
     fun checkUserSelected(nameEntry: String, passwordEntry: String) {
+        _loginState.value = LoginState.Idle
         when {
             nameEntry.isBlank() -> {
                 _loginState.value =
@@ -98,26 +105,33 @@ class LoginViewModel @Inject constructor(
 
 
     private fun askNewPassword(name: String) {
-        _loginState.value = LoginState.Loading(true)
+        _isLoading.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
             val request = NewPasswordRequestDomainModel(name)
             askNewPasswordUseCase.invoke(request)
                 .collect { res ->
                     when (res) {
-                        is NewPasswordEvent.Success -> {
-                            _loginState.value = LoginState.NewPasswordSent(res.msg)
+                        is ResultEvent.Success -> {
+                            _loginState.value = LoginState.NewPasswordSent(res.data)
                         }
 
-                        is NewPasswordEvent.Error -> {
-                            _loginState.value = LoginState.Error(res.errorMsg)
-                        }
+                        is ResultEvent.Error -> {
+                            when (res.error){
+                                is AppError.UsernameNotFound -> {
+                                    _loginState.value = LoginState.Error(resources.getString(R.string.error_msg_new_user_not_found))
+                                }
+                                is AppError.GenericError -> {
+                                    _loginState.value = LoginState.Error(res.error.errorMsg)
+                                }
+                                else -> {
+                                    _loginState.value = LoginState.Error("")
+                                }
+                            }
 
-                        is NewPasswordEvent.UsernameNotFound -> {
-                            _loginState.value = LoginState.UsernameNotFound(res.errorMsg)
                         }
                     }
-                    _loginState.value = LoginState.Loading(false)
+                    _isLoading.value = false
                 }
         }
     }
@@ -126,32 +140,35 @@ class LoginViewModel @Inject constructor(
         name: String,
         password: String
     ) {
-        _loginState.value = LoginState.Loading(true)
+        _isLoading.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
             getUserUseCase.invoke(name, password)
                 .collect { res ->
                     when (res) {
-                        is LoginEvent.Success -> {
+                        is ResultEvent.Success -> {
 
-                            saveUserLoggedUseCase.invoke(res.user)
+                            saveUserLoggedUseCase.invoke(res.data)
 
-                            _loginState.value = LoginState.Success(res.msg)
+                            _loginState.value = LoginState.Success(resources.getString(R.string.success_msg_login_successful))
                         }
 
-                        is LoginEvent.Error -> {
-                            _loginState.value = LoginState.Error(res.errorMsg)
-                        }
+                        is ResultEvent.Error -> {
+                            when (res.error) {
+                                is AppError.WrongPassword -> {
+                                    _loginState.value = LoginState.WrongPassword(resources.getString(R.string.error_msg_invalid_password))
+                                }
+                                is AppError.UsernameNotFound -> {
+                                    _loginState.value = LoginState.UsernameNotFound(resources.getString(R.string.error_msg_new_user_not_found))
+                                }
+                                else -> {
+                                    _loginState.value = LoginState.Error("")
+                                }
+                            }
 
-                        is LoginEvent.WrongPassword -> {
-                            _loginState.value = LoginState.WrongPassword(res.errorMsg)
-                        }
-
-                        is LoginEvent.UsernameNotFound -> {
-                            _loginState.value = LoginState.UsernameNotFound(res.errorMsg)
                         }
                     }
-                    _loginState.value = LoginState.Loading(false)
+                    _isLoading.value = false
                 }
         }
     }

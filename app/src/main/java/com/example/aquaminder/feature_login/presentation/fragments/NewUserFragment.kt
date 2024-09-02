@@ -11,10 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.aquaminder.R
+import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentNewUserBinding
 import com.example.aquaminder.feature_login.presentation.view_model.NewUserViewModel
+import com.example.aquaminder.feature_login.utils.LoginState
 import com.example.aquaminder.feature_login.utils.NewUserState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NewUserFragment : Fragment() {
@@ -48,32 +51,44 @@ class NewUserFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenStarted {
-            viewModel.newUserState.collect { newUserState ->
-                when (newUserState) {
-                    is NewUserState.Success -> {
-                        cleanErrors()
-                        showMessage(newUserState.msg)
-                        navToLoginFragment()
+            launch {
+                viewModel.isLoading.collect { isLoading ->
+                    binding.progressBar.isVisible = isLoading
+                }
+            }
+
+            launch {
+                viewModel.newUserState.collect { newUserState ->
+                    when (newUserState) {
+                        is NewUserState.Success -> {
+                            cleanErrors()
+                            showMessage(newUserState.msg)
+                            navToLoginFragment()
+                        }
+
+                        is NewUserState.Error -> {
+                            cleanErrors()
+                            showErrorMessage(newUserState.errorMsg)
+                        }
+
+                        is NewUserState.WrongName -> {
+                            setUserNameError(newUserState.errorMsg)
+                            showMessage(newUserState.errorMsg)
+                        }
+
+                        is NewUserState.WrongMail -> {
+                            setUserMailError(newUserState.errorMsg)
+                            showMessage(newUserState.errorMsg)
+                        }
+
+                        is NewUserState.WrongPassword -> {
+                            setUserPasswordError(newUserState.errorMsg)
+                            showMessage(newUserState.errorMsg)
+                        }
+
+                        is NewUserState.Idle -> {}
                     }
-                    is NewUserState.Error -> {
-                        cleanErrors()
-                        showMessage(newUserState.errorMsg)
-                    }
-                    is NewUserState.WrongName -> {
-                        setUserNameError(newUserState.errorMsg)
-                        showMessage(newUserState.errorMsg)
-                    }
-                    is NewUserState.WrongMail -> {
-                        setUserMailError(newUserState.errorMsg)
-                        showMessage(newUserState.errorMsg)
-                    }
-                    is NewUserState.WrongPassword -> {
-                        setUserPasswordError(newUserState.errorMsg)
-                        showMessage(newUserState.errorMsg)
-                    }
-                    is NewUserState.Loading -> {
-                        binding.progressBar.isVisible = newUserState.isLoading
-                    }
+                    viewModel.updateViewState(NewUserState.Idle)
                 }
             }
         }
@@ -124,6 +139,13 @@ class NewUserFragment : Fragment() {
 
     private fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showErrorMessage(message: String) {
+        DialogUtils.showErrorDialog(
+            context = requireContext(),
+            titleText = message,
+        )
     }
 
     private fun navToLoginFragment() {

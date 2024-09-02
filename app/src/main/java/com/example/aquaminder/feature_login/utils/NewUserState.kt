@@ -2,7 +2,7 @@ package com.example.aquaminder.feature_login.utils
 
 
 sealed class NewUserState {
-    data class Loading(val isLoading: Boolean) : NewUserState()
+    object Idle : NewUserState()
     data class Success(val msg: String) : NewUserState()
     data class Error(val errorMsg: String) : NewUserState()
     data class WrongName(val errorMsg: String) : NewUserState()

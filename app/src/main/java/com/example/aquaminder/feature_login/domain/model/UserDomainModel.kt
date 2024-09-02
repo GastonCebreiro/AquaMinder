@@ -1,6 +1,8 @@
 package com.example.aquaminder.feature_login.domain.model
 
 import com.example.aquaminder.feature_login.data.local.entity.UserEntity
+import com.example.aquaminder.feature_login.data.remote.model.request.LoginUserRequestNetworkEntity
+import com.example.aquaminder.feature_login.data.remote.model.request.NewUserRequestNetworkEntity
 
 
 data class UserDomainModel(
@@ -14,3 +16,4 @@ fun UserDomainModel.toEntity() = UserEntity(
     mail = mail,
     password = password
 )
+

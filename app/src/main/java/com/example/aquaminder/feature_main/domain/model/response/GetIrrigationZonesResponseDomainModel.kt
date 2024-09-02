@@ -8,13 +8,21 @@ import java.util.UUID
 
 data class GetIrrigationZonesResponseDomainModel(
     val status: Int,
+    val irrigationZones: List<IrrigationZoneDomainModel>
+)
+
+data class IrrigationZoneDomainModel(
     val uuid: String,
     val name: String,
     var logoId: Int,
     var colorId: Int
 )
 
-fun GetIrrigationZonesResponseDomainModel.toUiModel() = IrrigationZoneUiModel(
+fun List<IrrigationZoneDomainModel>.toUiModelList() = this.map { domainModel ->
+    domainModel.toUiModel()
+}
+
+fun IrrigationZoneDomainModel.toUiModel() = IrrigationZoneUiModel(
     uuid = uuid.takeIf { it.isNotBlank() } ?: UUID.randomUUID().toString(),
     name = name.takeIf { it.isNotBlank() } ?: DEFAULT_IZ_NAME,
     logoId = logoId.takeIf { it > 0 } ?: DEFAULT_LOGO_ID,

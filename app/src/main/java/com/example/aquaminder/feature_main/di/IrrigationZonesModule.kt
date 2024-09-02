@@ -5,6 +5,7 @@ import com.example.aquaminder.feature_login.data.local.dao.UserDao
 import com.example.aquaminder.feature_login.data.repository.UserRepositoryImpl
 import com.example.aquaminder.feature_login.domain.repository.UserRepository
 import com.example.aquaminder.feature_main.data.repository.IrrigationZonesRepositoryImpl
+import com.example.aquaminder.feature_main.domain.repository.IrrigationZonesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

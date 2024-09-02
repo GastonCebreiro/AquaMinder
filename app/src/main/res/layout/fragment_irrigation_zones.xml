@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/fragment_irrigation_zones_subtitle"
-        android:textColor="@color/gray"
+        android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -55,6 +55,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvIZ"
         android:layout_width="match_parent"
         android:layout_height="420dp"
         android:layout_marginStart="15dp"
@@ -94,19 +95,37 @@
         android:layout_height="wrap_content"
         android:contentDescription="@null"
         android:src="@drawable/ic_add"
+        android:translationZ="20dp"
         app:layout_constraintStart_toStartOf="@+id/fabNewIZ"
         app:layout_constraintEnd_toEndOf="@+id/fabNewIZ"
         app:layout_constraintTop_toTopOf="@+id/fabNewIZ"
         app:layout_constraintBottom_toBottomOf="@+id/fabNewIZ"/>
 
+    <TextView
+        android:id="@+id/tvEmptyWarning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:text="@string/error_msg_ir_empty_list"
+        android:textColor="@color/light_blue"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:translationZ="10dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/cvIZ"
+        app:layout_constraintEnd_toEndOf="@+id/cvIZ"
+        app:layout_constraintBottom_toBottomOf="@+id/cvIZ"
+        app:layout_constraintTop_toTopOf="@+id/cvIZ" />
+
     <ProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="20dp"
-        android:progressTint="@color/light_blue"
+        android:indeterminateTint="@color/light_blue"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
