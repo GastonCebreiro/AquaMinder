@@ -5,16 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentNewUserBinding
 import com.example.aquaminder.feature_login.presentation.view_model.NewUserViewModel
-import com.example.aquaminder.feature_login.utils.LoginState
 import com.example.aquaminder.feature_login.utils.NewUserState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -68,27 +67,25 @@ class NewUserFragment : Fragment() {
 
                         is NewUserState.Error -> {
                             cleanErrors()
-                            showErrorMessage(newUserState.errorMsg)
+                            showErrorMessage(newUserState.errorMsg, newUserState.logoId)
                         }
 
                         is NewUserState.WrongName -> {
                             setUserNameError(newUserState.errorMsg)
-                            showMessage(newUserState.errorMsg)
                         }
 
                         is NewUserState.WrongMail -> {
                             setUserMailError(newUserState.errorMsg)
-                            showMessage(newUserState.errorMsg)
                         }
 
                         is NewUserState.WrongPassword -> {
                             setUserPasswordError(newUserState.errorMsg)
-                            showMessage(newUserState.errorMsg)
                         }
 
                         is NewUserState.Idle -> {}
                     }
                     viewModel.updateViewState(NewUserState.Idle)
+                    screenEnabled(true)
                 }
             }
         }
@@ -105,6 +102,8 @@ class NewUserFragment : Fragment() {
     }
 
     private fun registerButtonAction() {
+        cleanErrors()
+        screenEnabled(false)
         viewModel.checkUserToRegister(
             binding.etUserName.text.toString().trim(),
             binding.etUserMail.text.toString().trim(),
@@ -141,15 +140,24 @@ class NewUserFragment : Fragment() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showErrorMessage(message: String) {
+    private fun showErrorMessage(message: String, logoId: Int? = null) {
         DialogUtils.showErrorDialog(
             context = requireContext(),
+            imageId = logoId,
             titleText = message,
         )
     }
 
     private fun navToLoginFragment() {
         findNavController().navigateUp()
+    }
+
+    private fun screenEnabled(isEnabled: Boolean) {
+        binding.btnRegister.isEnabled = isEnabled
+        binding.btnLogin.isEnabled = isEnabled
+        binding.etUserMail.isEnabled = isEnabled
+        binding.etUserName.isEnabled = isEnabled
+        binding.etUserPassword.isEnabled = isEnabled
     }
 
 }

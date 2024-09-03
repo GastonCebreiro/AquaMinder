@@ -4,16 +4,17 @@
     <string name="fragment_login_btn_login">Ingresar</string>
     <string name="fragment_login_text_register">¿No tenés una cuenta?</string>
     <string name="fragment_login_btn_register">Registrate</string>
-    <string name="fragment_login_btn_forgot_password">Olvidé mi contraseña</string>
-    <string name="fragment_login_btn_keep_values">Guardar usuario y contraseña</string>
+    <string name="fragment_login_btn_forgot_password">Olvidé mi clave</string>
+    <string name="fragment_login_btn_keep_values">Guardar usuario y clave</string>
     <string name="fragment_login_title">Aqua Minder</string>
     <string name="fragment_login_name_ask">Usuario</string>
-    <string name="fragment_login_password_ask">Contraseña</string>
+    <string name="fragment_login_password_ask">Clave</string>
 
     <string name="fragment_new_user_btn_register">Crea una\nCuenta</string>
     <string name="fragment_new_user_name_ask">Nombre de Usuario</string>
     <string name="fragment_new_user_mail_ask">Correo electrónico</string>
-    <string name="fragment_new_user_password_ask">Contraseña</string>
+    <string name="fragment_new_user_password_ask">Clave</string>
+    <string name="fragment_new_user_password_info">Clave numérica entre 4 y 8 dígitos</string>
     <string name="fragment_new_user_btn_save">Registrar</string>
     <string name="fragment_new_user_text_login">¿Ya tenés una cuenta?</string>
     <string name="fragment_new_user_btn_login">Ingresar</string>
@@ -28,11 +29,12 @@
 
     <string name="error_msg_invalid_password">Clave Incorrecta</string>
     <string name="error_msg_enter_password">Ingrese una clave</string>
+    <string name="error_msg_short_password">Clave demasiado corta</string>
     <string name="error_msg_enter_name">Ingrese un nombre</string>
     <string name="error_msg_enter_mail">Ingrese un mail</string>
+    <string name="error_msg_format_mail">Ingrese un formato de mail válido</string>
     <string name="error_msg_new_user_name">Ingrese un Nombre de Usuario</string>
     <string name="error_msg_new_user_email">Ingrese un Mail Válido</string>
-    <string name="error_msg_new_user_password">Ingrese una Clave Numerica de 6 dígitos</string>
     <string name="error_msg_new_user_register">Usuario Registrado!</string>
     <string name="error_msg_new_user_not_found">El usuario no se encuentra registrado</string>
     <string name="error_msg_new_user_empty_value">Los datos del usuario están incompletos</string>

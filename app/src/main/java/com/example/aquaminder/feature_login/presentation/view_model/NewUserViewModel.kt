@@ -8,7 +8,6 @@ import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.feature_login.domain.model.UserDomainModel
 import com.example.aquaminder.feature_login.domain.use_case.InsertUserUseCase
-import com.example.aquaminder.feature_login.utils.LoginState
 import com.example.aquaminder.feature_login.utils.NewUserState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +40,12 @@ class NewUserViewModel @Inject constructor(
                 return
             }
 
+            !isValidEmail(mailEntry) -> {
+                _newUserState.value =
+                    NewUserState.WrongMail(resources.getString(R.string.error_msg_format_mail))
+                return
+            }
+
             nameEntry.isBlank() -> {
                 _newUserState.value =
                     NewUserState.WrongName(resources.getString(R.string.error_msg_enter_name))
@@ -50,6 +55,12 @@ class NewUserViewModel @Inject constructor(
             passwordEntry.isBlank() -> {
                 _newUserState.value =
                     NewUserState.WrongPassword(resources.getString(R.string.error_msg_enter_password))
+                return
+            }
+
+            passwordEntry.length < 4 -> {
+                _newUserState.value =
+                    NewUserState.WrongPassword(resources.getString(R.string.error_msg_short_password))
                 return
             }
 
@@ -103,7 +114,7 @@ class NewUserViewModel @Inject constructor(
                                     )
                                 }
 
-                                is AppError.UserNameUnavailable -> {
+                                is AppError.UsernameUnavailable -> {
                                     _newUserState.value = NewUserState.Error(
                                         resources.getString(
                                             R.string.error_msg_new_user_username_unavailable
@@ -113,7 +124,10 @@ class NewUserViewModel @Inject constructor(
 
                                 is AppError.NetworkError -> {
                                     _newUserState.value =
-                                        NewUserState.Error(resources.getString(R.string.error_msg_network))
+                                        NewUserState.Error(
+                                            resources.getString(R.string.error_msg_network),
+                                            R.drawable.ic_error_network
+                                        )
                                 }
 
                                 else -> {
@@ -125,6 +139,12 @@ class NewUserViewModel @Inject constructor(
                     _isLoading.value = false
                 }
         }
+    }
+
+    private fun isValidEmail(mail: String): Boolean = mail.matches(EMAIL_REGEX.toRegex())
+
+    companion object {
+        private const val EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
     }
 }
 

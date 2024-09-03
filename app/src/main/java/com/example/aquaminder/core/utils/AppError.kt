@@ -15,6 +15,6 @@ sealed class AppError {
 
     // Register Errors
     object MailUnavailable : AppError()
-    object UserNameUnavailable : AppError()
+    object UsernameUnavailable : AppError()
 
 }

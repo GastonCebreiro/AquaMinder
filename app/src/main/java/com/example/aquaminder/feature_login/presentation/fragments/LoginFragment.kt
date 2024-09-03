@@ -78,7 +78,7 @@ class LoginFragment : Fragment() {
 
                             is LoginState.Error -> {
                                 cleanErrors()
-                                showErrorMessage(loginState.errorMsg)
+                                showErrorMessage(loginState.errorMsg, loginState.logoId)
                             }
 
                             is LoginState.WrongName -> {
@@ -109,6 +109,7 @@ class LoginFragment : Fragment() {
                             is LoginState.Idle -> {}
                         }
                         viewModel.updateViewState(LoginState.Idle)
+                        screenEnabled(true)
                     }
             }
         }
@@ -124,6 +125,7 @@ class LoginFragment : Fragment() {
 
 
     private fun loginButtonAction() {
+        screenEnabled(false)
         viewModel.checkUserSelected(
             binding.etInputName.text.toString().trim(),
             binding.etInputPassword.text.toString().trim()
@@ -180,11 +182,20 @@ class LoginFragment : Fragment() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showErrorMessage(message: String) {
+    private fun showErrorMessage(message: String, logoId: Int? = null) {
         DialogUtils.showErrorDialog(
             context = requireContext(),
+            imageId = logoId,
             titleText = message,
         )
+    }
+
+    private fun screenEnabled(isEnabled: Boolean) {
+        binding.btnRegister.isEnabled = isEnabled
+        binding.btnLogin.isEnabled = isEnabled
+        binding.etInputName.isEnabled = isEnabled
+        binding.etInputPassword.isEnabled = isEnabled
+        binding.cbKeepValues.isEnabled = isEnabled
     }
 
     private fun navToMainActivity() {
