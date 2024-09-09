@@ -10,7 +10,7 @@
     <string name="fragment_login_name_ask">Usuario</string>
     <string name="fragment_login_password_ask">Clave</string>
 
-    <string name="fragment_new_user_btn_register">Crea una\nCuenta</string>
+    <string name="fragment_new_user_btn_register">Nueva\nCuenta</string>
     <string name="fragment_new_user_name_ask">Nombre de Usuario</string>
     <string name="fragment_new_user_mail_ask">Correo electrónico</string>
     <string name="fragment_new_user_password_ask">Clave</string>
@@ -23,9 +23,11 @@
     <string name="fragment_irrigation_zones_subtitle">Seleccione la zona de riego</string>
     <string name="fragment_irrigation_zones_subtitle_b">Agregue una nueva zona de riego</string>
     <string name="fragment_irrigation_zones_item_name">Nombre:</string>
-    <string name="fragment_irrigation_zones_item_name_b">asd%s</string>
     <string name="fragment_irrigation_zones_item_id">ID:</string>
     <string name="fragment_irrigation_zones_item_id_b">%s</string>
+
+    <string name="fragment_irrigation_zones_share_id_label">Compartir ID</string>
+    <string name="fragment_irrigation_zones_share_id_error">No pudimos encontrar el ID</string>
 
     <string name="error_msg_invalid_password">Clave Incorrecta</string>
     <string name="error_msg_enter_password">Ingrese una clave</string>
@@ -41,7 +43,8 @@
     <string name="error_msg_new_user_mail_unavailable">El mail ingresado no está disponible</string>
     <string name="error_msg_new_user_username_unavailable">El nombre de usuario ingresado no está disponible</string>
     <string name="error_msg_network">Ha ocurrido un problema de conexión</string>
-    <string name="error_msg_unknown">Ha ocurrido un error: %s</string>
+    <string name="error_msg_catch">Ha ocurrido un error: %s</string>
+    <string name="error_msg_unknown">¡Ha ocurrido un error!</string>
 
     <string name="error_msg_ir_empty_list">No tiene niguna Zona de Riego configurada</string>
     <string name="error_msg_ir_generic">No se encuentran datos de Zona de Riego</string>
@@ -53,6 +56,5 @@
 
     <string name="error_dialog_accept">ACEPTAR</string>
     <string name="error_dialog_cancel">CANCELAR</string>
-    <string name="error_dialog_title">¡Ha ocurrido un error!</string>
 
 </resources>

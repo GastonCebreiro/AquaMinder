@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AskNewPasswordUseCase @Inject constructor(
-    private val resources: Resources,
     private val userRepository: UserRepository
 ) {
 

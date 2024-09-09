@@ -9,11 +9,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.aquaminder.R
+import com.example.aquaminder.core.utils.DialogUtils
+import com.example.aquaminder.core.utils.IdentifierUtils
 import com.example.aquaminder.databinding.FragmentIrrigationZonesBinding
 import com.example.aquaminder.feature_login.utils.LoginState
+import com.example.aquaminder.feature_main.presentation.adapter.IrrigationZoneAdapter
+import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
 import com.example.aquaminder.feature_main.presentation.view_model.IrrigationZonesViewModel
 import com.example.aquaminder.feature_main.utils.IrrigationZoneState
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,52 +41,84 @@ class IrrigationZonesFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel.getIrrigationZones()
 
         lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.isLoading.collect { isLoading ->
-                    binding.progressBar.isVisible = isLoading
-                }
-            }
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-            launch {
-                viewModel.irrigationZoneState.collect { irrigationZoneState ->
-                    when (irrigationZoneState) {
-                        is IrrigationZoneState.Success -> {
-//                        val cardAdapter = CardAdapter(irrigationZoneState.cardList) { cardSelected ->
-//                            navToPayCardFragment(cardSelected)
-//                        }
-//                        binding.rvCards.layoutManager = LinearLayoutManager(context)
-//                        binding.rvCards.adapter = cardAdapter
-                        }
-
-                        is IrrigationZoneState.Error -> {
-                            showMessage(irrigationZoneState.errorMsg)
-                        }
-
-                        is IrrigationZoneState.EmptyList -> {
-                            showEmptyListWarning(irrigationZoneState.emptyListMsg)
-                        }
-
-                        is IrrigationZoneState.Idle -> {}
+                launch {
+                    viewModel.isLoading.collect { isLoading ->
+                        binding.progressBar.isVisible = isLoading
                     }
-                    viewModel.updateViewState(IrrigationZoneState.Idle)
+                }
+
+                launch {
+                    viewModel.irrigationZoneState.collect { irrigationZoneState ->
+                        when (irrigationZoneState) {
+                            is IrrigationZoneState.Success -> {
+                                val izAdapter = IrrigationZoneAdapter(
+                                    irrigationZoneList = irrigationZoneState.itemList,
+                                    onClick = {
+                                        navToIrrigationZoneDetail(it)
+                                    },
+                                    onShareId = { id ->
+                                        if (id.isBlank()) {
+                                            showErrorMessage(
+                                                resources.getString(
+                                                    R.string.fragment_irrigation_zones_share_id_error
+                                                )
+                                            )
+                                            return@IrrigationZoneAdapter
+                                        }
+                                        shareIrrigationZoneId(id)
+                                    }
+                                )
+                                binding.rvIrrigationZones.layoutManager =
+                                    LinearLayoutManager(context)
+                                binding.rvIrrigationZones.adapter = izAdapter
+                            }
+
+                            is IrrigationZoneState.Error -> {
+                                showErrorMessage(irrigationZoneState.errorMsg)
+                            }
+
+                            is IrrigationZoneState.EmptyList -> {
+                                showEmptyListWarning(irrigationZoneState.emptyListMsg)
+                            }
+
+                            is IrrigationZoneState.Idle -> {}
+                        }
+                    }
                 }
             }
         }
     }
 
-//    private fun navToPayCardFragment(cardSelected: CardDomainModel) {
-//        val action = FragmentDirections.actionHomeFragmentToPayCardFragment(cardSelected)
-//        findNavController().navigate(action)
-//    }
+    private fun shareIrrigationZoneId(id: String) {
+        IdentifierUtils.shareId(requireContext(), id)
+    }
+
+    private fun navToIrrigationZoneDetail(itemSelected: IrrigationZoneDomainModel) {
+        val action =
+            IrrigationZonesFragmentDirections.actionIrrigationZonesFragmentToIrrigationZoneDetailFragment(
+                itemSelected
+            )
+        findNavController().navigate(action)
+    }
 
     private fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showErrorMessage(message: String, logoId: Int? = null) {
+        DialogUtils.showErrorDialog(
+            context = requireContext(),
+            imageId = logoId,
+            titleText = message,
+        )
     }
 
     private fun showEmptyListWarning(message: String) {

@@ -28,11 +28,9 @@ class NewUserViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    fun updateViewState(viewState: NewUserState) {
-        _newUserState.value = viewState
-    }
 
     fun checkUserToRegister(nameEntry: String, mailEntry: String, passwordEntry: String) {
+        _newUserState.value = NewUserState.Idle
         when {
             mailEntry.isBlank() -> {
                 _newUserState.value =
@@ -100,7 +98,7 @@ class NewUserViewModel @Inject constructor(
                                 is AppError.GenericError -> {
                                     _newUserState.value = NewUserState.Error(
                                         resources.getString(
-                                            R.string.error_msg_unknown, res.error.errorMsg
+                                            R.string.error_msg_catch, res.error.errorMsg
                                         )
                                     )
 

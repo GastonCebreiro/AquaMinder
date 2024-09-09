@@ -9,7 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.DialogUtils
@@ -34,8 +36,8 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         clearEntries()
         cleanErrors()
@@ -60,15 +62,15 @@ class LoginFragment : Fragment() {
 
 
         lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.isLoading.collect { isLoading ->
-                    binding.progressBar.isVisible = isLoading
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.isLoading.collect { isLoading ->
+                        binding.progressBar.isVisible = isLoading
+                    }
                 }
-            }
 
-            launch {
-                viewModel.loginState
-                    .collect { loginState ->
+                launch {
+                    viewModel.loginState.collect { loginState ->
                         when (loginState) {
                             is LoginState.Success -> {
                                 cleanErrors()
@@ -79,18 +81,22 @@ class LoginFragment : Fragment() {
                             is LoginState.Error -> {
                                 cleanErrors()
                                 showErrorMessage(loginState.errorMsg, loginState.logoId)
+                                screenEnabled(true)
                             }
 
                             is LoginState.WrongName -> {
                                 setUserNameError(loginState.errorMsg)
+                                screenEnabled(true)
                             }
 
                             is LoginState.WrongPassword -> {
                                 setUserPasswordError(loginState.errorMsg)
+                                screenEnabled(true)
                             }
 
                             is LoginState.UsernameNotFound -> {
                                 setUserNameError(loginState.errorMsg)
+                                screenEnabled(true)
                             }
 
                             is LoginState.UserSavedValues -> {
@@ -108,9 +114,8 @@ class LoginFragment : Fragment() {
 
                             is LoginState.Idle -> {}
                         }
-                        viewModel.updateViewState(LoginState.Idle)
-                        screenEnabled(true)
                     }
+                }
             }
         }
     }

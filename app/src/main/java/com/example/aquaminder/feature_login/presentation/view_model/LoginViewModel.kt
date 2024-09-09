@@ -40,10 +40,6 @@ class LoginViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    fun updateViewState(viewState: LoginState) {
-        _loginState.value = viewState
-    }
-
     fun checkUserSelected(nameEntry: String, passwordEntry: String) {
         _loginState.value = LoginState.Idle
         when {
@@ -75,6 +71,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun getNewPassword(nameEntry: String) {
+        _loginState.value = LoginState.Idle
         when {
             nameEntry.isBlank() -> {
                 _loginState.value =

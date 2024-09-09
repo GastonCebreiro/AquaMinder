@@ -19,13 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
-
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -43,12 +36,12 @@
         android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
         android:text="@string/fragment_irrigation_zones_subtitle"
-        android:textColor="@color/white"
+        android:textColor="@color/gray"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -57,16 +50,18 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvIZ"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="20dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="50dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/light_gray"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSubtitle">
 
 
@@ -74,8 +69,8 @@
             android:id="@+id/rvIrrigationZones"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:background="@color/light_gray"
             android:scrollbars="vertical" />
 
     </androidx.cardview.widget.CardView>
@@ -84,11 +79,16 @@
         android:id="@+id/fabNewIZ"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_margin="25dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/light_blue"
         android:contentDescription="@null"
-        android:background="@drawable/fab_gradient"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:elevation="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cvIZ"
+        app:layout_constraintEnd_toEndOf="@+id/cvIZ"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@color/light_blue_finish" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -96,10 +96,10 @@
         android:contentDescription="@null"
         android:src="@drawable/ic_add"
         android:translationZ="20dp"
-        app:layout_constraintStart_toStartOf="@+id/fabNewIZ"
+        app:layout_constraintBottom_toBottomOf="@+id/fabNewIZ"
         app:layout_constraintEnd_toEndOf="@+id/fabNewIZ"
-        app:layout_constraintTop_toTopOf="@+id/fabNewIZ"
-        app:layout_constraintBottom_toBottomOf="@+id/fabNewIZ"/>
+        app:layout_constraintStart_toStartOf="@+id/fabNewIZ"
+        app:layout_constraintTop_toTopOf="@+id/fabNewIZ" />
 
     <TextView
         android:id="@+id/tvEmptyWarning"
@@ -107,16 +107,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
+        android:gravity="center"
         android:text="@string/error_msg_ir_empty_list"
         android:textColor="@color/light_blue"
         android:textSize="22sp"
-        android:gravity="center"
         android:textStyle="bold"
         android:translationZ="10dp"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/cvIZ"
-        app:layout_constraintEnd_toEndOf="@+id/cvIZ"
         app:layout_constraintBottom_toBottomOf="@+id/cvIZ"
+        app:layout_constraintEnd_toEndOf="@+id/cvIZ"
+        app:layout_constraintStart_toStartOf="@+id/cvIZ"
         app:layout_constraintTop_toTopOf="@+id/cvIZ" />
 
     <ProgressBar

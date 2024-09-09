@@ -7,5 +7,14 @@
         <!-- Secondary brand color. -->
         <!-- Status bar color. -->
 <!--        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->
+        <item name="floatingActionButtonStyle">@style/Widget.AquaMinder.FloatingActionButton</item>
+    </style>
+
+    <style name="Widget.AquaMinder.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.AquaMinder.Fab</item>
+    </style>
+
+    <style name="ShapeAppearance.AquaMinder.Fab" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">50%</item> <!-- Ensures circular shape -->
     </style>
 </resources>

@@ -10,34 +10,30 @@
         android:name="com.example.aquaminder.feature_main.presentation.fragments.IrrigationZonesFragment"
         android:label="fragment_irrigation_zones"
         tools:layout="@layout/fragment_irrigation_zones">
-<!--        <action-->
-<!--            android:id="@+id/action_irrigationZonesFragment_to_newCardFragment"-->
-<!--            app:destination="@id/newCardFragment" />-->
-<!--        <action-->
-<!--            android:id="@+id/action_irrigationZonesFragment_to_payQrFragment"-->
-<!--            app:destination="@id/payQrFragment" />-->
-<!--        <action-->
-<!--            android:id="@+id/action_irrigationZonesFragment_to_payCardFragment"-->
-<!--            app:destination="@id/payCardFragment" />-->
+        <action
+            android:id="@+id/action_irrigationZonesFragment_to_irrigationZoneDetailFragment"
+            app:destination="@id/irrigationZoneDetailFragment" />
     </fragment>
-<!--    <fragment-->
-<!--        android:id="@+id/newCardFragment"-->
-<!--        android:name="com.example.aquaminder.feature_card.presentation.fragments.NewCardFragment"-->
-<!--        android:label="fragment_new_card"-->
-<!--        tools:layout="@layout/fragment_new_card"/>-->
-<!--    <fragment-->
-<!--        android:id="@+id/payQrFragment"-->
-<!--        android:name="com.example.aquaminder.feature_pay_qr.presentation.fragments.PayQrFragment"-->
-<!--        android:label="fragment_pay_qr"-->
-<!--        tools:layout="@layout/fragment_pay_qr" />-->
-<!--    <fragment-->
-<!--        android:id="@+id/payCardFragment"-->
-<!--        android:name="com.example.aquaminder.feature_card.presentation.fragments.PayCardFragment"-->
-<!--        android:label="fragment_pay_card"-->
-<!--        tools:layout="@layout/fragment_pay_card" >-->
-<!--        <argument-->
-<!--            android:name="cardSelected"-->
-<!--            app:argType="com.example.aquaminder.feature_card.domain.model.CardDomainModel" />-->
-<!--    </fragment>-->
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/newCardFragment"-->
+    <!--        android:name="com.example.aquaminder.feature_card.presentation.fragments.NewCardFragment"-->
+    <!--        android:label="fragment_new_card"-->
+    <!--        tools:layout="@layout/fragment_new_card"/>-->
+    <!--    <fragment-->
+    <!--        android:id="@+id/payQrFragment"-->
+    <!--        android:name="com.example.aquaminder.feature_pay_qr.presentation.fragments.PayQrFragment"-->
+    <!--        android:label="fragment_pay_qr"-->
+    <!--        tools:layout="@layout/fragment_pay_qr" />-->
+
+    <fragment
+        android:id="@+id/irrigationZoneDetailFragment"
+        android:name="com.example.aquaminder.feature_irrigation_zone.fragments.IrrigationZoneDetailFragment"
+        android:label="fragment_irrigation_zone_detail"
+        tools:layout="@layout/fragment_irrigation_zone_detail">
+        <argument
+            android:name="itemSelected"
+            app:argType="com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel" />
+    </fragment>
 
 </navigation>

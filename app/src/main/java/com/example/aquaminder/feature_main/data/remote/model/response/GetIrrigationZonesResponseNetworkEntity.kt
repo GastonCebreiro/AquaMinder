@@ -1,7 +1,12 @@
 package com.example.aquaminder.feature_main.data.remote.model.response
 
+import com.example.aquaminder.core.utils.AppConstants.DEFAULT_COLOR_ID
+import com.example.aquaminder.core.utils.AppConstants.DEFAULT_IZ_NAME
+import com.example.aquaminder.core.utils.AppConstants.DEFAULT_LOGO_ID
+import com.example.aquaminder.core.utils.IdentifierUtils
 import com.example.aquaminder.feature_main.domain.model.response.GetIrrigationZonesResponseDomainModel
-import com.example.aquaminder.feature_main.domain.model.response.IrrigationZoneDomainModel
+import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
+import java.util.UUID
 
 data class GetIrrigationZonesResponseNetworkEntity(
     val status: Int? = null,
@@ -20,10 +25,10 @@ fun GetIrrigationZonesResponseNetworkEntity.toDomainModel() = GetIrrigationZones
     irrigationZones = irrigationZones?.let { zones ->
         zones.map {
             IrrigationZoneDomainModel(
-                uuid = it.uuid.orEmpty(),
-                name = it.name.orEmpty(),
-                logoId = it.logoId ?: -1,
-                colorId = it.colorId ?: -1
+                uuid = it.uuid ?: IdentifierUtils.createUUID(),
+                name = it.name ?: DEFAULT_IZ_NAME,
+                logoId = it.logoId ?: DEFAULT_LOGO_ID,
+                colorId = it.colorId ?: DEFAULT_COLOR_ID
             )
         }
     } ?: emptyList()

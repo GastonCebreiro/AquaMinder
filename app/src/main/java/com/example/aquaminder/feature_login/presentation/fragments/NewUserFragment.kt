@@ -9,7 +9,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentNewUserBinding
@@ -35,8 +37,8 @@ class NewUserFragment : Fragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         clearEntries()
         cleanErrors()
@@ -50,46 +52,50 @@ class NewUserFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenStarted {
-            launch {
-                viewModel.isLoading.collect { isLoading ->
-                    binding.progressBar.isVisible = isLoading
-                }
-            }
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-            launch {
-                viewModel.newUserState.collect { newUserState ->
-                    when (newUserState) {
-                        is NewUserState.Success -> {
-                            cleanErrors()
-                            showMessage(newUserState.msg)
-                            navToLoginFragment()
-                        }
-
-                        is NewUserState.Error -> {
-                            cleanErrors()
-                            showErrorMessage(newUserState.errorMsg, newUserState.logoId)
-                        }
-
-                        is NewUserState.WrongName -> {
-                            setUserNameError(newUserState.errorMsg)
-                        }
-
-                        is NewUserState.WrongMail -> {
-                            setUserMailError(newUserState.errorMsg)
-                        }
-
-                        is NewUserState.WrongPassword -> {
-                            setUserPasswordError(newUserState.errorMsg)
-                        }
-
-                        is NewUserState.Idle -> {}
+                launch {
+                    viewModel.isLoading.collect { isLoading ->
+                        binding.progressBar.isVisible = isLoading
                     }
-                    viewModel.updateViewState(NewUserState.Idle)
-                    screenEnabled(true)
+                }
+
+                launch {
+                    viewModel.newUserState.collect { newUserState ->
+                        when (newUserState) {
+                            is NewUserState.Success -> {
+                                cleanErrors()
+                                showMessage(newUserState.msg)
+                                navToLoginFragment()
+                            }
+
+                            is NewUserState.Error -> {
+                                cleanErrors()
+                                showErrorMessage(newUserState.errorMsg, newUserState.logoId)
+                                screenEnabled(true)
+                            }
+
+                            is NewUserState.WrongName -> {
+                                setUserNameError(newUserState.errorMsg)
+                                screenEnabled(true)
+                            }
+
+                            is NewUserState.WrongMail -> {
+                                setUserMailError(newUserState.errorMsg)
+                                screenEnabled(true)
+                            }
+
+                            is NewUserState.WrongPassword -> {
+                                setUserPasswordError(newUserState.errorMsg)
+                                screenEnabled(true)
+                            }
+
+                            is NewUserState.Idle -> {}
+                        }
+                    }
                 }
             }
         }
-
     }
 
 

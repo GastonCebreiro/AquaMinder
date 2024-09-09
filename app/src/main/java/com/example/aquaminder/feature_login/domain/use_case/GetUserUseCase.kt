@@ -19,6 +19,9 @@ class GetUserUseCase @Inject constructor(
         name: String,
         password: String
     ): Flow<ResultEvent<UserDomainModel>> = flow {
+        // TODO GC DELETE MOCK
+        emit(ResultEvent.Success(UserDomainModel("pepe","asd@mail.com","1234")))
+
         try {
             val userRequest = LoginUserRequestDomainModel(
                 name = name,

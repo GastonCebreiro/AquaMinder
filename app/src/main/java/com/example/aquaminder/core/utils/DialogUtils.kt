@@ -31,7 +31,9 @@ object DialogUtils {
         dialog.setContentView(binding.root)
 
         imageId?.let { binding.ivLogo.setImageResource(it) }
-        titleText?.let { binding.tvTitle.text = titleText }
+        titleText?.takeIf { it.isNotBlank() }?.let {
+            binding.tvTitle.text = it
+        }
         messageTextId?.let {
             binding.tvMessage.visibility = View.VISIBLE
             binding.tvMessage.setText(it)

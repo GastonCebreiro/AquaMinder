@@ -7,10 +7,8 @@ import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.feature_login.domain.use_case.GetUserLoggedUseCase
-import com.example.aquaminder.feature_login.utils.LoginState
 import com.example.aquaminder.feature_main.domain.model.request.GetIrrigationZonesRequestDomainModel
 import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZonesUseCase
-import com.example.aquaminder.feature_main.utils.GetIrrigationZonesEvent
 import com.example.aquaminder.feature_main.utils.IrrigationZoneState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,12 +30,9 @@ class IrrigationZonesViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    fun updateViewState(viewState: IrrigationZoneState) {
-        _irrigationZoneState.value = viewState
-    }
-
     fun getIrrigationZones() {
         _isLoading.value = true
+        _irrigationZoneState.value = IrrigationZoneState.Idle
 
         viewModelScope.launch {
             when (val res = getUserLoggedUseCase.invoke()) {
@@ -76,6 +71,7 @@ class IrrigationZonesViewModel @Inject constructor(
 
                 is ResultEvent.Error -> {
                     _isLoading.value = false
+                    _irrigationZoneState.value = IrrigationZoneState.Error("")
                 }
             }
         }
