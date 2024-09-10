@@ -36,8 +36,8 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        super.onStart()
 
         clearEntries()
         cleanErrors()
@@ -62,60 +62,59 @@ class LoginFragment : Fragment() {
 
 
         lifecycleScope.launchWhenStarted {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.isLoading.collect { isLoading ->
-                        binding.progressBar.isVisible = isLoading
-                    }
+            launch {
+                viewModel.isLoading.collect { isLoading ->
+                    binding.progressBar.isVisible = isLoading
                 }
+            }
 
-                launch {
-                    viewModel.loginState.collect { loginState ->
-                        when (loginState) {
-                            is LoginState.Success -> {
-                                cleanErrors()
-                                showMessage(loginState.msg)
-                                navToMainActivity()
-                            }
-
-                            is LoginState.Error -> {
-                                cleanErrors()
-                                showErrorMessage(loginState.errorMsg, loginState.logoId)
-                                screenEnabled(true)
-                            }
-
-                            is LoginState.WrongName -> {
-                                setUserNameError(loginState.errorMsg)
-                                screenEnabled(true)
-                            }
-
-                            is LoginState.WrongPassword -> {
-                                setUserPasswordError(loginState.errorMsg)
-                                screenEnabled(true)
-                            }
-
-                            is LoginState.UsernameNotFound -> {
-                                setUserNameError(loginState.errorMsg)
-                                screenEnabled(true)
-                            }
-
-                            is LoginState.UserSavedValues -> {
-                                setUserSavedName(loginState.name)
-                                setUserSavedPassword(loginState.password)
-                            }
-
-                            is LoginState.KeepValues -> {
-                                setCheckBoxKeepValues(loginState.isChecked)
-                            }
-
-                            is LoginState.NewPasswordSent -> {
-                                showMessage(loginState.msg)
-                            }
-
-                            is LoginState.Idle -> {}
+            launch {
+                viewModel.loginState.collect { loginState ->
+                    when (loginState) {
+                        is LoginState.Success -> {
+                            cleanErrors()
+                            showMessage(loginState.msg)
+                            navToMainActivity()
                         }
+
+                        is LoginState.Error -> {
+                            cleanErrors()
+                            showErrorMessage(loginState.errorMsg, loginState.logoId)
+                            screenEnabled(true)
+                        }
+
+                        is LoginState.WrongName -> {
+                            setUserNameError(loginState.errorMsg)
+                            screenEnabled(true)
+                        }
+
+                        is LoginState.WrongPassword -> {
+                            setUserPasswordError(loginState.errorMsg)
+                            screenEnabled(true)
+                        }
+
+                        is LoginState.UsernameNotFound -> {
+                            setUserNameError(loginState.errorMsg)
+                            screenEnabled(true)
+                        }
+
+                        is LoginState.UserSavedValues -> {
+                            setUserSavedName(loginState.name)
+                            setUserSavedPassword(loginState.password)
+                        }
+
+                        is LoginState.KeepValues -> {
+                            setCheckBoxKeepValues(loginState.isChecked)
+                        }
+
+                        is LoginState.NewPasswordSent -> {
+                            showMessage(loginState.msg)
+                        }
+
+                        is LoginState.Idle -> {}
                     }
                 }
+
             }
         }
     }

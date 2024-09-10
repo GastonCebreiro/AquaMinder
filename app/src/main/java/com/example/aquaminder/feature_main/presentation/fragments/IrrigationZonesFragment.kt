@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,10 +14,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aquaminder.R
+import com.example.aquaminder.core.utils.AdapterUtils
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.core.utils.IdentifierUtils
 import com.example.aquaminder.databinding.FragmentIrrigationZonesBinding
-import com.example.aquaminder.feature_login.utils.LoginState
 import com.example.aquaminder.feature_main.presentation.adapter.IrrigationZoneAdapter
 import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
 import com.example.aquaminder.feature_main.presentation.view_model.IrrigationZonesViewModel
@@ -44,6 +43,10 @@ class IrrigationZonesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.fabNewIZ.setOnClickListener {
+
+        }
+
         viewModel.getIrrigationZones()
 
         lifecycleScope.launchWhenStarted {
@@ -59,8 +62,9 @@ class IrrigationZonesFragment : Fragment() {
                     viewModel.irrigationZoneState.collect { irrigationZoneState ->
                         when (irrigationZoneState) {
                             is IrrigationZoneState.Success -> {
+                                val izList = irrigationZoneState.itemList.toMutableList()
                                 val izAdapter = IrrigationZoneAdapter(
-                                    irrigationZoneList = irrigationZoneState.itemList,
+                                    irrigationZoneList = izList,
                                     onClick = {
                                         navToIrrigationZoneDetail(it)
                                     },
@@ -79,6 +83,7 @@ class IrrigationZonesFragment : Fragment() {
                                 binding.rvIrrigationZones.layoutManager =
                                     LinearLayoutManager(context)
                                 binding.rvIrrigationZones.adapter = izAdapter
+                                setUpSweepDelete(izAdapter)
                             }
 
                             is IrrigationZoneState.Error -> {
@@ -94,6 +99,13 @@ class IrrigationZonesFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setUpSweepDelete(izAdapter: IrrigationZoneAdapter) {
+        AdapterUtils.setUpItemTouchHelper(binding.rvIrrigationZones, izAdapter) { position ->
+            izAdapter.removeItem(requireContext(), position)
+            // TODO GC SEND DELETED ITEM TO BE
         }
     }
 

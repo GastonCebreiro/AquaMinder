@@ -8,6 +8,7 @@ import android.view.Window
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.aquaminder.R
+import com.example.aquaminder.databinding.DialogLogoutBinding
 import com.example.aquaminder.databinding.ErrorGenericDialogBinding
 
 object DialogUtils {
@@ -16,9 +17,9 @@ object DialogUtils {
         context: Context,
         @DrawableRes imageId: Int? = null,
         titleText: String? = null,
-        @StringRes messageTextId: Int? = null,
-        @StringRes acceptTextId: Int? = null,
-        @StringRes cancelTextId: Int? = null,
+        messageText: String? = null,
+        acceptText: String? = null,
+        cancelText: String? = null,
         onAcceptAction: (() -> Unit)? = null,
         onCancelAction: (() -> Unit)? = null
     ) {
@@ -34,18 +35,20 @@ object DialogUtils {
         titleText?.takeIf { it.isNotBlank() }?.let {
             binding.tvTitle.text = it
         }
-        messageTextId?.let {
+        messageText?.takeIf { it.isNotBlank() }?.let {
             binding.tvMessage.visibility = View.VISIBLE
-            binding.tvMessage.setText(it)
+            binding.tvMessage.text = it
         }
-        acceptTextId?.let { binding.btnAccept.setText(it) }
+        acceptText?.takeIf { it.isNotBlank() }?.let {
+            binding.btnAccept.text = it
+        }
         binding.btnAccept.setOnClickListener {
             onAcceptAction?.invoke()
             dialog.dismiss()
         }
-        cancelTextId?.let {
+        cancelText?.takeIf { it.isNotBlank() }?.let {
             binding.tvCancel.visibility = View.VISIBLE
-            binding.tvCancel.setText(it)
+            binding.tvCancel.text = it
             binding.tvCancel.setOnClickListener {
                 onCancelAction?.invoke()
                 dialog.dismiss()
@@ -54,4 +57,32 @@ object DialogUtils {
         dialog.show()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
+
+
+    fun showLogoutDialog(
+        context: Context,
+        onAcceptAction: (() -> Unit)? = null,
+        onCancelAction: (() -> Unit)? = null
+    ) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+
+        val binding = DialogLogoutBinding
+            .inflate(LayoutInflater.from(context), null, false)
+        dialog.setContentView(binding.root)
+
+        binding.btnAccept.setOnClickListener {
+            onAcceptAction?.invoke()
+            dialog.dismiss()
+        }
+        binding.tvCancel.setOnClickListener {
+            onCancelAction?.invoke()
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    }
+
 }

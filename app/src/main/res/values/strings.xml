@@ -29,6 +29,8 @@
     <string name="fragment_irrigation_zones_share_id_label">Compartir ID</string>
     <string name="fragment_irrigation_zones_share_id_error">No pudimos encontrar el ID</string>
 
+    <string name="fragment_irrigation_zones_delete_item_position_error">No pudimos elimnar la zona</string>
+
     <string name="error_msg_invalid_password">Clave Incorrecta</string>
     <string name="error_msg_enter_password">Ingrese una clave</string>
     <string name="error_msg_short_password">Clave demasiado corta</string>
@@ -56,5 +58,7 @@
 
     <string name="error_dialog_accept">ACEPTAR</string>
     <string name="error_dialog_cancel">CANCELAR</string>
+
+    <string name="dialog_logout_title">¿Está seguro que desea cerrar sesión?</string>
 
 </resources>
