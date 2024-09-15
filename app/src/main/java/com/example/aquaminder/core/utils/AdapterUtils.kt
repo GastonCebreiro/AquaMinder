@@ -59,8 +59,8 @@ object AdapterUtils {
                     val cornerRadius = 20f
 
                     if (dX < 0) {
-                        val iconLeft = itemView.right - iconMargin - icon.intrinsicWidth
-                        val iconRight = itemView.right - iconMargin
+                        val iconLeft = itemView.right - iconMargin - icon.intrinsicWidth + 80
+                        val iconRight = itemView.right - iconMargin + 80
                         icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
 
                         // Define the rounded rectangle for the background

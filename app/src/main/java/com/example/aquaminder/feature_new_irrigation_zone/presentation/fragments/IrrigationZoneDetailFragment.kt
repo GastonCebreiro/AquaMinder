@@ -1,29 +1,19 @@
-package com.example.aquaminder.feature_irrigation_zone.fragments
+package com.example.aquaminder.feature_new_irrigation_zone.presentation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aquaminder.databinding.FragmentIrrigationZoneDetailBinding
-import com.example.aquaminder.databinding.FragmentIrrigationZonesBinding
-import com.example.aquaminder.feature_login.utils.LoginState
-import com.example.aquaminder.feature_main.presentation.adapter.IrrigationZoneAdapter
-import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
 import com.example.aquaminder.feature_main.presentation.view_model.IrrigationZonesViewModel
-import com.example.aquaminder.feature_main.utils.IrrigationZoneState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class IrrigationZoneDetailFragment : Fragment() {

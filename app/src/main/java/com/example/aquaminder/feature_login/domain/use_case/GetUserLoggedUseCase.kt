@@ -9,7 +9,6 @@ import com.example.aquaminder.feature_login.domain.repository.UserRepository
 import javax.inject.Inject
 
 class GetUserLoggedUseCase @Inject constructor(
-    private val resources: Resources,
     private val userRepository: UserRepository,
 ) {
 

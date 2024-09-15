@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#2E2C2C</color>
+    <color name="hard_gray">#433F3F</color>
     <color name="gray_hint">#787373</color>
     <color name="gray_delete">#9D9595</color>
     <color name="light_gray">#D8D8D8</color>
@@ -17,7 +18,7 @@
     <color name="blue">#1C37ED</color>
     <color name="light_blue">#00A6DA</color>
     <color name="light_blue_finish">#8EE2FB</color>
-    <color name="background_blue">#9FC3D3</color>
+    <color name="background_light_blue">#DAF3FF</color>
     <color name="red">#F44336</color>
     <color name="card_light_blue">#4AB4D5</color>
     <color name="card_blue_pool">#59C2C5</color>
@@ -26,4 +27,5 @@
     <color name="checkbox">#00A6DA</color>
     <color name="checkbox_tick">#FFFFFFFF</color>
     <color name="autofill">#2500A6DA</color>
+    <color name="disable">#80BFD8DE</color>
 </resources>

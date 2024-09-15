@@ -44,7 +44,7 @@ class IrrigationZonesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.fabNewIZ.setOnClickListener {
-
+            navToNewIrrigationZone()
         }
 
         viewModel.getIrrigationZones()
@@ -101,7 +101,6 @@ class IrrigationZonesFragment : Fragment() {
             }
         }
     }
-
     private fun setUpSweepDelete(izAdapter: IrrigationZoneAdapter) {
         AdapterUtils.setUpItemTouchHelper(binding.rvIrrigationZones, izAdapter) { position ->
             izAdapter.removeItem(requireContext(), position)
@@ -112,6 +111,12 @@ class IrrigationZonesFragment : Fragment() {
     private fun shareIrrigationZoneId(id: String) {
         IdentifierUtils.shareId(requireContext(), id)
     }
+
+    private fun navToNewIrrigationZone() {
+        val action = IrrigationZonesFragmentDirections.actionIrrigationZonesFragmentToNewIrrigationZoneFragment()
+        findNavController().navigate(action)
+    }
+
 
     private fun navToIrrigationZoneDetail(itemSelected: IrrigationZoneDomainModel) {
         val action =

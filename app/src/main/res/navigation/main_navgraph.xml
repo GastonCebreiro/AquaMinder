@@ -13,22 +13,25 @@
         <action
             android:id="@+id/action_irrigationZonesFragment_to_irrigationZoneDetailFragment"
             app:destination="@id/irrigationZoneDetailFragment" />
+        <action
+            android:id="@+id/action_irrigationZonesFragment_to_newIrrigationZoneFragment"
+            app:destination="@id/newIrrigationZoneFragment" />
     </fragment>
 
-    <!--    <fragment-->
-    <!--        android:id="@+id/newCardFragment"-->
-    <!--        android:name="com.example.aquaminder.feature_card.presentation.fragments.NewCardFragment"-->
-    <!--        android:label="fragment_new_card"-->
-    <!--        tools:layout="@layout/fragment_new_card"/>-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/payQrFragment"-->
-    <!--        android:name="com.example.aquaminder.feature_pay_qr.presentation.fragments.PayQrFragment"-->
-    <!--        android:label="fragment_pay_qr"-->
-    <!--        tools:layout="@layout/fragment_pay_qr" />-->
+        <fragment
+            android:id="@+id/newIrrigationZoneFragment"
+            android:name="com.example.aquaminder.feature_new_irrigation_zone.presentation.fragments.NewIrrigationZoneFragment"
+            android:label="fragment_new_irrigation_zone"
+            tools:layout="@layout/fragment_new_irrigation_zone"/>
+<!--        <fragment-->
+<!--            android:id="@+id/payQrFragment"-->
+<!--            android:name="com.example.aquaminder.feature_pay_qr.presentation.fragments.PayQrFragment"-->
+<!--            android:label="fragment_pay_qr"-->
+<!--            tools:layout="@layout/fragment_pay_qr" />-->
 
     <fragment
         android:id="@+id/irrigationZoneDetailFragment"
-        android:name="com.example.aquaminder.feature_irrigation_zone.fragments.IrrigationZoneDetailFragment"
+        android:name="com.example.aquaminder.feature_new_irrigation_zone.presentation.fragments.IrrigationZoneDetailFragment"
         android:label="fragment_irrigation_zone_detail"
         tools:layout="@layout/fragment_irrigation_zone_detail">
         <argument

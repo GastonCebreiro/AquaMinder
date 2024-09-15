@@ -1,4 +1,4 @@
-package com.example.aquaminder.feature_main.domain.use_case
+package com.example.aquaminder.feature_new_irrigation_zone.domain.use_case
 
 import com.example.aquaminder.core.utils.AppConstants.STATUS_OK
 import com.example.aquaminder.core.utils.AppError
@@ -11,21 +11,18 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
-class GetIrrigationZonesUseCase @Inject constructor(
+class SaveIrrigationZoneUseCase @Inject constructor(
     private val irrigationZonesRepository: IrrigationZonesRepository
 ) {
 
     suspend operator fun invoke(
-        request: GetIrrigationZonesRequestDomainModel
-    ): Flow<ResultEvent<List<IrrigationZoneDomainModel>>> = flow {
+        request: IrrigationZoneDomainModel
+    ): Flow<ResultEvent<Boolean>> = flow {
         try {
-            val response = irrigationZonesRepository.getIrrigationZones(request)
+            val response = irrigationZonesRepository.saveIrrigationZone(request)
             when (response.status) {
                 STATUS_OK -> {
-                    if (response.irrigationZones.isNotEmpty())
-                        emit(ResultEvent.Success(response.irrigationZones))
-                    else
-                        emit(ResultEvent.Error(AppError.EmptyList))
+                    emit(ResultEvent.Success(true))
                 }
                 else -> {
                     emit(ResultEvent.Error(AppError.GenericError()))

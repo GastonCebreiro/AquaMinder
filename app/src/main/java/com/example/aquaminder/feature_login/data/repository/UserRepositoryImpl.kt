@@ -1,8 +1,10 @@
 package com.example.aquaminder.feature_login.data.repository
 
 import com.example.aquaminder.core.data.remote.WebService
+import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.core.utils.SharedPreferencesUtil
 import com.example.aquaminder.feature_login.data.local.dao.UserDao
+import com.example.aquaminder.feature_login.data.remote.model.response.LoginUserResponseNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.response.NewPasswordResponseNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.response.toDomainModel
 import com.example.aquaminder.feature_login.domain.model.UserDomainModel
@@ -14,6 +16,7 @@ import com.example.aquaminder.feature_login.domain.model.response.LoginUserRespo
 import com.example.aquaminder.feature_login.domain.model.response.NewPasswordResponseDomainModel
 import com.example.aquaminder.feature_login.domain.model.response.NewUserResponseDomainModel
 import com.example.aquaminder.feature_login.domain.repository.UserRepository
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -25,8 +28,16 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun loginUser(
         user: LoginUserRequestDomainModel,
     ): LoginUserResponseDomainModel {
-//        userDao.getUser(name)?.toDomainModel()
-        return webService.loginUser(user.toNetworkEntity()).toDomainModel()
+        //  TODO GC DELETE MOCK
+//        val response = webService.loginUser(user.toNetworkEntity())
+        val response = LoginUserResponseNetworkEntity(
+            status = 200,
+            username = "pepe",
+            mail = "asd@mail.com",
+            password = "1234"
+        )
+        delay(2000)
+        return response.toDomainModel()
     }
 
 

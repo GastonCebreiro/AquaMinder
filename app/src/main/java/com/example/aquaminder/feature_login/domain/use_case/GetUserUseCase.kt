@@ -6,6 +6,7 @@ import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.feature_login.domain.model.UserDomainModel
 import com.example.aquaminder.feature_login.domain.model.request.LoginUserRequestDomainModel
 import com.example.aquaminder.feature_login.domain.repository.UserRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
@@ -19,9 +20,6 @@ class GetUserUseCase @Inject constructor(
         name: String,
         password: String
     ): Flow<ResultEvent<UserDomainModel>> = flow {
-        // TODO GC DELETE MOCK
-        emit(ResultEvent.Success(UserDomainModel("pepe","asd@mail.com","1234")))
-
         try {
             val userRequest = LoginUserRequestDomainModel(
                 name = name,

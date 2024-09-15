@@ -10,6 +10,8 @@ object IdentifierUtils {
 
     fun createUUID(): String = UUID.randomUUID().toString().substring(0, 28)
 
+    fun isValidUUID(uuid: String) = uuid.length == 28 && uuid.matches(Regex("^[a-fA-F0-9-]+$"))
+
     fun shareId(context: Context, id: String) {
         try {
             val shareIntent = Intent().apply {

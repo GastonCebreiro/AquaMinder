@@ -9,6 +9,7 @@ import com.example.aquaminder.feature_login.domain.model.request.NewPasswordRequ
 import com.example.aquaminder.feature_login.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.io.IOException
 import javax.inject.Inject
 
 class AskNewPasswordUseCase @Inject constructor(
@@ -31,7 +32,8 @@ class AskNewPasswordUseCase @Inject constructor(
                     )
                 }
             }
-
+        } catch (e: IOException) {
+            emit(ResultEvent.Error(AppError.NetworkError))
         } catch (e: Exception) {
             emit(ResultEvent.Error(AppError.GenericError(e.message.orEmpty())))
         }

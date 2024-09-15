@@ -103,6 +103,8 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.14.2")
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+
     implementation("androidx.recyclerview:recyclerview:1.2.1")
 
     implementation("androidx.security:security-crypto:1.1.0-rc01")
