@@ -69,7 +69,10 @@
             android:id="@+id/rvIrrigationZones"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="50dp"
             android:background="@color/background_light_blue"
             android:scrollbars="vertical" />
 
@@ -109,7 +112,7 @@
         android:layout_marginEnd="60dp"
         android:gravity="center"
         android:text="@string/error_msg_ir_empty_list"
-        android:textColor="@color/light_blue"
+        android:textColor="@color/gray_hint"
         android:textSize="22sp"
         android:textStyle="bold"
         android:translationZ="10dp"
@@ -118,6 +121,21 @@
         app:layout_constraintEnd_toEndOf="@+id/cvIZ"
         app:layout_constraintStart_toStartOf="@+id/cvIZ"
         app:layout_constraintTop_toTopOf="@+id/cvIZ" />
+
+    <ImageView
+        android:id="@+id/ivEmptyWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="80dp"
+        android:src="@drawable/ic_arrow_down_right"
+        android:translationZ="20dp"
+        android:contentDescription="@null"
+        android:visibility="gone"
+        app:tint="@color/gray_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEmptyWarning" />
 
     <ProgressBar
         android:id="@+id/progressBar"

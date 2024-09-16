@@ -29,32 +29,33 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
         delay(3000)
         val response = GetIrrigationZonesResponseNetworkEntity(
             status = 200,
-            irrigationZones = listOf(
-                IrrigationZoneNetworkEntity(
-                    uuid = IdentifierUtils.createUUID(),
-                    name = "Parque",
-                    logoId = R.drawable.ic_card_house,
-                    colorId = R.color.card_light_blue
-                ),
-                IrrigationZoneNetworkEntity(
-                    uuid = IdentifierUtils.createUUID(),
-                    name = "Balcón",
-                    logoId = R.drawable.ic_card_balcony,
-                    colorId = R.color.card_blue_pool
-                ),
-                IrrigationZoneNetworkEntity(
-                    uuid = IdentifierUtils.createUUID(),
-                    name = "Patio Trasero",
-                    logoId = R.drawable.ic_card_park,
-                    colorId = R.color.card_green_water
-                ),
-                IrrigationZoneNetworkEntity(
-                    uuid = IdentifierUtils.createUUID(),
-                    name = "Terreza",
-                    logoId = R.drawable.ic_card_flowers,
-                    colorId = R.color.card_gray
-                )
-            )
+            emptyList()
+//            irrigationZones = listOf(
+//                IrrigationZoneNetworkEntity(
+//                    uuid = IdentifierUtils.createUUID(),
+//                    name = "JARDIN",
+//                    logoId = R.drawable.ic_card_house,
+//                    colorId = R.color.card_light_blue
+//                ),
+//                IrrigationZoneNetworkEntity(
+//                    uuid = IdentifierUtils.createUUID(),
+//                    name = "BALCON HABITACION",
+//                    logoId = R.drawable.ic_card_balcony,
+//                    colorId = R.color.card_blue_pool
+//                ),
+//                IrrigationZoneNetworkEntity(
+//                    uuid = IdentifierUtils.createUUID(),
+//                    name = "PARQUE DEL FONDO",
+//                    logoId = R.drawable.ic_card_park,
+//                    colorId = R.color.card_green_water
+//                ),
+//                IrrigationZoneNetworkEntity(
+//                    uuid = IdentifierUtils.createUUID(),
+//                    name = "INVERNADERO",
+//                    logoId = R.drawable.ic_card_flowers,
+//                    colorId = R.color.card_gray
+//                )
+//            )
         )
         return response.toDomainModel()
     }

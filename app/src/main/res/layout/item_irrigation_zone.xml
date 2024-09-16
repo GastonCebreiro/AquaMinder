@@ -29,33 +29,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvIZNameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@string/fragment_irrigation_zones_item_name"
-            android:textColor="@color/gray"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/ivIZLogo"
-            app:layout_constraintTop_toTopOf="@+id/ivIZLogo" />
 
         <TextView
             android:id="@+id/tvIZName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="30dp"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="2"
-            android:textColor="@color/gray"
-            android:textSize="28sp"
+            android:textColor="@color/background_light_blue"
+            android:textSize="26sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivIZLogo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tvIZNameLabel"
-            app:layout_constraintTop_toBottomOf="@+id/tvIZNameLabel"
-            tools:text="Campo de juego de Stamford Bridge londres" />
+            app:layout_constraintStart_toEndOf="@+id/ivIZLogo"
+            app:layout_constraintTop_toTopOf="@+id/ivIZLogo"
+            tools:text="BALCON" />
 
         <TextView
             android:id="@+id/tvIZIdLabel"
@@ -75,18 +65,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:text="@string/fragment_irrigation_zones_item_id_b"
             android:textColor="@color/hard_gray"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/tvIZIdLabel"
-            app:layout_constraintTop_toBottomOf="@+id/tvIZName"
+            app:layout_constraintTop_toBottomOf="@+id/ivIZLogo"
             tools:text="0b4d5e3e-dd37-4aa5-88cc-21ss" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clShare"
             android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">

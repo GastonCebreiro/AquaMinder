@@ -140,6 +140,7 @@ class IrrigationZonesFragment : Fragment() {
 
     private fun showEmptyListWarning(message: String) {
         binding.tvEmptyWarning.visibility = View.VISIBLE
+        binding.ivEmptyWarning.visibility = View.VISIBLE
         binding.tvEmptyWarning.text = message
     }
 

@@ -64,7 +64,7 @@
     <string name="error_msg_catch">Ha ocurrido un error: %s</string>
     <string name="error_msg_unknown">¡Ha ocurrido un error!</string>
 
-    <string name="error_msg_ir_empty_list">No tiene niguna Zona de Riego configurada</string>
+    <string name="error_msg_ir_empty_list">No tiene niguna Zona de Riego configurada\n\nCree una nueva</string>
     <string name="error_msg_ir_generic">No se encuentran datos de Zona de Riego</string>
     <string name="error_msg_new_iz">No se pudo crear la Zona de Riego</string>
 
