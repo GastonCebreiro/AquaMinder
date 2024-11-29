@@ -19,7 +19,6 @@ import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.core.utils.IdentifierUtils
 import com.example.aquaminder.databinding.FragmentIrrigationZonesBinding
 import com.example.aquaminder.feature_main.presentation.adapter.IrrigationZoneAdapter
-import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
 import com.example.aquaminder.feature_main.presentation.view_model.IrrigationZonesViewModel
 import com.example.aquaminder.feature_main.utils.IrrigationZoneState
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,7 +65,8 @@ class IrrigationZonesFragment : Fragment() {
                                 val izAdapter = IrrigationZoneAdapter(
                                     irrigationZoneList = izList,
                                     onClick = {
-                                        navToIrrigationZoneDetail(it)
+                                        viewModel.saveIdSelected(it.uuid)
+                                        navToIrrigationZoneDetail()
                                     },
                                     onShareId = { id ->
                                         if (id.isBlank()) {
@@ -117,17 +117,9 @@ class IrrigationZonesFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-
-    private fun navToIrrigationZoneDetail(itemSelected: IrrigationZoneDomainModel) {
-        val action =
-            IrrigationZonesFragmentDirections.actionIrrigationZonesFragmentToIrrigationZoneDetailFragment(
-                itemSelected
-            )
+    private fun navToIrrigationZoneDetail() {
+        val action = IrrigationZonesFragmentDirections.actionIrrigationZonesFragmentToHomeActivity()
         findNavController().navigate(action)
-    }
-
-    private fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showErrorMessage(message: String, logoId: Int? = null) {
@@ -140,7 +132,6 @@ class IrrigationZonesFragment : Fragment() {
 
     private fun showEmptyListWarning(message: String) {
         binding.tvEmptyWarning.visibility = View.VISIBLE
-        binding.ivEmptyWarning.visibility = View.VISIBLE
         binding.tvEmptyWarning.text = message
     }
 

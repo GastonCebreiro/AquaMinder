@@ -1,7 +1,7 @@
-package com.example.aquaminder.feature_main.presentation.model
+package com.example.aquaminder.feature_main.domain.model
 
 import android.os.Parcelable
-import com.example.aquaminder.feature_main.data.remote.model.response.IrrigationZoneNetworkEntity
+import com.example.aquaminder.feature_main.data.remote.model.IrrigationZoneNetworkEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

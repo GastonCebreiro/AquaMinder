@@ -1,6 +1,6 @@
 package com.example.aquaminder.feature_main.utils
 
-import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
+import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
 
 sealed class IrrigationZoneState {
     object Idle : IrrigationZoneState()

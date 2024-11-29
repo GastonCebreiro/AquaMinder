@@ -8,7 +8,9 @@ import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.feature_login.domain.use_case.GetUserLoggedUseCase
 import com.example.aquaminder.feature_main.domain.model.request.GetIrrigationZonesRequestDomainModel
+import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZoneIdSelectedUseCase
 import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZonesUseCase
+import com.example.aquaminder.feature_main.domain.use_case.SaveIrrigationZoneIdSelectedUseCase
 import com.example.aquaminder.feature_main.utils.IrrigationZoneState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class IrrigationZonesViewModel @Inject constructor(
     private val resources: Resources,
     private val getUserLoggedUseCase: GetUserLoggedUseCase,
-    private val getIrrigationZonesUseCase: GetIrrigationZonesUseCase
+    private val getIrrigationZonesUseCase: GetIrrigationZonesUseCase,
+    private val saveIrrigationZoneIdSelectedUseCase: SaveIrrigationZoneIdSelectedUseCase,
 ) : ViewModel() {
 
     private val _irrigationZoneState =
@@ -75,6 +78,10 @@ class IrrigationZonesViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun saveIdSelected(id: String) {
+        saveIrrigationZoneIdSelectedUseCase.invoke(id)
     }
 
 }

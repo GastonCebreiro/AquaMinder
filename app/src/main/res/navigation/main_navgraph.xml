@@ -11,8 +11,8 @@
         android:label="fragment_irrigation_zones"
         tools:layout="@layout/fragment_irrigation_zones">
         <action
-            android:id="@+id/action_irrigationZonesFragment_to_irrigationZoneDetailFragment"
-            app:destination="@id/irrigationZoneDetailFragment" />
+            android:id="@+id/action_irrigationZonesFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
         <action
             android:id="@+id/action_irrigationZonesFragment_to_newIrrigationZoneFragment"
             app:destination="@id/newIrrigationZoneFragment" />
@@ -23,20 +23,12 @@
             android:name="com.example.aquaminder.feature_new_irrigation_zone.presentation.fragments.NewIrrigationZoneFragment"
             android:label="fragment_new_irrigation_zone"
             tools:layout="@layout/fragment_new_irrigation_zone"/>
-<!--        <fragment-->
-<!--            android:id="@+id/payQrFragment"-->
-<!--            android:name="com.example.aquaminder.feature_pay_qr.presentation.fragments.PayQrFragment"-->
-<!--            android:label="fragment_pay_qr"-->
-<!--            tools:layout="@layout/fragment_pay_qr" />-->
 
-    <fragment
-        android:id="@+id/irrigationZoneDetailFragment"
-        android:name="com.example.aquaminder.feature_new_irrigation_zone.presentation.fragments.IrrigationZoneDetailFragment"
-        android:label="fragment_irrigation_zone_detail"
-        tools:layout="@layout/fragment_irrigation_zone_detail">
-        <argument
-            android:name="itemSelected"
-            app:argType="com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel" />
-    </fragment>
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.example.aquaminder.feature_home.presentation.activities.HomeActivity"
+        android:label="home_activity"
+        tools:layout="@layout/activity_home">
+    </activity>
 
 </navigation>

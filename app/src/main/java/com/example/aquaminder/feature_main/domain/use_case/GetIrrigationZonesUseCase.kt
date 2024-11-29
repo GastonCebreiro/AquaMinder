@@ -5,7 +5,7 @@ import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.feature_main.domain.model.request.GetIrrigationZonesRequestDomainModel
 import com.example.aquaminder.feature_main.domain.repository.IrrigationZonesRepository
-import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
+import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException

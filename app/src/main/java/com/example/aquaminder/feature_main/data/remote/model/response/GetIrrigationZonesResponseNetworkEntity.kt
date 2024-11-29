@@ -4,20 +4,13 @@ import com.example.aquaminder.core.utils.AppConstants.DEFAULT_COLOR_ID
 import com.example.aquaminder.core.utils.AppConstants.DEFAULT_IZ_NAME
 import com.example.aquaminder.core.utils.AppConstants.DEFAULT_LOGO_ID
 import com.example.aquaminder.core.utils.IdentifierUtils
+import com.example.aquaminder.feature_main.data.remote.model.IrrigationZoneNetworkEntity
 import com.example.aquaminder.feature_main.domain.model.response.GetIrrigationZonesResponseDomainModel
-import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
-import java.util.UUID
+import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
 
 data class GetIrrigationZonesResponseNetworkEntity(
     val status: Int? = null,
     val irrigationZones: List<IrrigationZoneNetworkEntity>? = null
-)
-
-data class IrrigationZoneNetworkEntity(
-    val uuid: String? = null,
-    val name: String? = null,
-    var logoId: Int? = null,
-    var colorId: Int? = null
 )
 
 fun GetIrrigationZonesResponseNetworkEntity.toDomainModel() = GetIrrigationZonesResponseDomainModel(

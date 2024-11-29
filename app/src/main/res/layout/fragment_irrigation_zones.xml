@@ -122,21 +122,6 @@
         app:layout_constraintStart_toStartOf="@+id/cvIZ"
         app:layout_constraintTop_toTopOf="@+id/cvIZ" />
 
-    <ImageView
-        android:id="@+id/ivEmptyWarning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="80dp"
-        android:src="@drawable/ic_arrow_down_right"
-        android:translationZ="20dp"
-        android:contentDescription="@null"
-        android:visibility="gone"
-        app:tint="@color/gray_hint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEmptyWarning" />
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

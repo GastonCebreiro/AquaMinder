@@ -2,15 +2,13 @@ package com.example.aquaminder.feature_main.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.ItemIrrigationZoneBinding
-import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
-import com.google.android.material.snackbar.Snackbar
+import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
 
 class IrrigationZoneAdapter(
     private val irrigationZoneList: MutableList<IrrigationZoneDomainModel>,

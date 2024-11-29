@@ -1,6 +1,6 @@
 package com.example.aquaminder.feature_main.domain.model.response
 
-import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
+import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
 
 data class GetIrrigationZonesResponseDomainModel(
     val status: Int,

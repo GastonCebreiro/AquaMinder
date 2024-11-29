@@ -8,10 +8,7 @@ import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.IdentifierUtils
 import com.example.aquaminder.core.utils.ResultEvent
-import com.example.aquaminder.feature_login.utils.NewUserState
-import com.example.aquaminder.feature_main.domain.model.request.GetIrrigationZonesRequestDomainModel
-import com.example.aquaminder.feature_main.presentation.model.IrrigationZoneDomainModel
-import com.example.aquaminder.feature_main.utils.IrrigationZoneState
+import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
 import com.example.aquaminder.feature_new_irrigation_zone.domain.use_case.SaveIrrigationZoneUseCase
 import com.example.aquaminder.feature_new_irrigation_zone.utils.NewIrrigationZoneState
 import dagger.hilt.android.lifecycle.HiltViewModel

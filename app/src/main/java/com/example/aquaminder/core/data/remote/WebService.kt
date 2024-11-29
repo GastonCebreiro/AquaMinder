@@ -1,5 +1,7 @@
 package com.example.aquaminder.core.data.remote
 
+import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequestNetworkEntity
+import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponseNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.request.LoginUserRequestNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.request.NewUserRequestNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.response.LoginUserResponseNetworkEntity
@@ -25,10 +27,14 @@ interface WebService {
     @GET(GET_IRRIGATION_ZONES)
     suspend fun getIrrigationZones(@Body request: GetIrrigationZonesRequestNetworkEntity): GetIrrigationZonesResponseNetworkEntity
 
+    @GET(GET_IRRIGATION_ZONE_DETAILS)
+    suspend fun getIrrigationZoneDetails(@Body request: GetIrrigationZoneDetailsRequestNetworkEntity): GetIrrigationZoneDetailsResponseNetworkEntity
+
     companion object {
         private const val REGISTER_USER = "register"
         private const val LOGIN_USER = "loginuser"
         private const val ASK_NEW_PASSWORD = "asknewpassword"
         private const val GET_IRRIGATION_ZONES = "getirrigationzones"
+        private const val GET_IRRIGATION_ZONE_DETAILS = "getirrigationzonedetails"
     }
 }

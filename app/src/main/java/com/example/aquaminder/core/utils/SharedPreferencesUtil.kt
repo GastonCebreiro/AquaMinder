@@ -48,11 +48,22 @@ class SharedPreferencesUtil(context: Context) {
         return sharedPreferences.getBoolean(LOGIN_KEEP_VALUES, true)
     }
 
+    fun setIrrigationZoneIdSelected(id: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString(IRRIGATION_ZONE_ID_SELECTED, id)
+        editor.apply()
+    }
+
+    fun getIrrigationZoneIdSelected(): String {
+        return sharedPreferences.getString(IRRIGATION_ZONE_ID_SELECTED, "").orEmpty()
+    }
+
     companion object {
         private const val SHARED_PREFERENCES_NAME = "SHARED_PREFERENCES_NAME"
         const val USER_LOGGED_NAME = "USER_LOGGED_NAME"
         const val USER_LOGGED_MAIL = "USER_LOGGED_MAIL"
         const val USER_LOGGED_PASSWORD = "USER_LOGGED_PASSWORD"
         const val LOGIN_KEEP_VALUES = "LOGIN_KEEP_VALUES"
+        const val IRRIGATION_ZONE_ID_SELECTED = "IRRIGATION_ZONE_ID_SELECTED"
     }
 }
