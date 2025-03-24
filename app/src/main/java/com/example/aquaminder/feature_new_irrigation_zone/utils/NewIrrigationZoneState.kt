@@ -4,5 +4,6 @@ sealed class NewIrrigationZoneState {
     object Idle : NewIrrigationZoneState()
     data class Success(val message: String) : NewIrrigationZoneState()
     data class Error(val errorMsg: String, val logoId: Int? = null) : NewIrrigationZoneState()
-    data class CreatedId(val id: String) : NewIrrigationZoneState()
+    data class ValidID(val id: String) : NewIrrigationZoneState()
+    object InvalidID : NewIrrigationZoneState()
 }

@@ -36,25 +36,25 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
 //            emptyList()
             irrigationZones = listOf(
                 IrrigationZoneNetworkEntity(
-                    uuid = IdentifierUtils.createUUID(),
+                    uuid = "123456",
                     name = "JARDIN",
                     logoId = R.drawable.ic_card_house,
                     colorId = R.color.card_light_blue
                 ),
                 IrrigationZoneNetworkEntity(
-                    uuid = IdentifierUtils.createUUID(),
+                    uuid = "123457",
                     name = "BALCON HABITACION",
                     logoId = R.drawable.ic_card_balcony,
                     colorId = R.color.card_blue_pool
                 ),
                 IrrigationZoneNetworkEntity(
-                    uuid = IdentifierUtils.createUUID(),
+                    uuid = "123458",
                     name = "PARQUE DEL FONDO",
                     logoId = R.drawable.ic_card_park,
                     colorId = R.color.card_green_water
                 ),
                 IrrigationZoneNetworkEntity(
-                    uuid = IdentifierUtils.createUUID(),
+                    uuid = "123459",
                     name = "INVERNADERO",
                     logoId = R.drawable.ic_card_flowers,
                     colorId = R.color.card_gray
@@ -87,7 +87,7 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
         val response = GetIrrigationZoneDetailsResponseNetworkEntity(
             status = 200,
             IrrigationZoneDetailsNetworkEntity(
-                uuid = IdentifierUtils.createUUID(),
+                uuid = "123456",
                 name = "JARDIN",
                 logoId = R.drawable.ic_card_house,
                 colorId = R.color.card_light_blue

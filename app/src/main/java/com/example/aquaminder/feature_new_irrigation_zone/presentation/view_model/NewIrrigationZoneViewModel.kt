@@ -30,35 +30,29 @@ class NewIrrigationZoneViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    private var isVerification: Boolean = false
-
-    fun createUUID() {
+    fun checkValidID(id: String) {
         _irrigationZoneState.value = NewIrrigationZoneState.Idle
-        val id = IdentifierUtils.createUUID()
-        _irrigationZoneState.value = NewIrrigationZoneState.CreatedId(id)
+        if (IdentifierUtils.isValidID(id))
+            _irrigationZoneState.value = NewIrrigationZoneState.ValidID(id)
+        else
+            _irrigationZoneState.value = NewIrrigationZoneState.InvalidID
     }
 
     fun saveIrrigationZone(
         inputId: String,
         inputName: String,
-        inputLogo: Int,
-        inputColor: Int
+        inputLogo: Int
     ) {
         _irrigationZoneState.value = NewIrrigationZoneState.Idle
         val id = inputId.trim()
         val name = inputName.trim()
         val logo = getLogos()[inputLogo]
-        val color = getColors()[inputColor]
+        val color = getColors()[inputLogo]
 
         if (id.isBlank()) {
             _irrigationZoneState.value = NewIrrigationZoneState.Error(
                 resources.getString(R.string.error_msg_new_irrigation_zone_invalid_id)
             )
-            return
-        }
-
-        if (isVerification) {
-            verifyExistingId(id)
             return
         }
 
@@ -124,11 +118,6 @@ class NewIrrigationZoneViewModel @Inject constructor(
         Log.d("GASTON", "id=$id\nname=$name\nlogo=$logo\ncolor=$color")
     }
 
-
-    private fun verifyExistingId(id: String) {
-        Log.d("GASTON", "verifyId=$id")
-    }
-
     fun getLogos(): List<Int> = listOf(
         R.drawable.ic_card_house,
         R.drawable.ic_card_balcony,
@@ -142,8 +131,4 @@ class NewIrrigationZoneViewModel @Inject constructor(
         R.color.card_green_water,
         R.color.card_gray
     )
-
-    fun setVerification(verification: Boolean) {
-        isVerification = verification
-    }
 }

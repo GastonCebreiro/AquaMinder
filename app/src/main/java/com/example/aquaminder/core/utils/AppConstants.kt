@@ -10,6 +10,7 @@ object AppConstants {
     const val STATUS_OK = 200
 
     const val DEFAULT_IZ_NAME = "Sin nombre"
+    const val DEFAULT_IZ_ID = "Sin ID"
     val DEFAULT_LOGO_ID = R.drawable.ic_card_house
     val DEFAULT_COLOR_ID = R.color.card_light_blue
 }

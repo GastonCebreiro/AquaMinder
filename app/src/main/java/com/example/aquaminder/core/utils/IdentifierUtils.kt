@@ -3,14 +3,11 @@ package com.example.aquaminder.core.utils
 import android.content.Context
 import android.content.Intent
 import com.example.aquaminder.R
-import java.lang.reflect.Executable
-import java.util.UUID
 
 object IdentifierUtils {
 
-    fun createUUID(): String = UUID.randomUUID().toString().substring(0, 28)
-
-    fun isValidUUID(uuid: String) = uuid.length == 28 && uuid.matches(Regex("^[a-fA-F0-9-]+$"))
+    // TODO GC DEFINE VALID ID
+    fun isValidID(id: String) = id.length == ID_LENGTH
 
     fun shareId(context: Context, id: String) {
         try {
@@ -32,5 +29,7 @@ object IdentifierUtils {
             DialogUtils.showErrorDialog(context)
         }
     }
+
+    private const val ID_LENGTH = 6
 
 }

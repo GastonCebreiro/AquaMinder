@@ -33,8 +33,8 @@
 
     <string name="fragment_new_irrigation_zone_title">Nueva Zona de Riego</string>
     <string name="fragment_new_irrigation_zone_subtitle">Cree una nueva zona de riego</string>
-    <string name="fragment_new_irrigation_zone_select_id">Genere el ID del dispositivo</string>
-    <string name="fragment_new_irrigation_zone_select_id_info">Si ya posee un ID péguelo aquí</string>
+    <string name="fragment_new_irrigation_zone_select_id">Ingrese el ID del dispositivo</string>
+    <string name="fragment_new_irrigation_zone_select_id_info">El ID del dispositivo se encuentra en la etiqueta</string>
     <string name="fragment_new_irrigation_zone_input_id">ID del dispostivo</string>
     <string name="fragment_new_irrigation_zone_copy_message">¡Has pegado el ID!</string>
     <string name="fragment_new_irrigation_zone_copy_message_error">Formato de ID inválido</string>
