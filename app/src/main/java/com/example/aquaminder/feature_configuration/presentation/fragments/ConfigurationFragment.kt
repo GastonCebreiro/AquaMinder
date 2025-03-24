@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentConfigurationBinding
 import com.example.aquaminder.feature_configuration.presentation.view_models.ConfigurationViewModel
@@ -36,7 +37,7 @@ class ConfigurationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getIrrigationZoneDetails()
+        setSwitch()
 
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -51,7 +52,6 @@ class ConfigurationFragment : Fragment() {
                     viewModel.configurationState.collect { configurationState ->
                         when (configurationState) {
                             is ConfigurationState.Success -> {
-                                showConfig(configurationState.configuration)
                             }
 
                             is ConfigurationState.Error -> {
@@ -66,7 +66,14 @@ class ConfigurationFragment : Fragment() {
         }
     }
 
-    private fun showConfig(config: IrrigationZoneDetailsDomainModel) {
+    private fun setSwitch() {
+        binding.switchSensor.setOnCheckedChangeListener { _, isChecked ->
+            binding.tvSensor.text =
+                if (isChecked)
+                    getString(R.string.fragment_configuration_switch_sensor_on)
+                else
+                    getString(R.string.fragment_configuration_switch_sensor_off)
+        }
     }
 
 
