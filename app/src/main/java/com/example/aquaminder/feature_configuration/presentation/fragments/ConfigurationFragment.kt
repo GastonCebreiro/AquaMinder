@@ -68,11 +68,36 @@ class ConfigurationFragment : Fragment() {
 
     private fun setSwitch() {
         binding.switchSensor.setOnCheckedChangeListener { _, isChecked ->
-            binding.tvSensor.text =
+
+            viewModel.setSwitchSound(isChecked)
+
+            binding.tvSensorState.text =
                 if (isChecked)
-                    getString(R.string.fragment_configuration_switch_sensor_on)
+                    getString(R.string.fragment_configuration_switch_on)
                 else
-                    getString(R.string.fragment_configuration_switch_sensor_off)
+                    getString(R.string.fragment_configuration_switch_off)
+        }
+
+        binding.switchWeather.setOnCheckedChangeListener { _, isChecked ->
+
+            viewModel.setSwitchSound(isChecked)
+
+            binding.tvWeatherState.text =
+                if (isChecked)
+                    getString(R.string.fragment_configuration_switch_on)
+                else
+                    getString(R.string.fragment_configuration_switch_off)
+        }
+
+        binding.switchTimer.setOnCheckedChangeListener { _, isChecked ->
+
+            viewModel.setSwitchSound(isChecked)
+
+            binding.tvTimerState.text =
+                if (isChecked)
+                    getString(R.string.fragment_configuration_switch_on)
+                else
+                    getString(R.string.fragment_configuration_switch_off)
         }
     }
 

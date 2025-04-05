@@ -4,8 +4,10 @@ import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aquaminder.R
+import com.example.aquaminder.core.domain.use_case.PlaySoundUseCase
 import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.ResultEvent
+import com.example.aquaminder.core.utils.SoundManager
 import com.example.aquaminder.feature_configuration.utils.ConfigurationState
 import com.example.aquaminder.feature_home.domain.model.request.GetIrrigationZoneDetailsRequestDomainModel
 import com.example.aquaminder.feature_home.domain.use_case.GetIrrigationZoneDetailsUseCase
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class ConfigurationViewModel @Inject constructor(
     private val resources: Resources,
     private val getIrrigationZoneDetailsUseCase: GetIrrigationZoneDetailsUseCase,
-    private val getIrrigationZoneIdSelectedUseCase: GetIrrigationZoneIdSelectedUseCase
+    private val getIrrigationZoneIdSelectedUseCase: GetIrrigationZoneIdSelectedUseCase,
+    private val playSoundUseCase: PlaySoundUseCase
 ) : ViewModel() {
 
     private val _configurationState =
@@ -72,6 +75,16 @@ class ConfigurationViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setSwitchSound(isChecked: Boolean) {
+        val soundKey = if (isChecked) {
+            SoundManager.SOUND_SWITCH_ON
+        } else {
+            SoundManager.SOUND_SWITCH_OFF
+        }
+
+        playSoundUseCase.invoke(soundKey)
     }
 
 }

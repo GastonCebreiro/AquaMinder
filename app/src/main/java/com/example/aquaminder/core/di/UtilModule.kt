@@ -5,6 +5,7 @@ import android.content.res.Resources
 import androidx.room.Room
 import com.example.aquaminder.core.data.AppDatabase
 import com.example.aquaminder.core.utils.SharedPreferencesUtil
+import com.example.aquaminder.core.utils.SoundManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +16,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class UtilModule {
+
+    @Singleton
+    @Provides
+    fun providesContext(@ApplicationContext context: Context): Context = context
 
     @Singleton
     @Provides
@@ -36,4 +41,9 @@ class UtilModule {
     @Provides
     fun providesSharedPreferencesUtil(@ApplicationContext context: Context): SharedPreferencesUtil =
         SharedPreferencesUtil(context)
+
+    @Singleton
+    @Provides
+    fun provideSoundManager(@ApplicationContext context: Context): SoundManager =
+        SoundManager(context)
 }

@@ -48,8 +48,11 @@
     <string name="fragment_home_title">Nombre de la Zona de Riego</string>
 
     <string name="fragment_configuration_title">Configuración</string>
-    <string name="fragment_configuration_switch_sensor_on">Sensor Activado</string>
-    <string name="fragment_configuration_switch_sensor_off">Sensor Desactivado</string>
+    <string name="fragment_configuration_switch_on">ON</string>
+    <string name="fragment_configuration_switch_off">OFF</string>
+    <string name="fragment_configuration_switch_sensor">Medir Humedad</string>
+    <string name="fragment_configuration_switch_weather">Revisar Clima</string>
+    <string name="fragment_configuration_switch_timer">Programación Horaria</string>
 
     <string name="error_msg_invalid_password">Clave Incorrecta</string>
     <string name="error_msg_enter_password">Ingrese una clave</string>
