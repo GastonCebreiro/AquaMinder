@@ -7,6 +7,8 @@ plugins {
     kotlin("kapt")
 //    id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -48,6 +50,7 @@ android {
 
 
 dependencies {
+    implementation(libs.firebase.messaging.ktx)
     val hiltVersion = "2.44.2"
     val navVersion = "2.5.3"
     val retrofitVersion = "2.4.0"
@@ -110,4 +113,10 @@ dependencies {
     implementation("androidx.security:security-crypto:1.1.0-rc01")
 
     implementation ("androidx.appcompat:appcompat:1.3.1")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+//    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-messaging")
+
 }

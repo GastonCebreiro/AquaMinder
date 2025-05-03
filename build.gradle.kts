@@ -24,4 +24,8 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.8.0" apply false
     id("com.google.dagger.hilt.android") version "2.44.2" apply false
 //    id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
+
+    // Add the dependency for the Google services Gradle plugin
+    id("com.google.gms.google-services") version "4.4.2" apply false
+
 }

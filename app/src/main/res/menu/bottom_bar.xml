@@ -11,4 +11,10 @@
         android:icon="@drawable/ic_config"
         android:title="@string/bottom_bar_config"
         />
+
+    <item
+        android:id="@+id/weatherFragment"
+        android:icon="@drawable/ic_weather_border"
+        android:title="@string/bottom_bar_weather"
+        />
 </menu>

@@ -8,6 +8,7 @@ import com.example.aquaminder.feature_login.data.remote.model.response.LoginUser
 import com.example.aquaminder.feature_login.data.remote.model.response.NewUserResponseNetworkEntity
 import com.example.aquaminder.feature_main.data.remote.model.request.GetIrrigationZonesRequestNetworkEntity
 import com.example.aquaminder.feature_main.data.remote.model.response.GetIrrigationZonesResponseNetworkEntity
+import com.example.aquaminder.feature_notifications.data.remote.model.response.TokenResponseNetworkEntity
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -30,9 +31,13 @@ interface WebService {
     @GET(GET_IRRIGATION_ZONE_DETAILS)
     suspend fun getIrrigationZoneDetails(@Body request: GetIrrigationZoneDetailsRequestNetworkEntity): GetIrrigationZoneDetailsResponseNetworkEntity
 
+    @POST(SEND_TOKEN)
+    suspend fun sendToken(@Body token: String): TokenResponseNetworkEntity
+
     companion object {
         private const val REGISTER_USER = "register"
         private const val LOGIN_USER = "loginuser"
+        private const val SEND_TOKEN = "sendtoken"
         private const val ASK_NEW_PASSWORD = "asknewpassword"
         private const val GET_IRRIGATION_ZONES = "getirrigationzones"
         private const val GET_IRRIGATION_ZONE_DETAILS = "getirrigationzonedetails"

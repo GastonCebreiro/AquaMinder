@@ -3,7 +3,6 @@ package com.example.aquaminder.feature_login.data.repository
 import com.example.aquaminder.core.data.remote.WebService
 import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.core.utils.SharedPreferencesUtil
-import com.example.aquaminder.feature_login.data.local.dao.UserDao
 import com.example.aquaminder.feature_login.data.remote.model.response.LoginUserResponseNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.response.NewPasswordResponseNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.response.toDomainModel
@@ -20,7 +19,6 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val userDao: UserDao,
     private val webService: WebService,
     private val sharedPreferences: SharedPreferencesUtil
 ) : UserRepository {
@@ -44,8 +42,6 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun registerUser(
         user: NewUserRequestDomainModel
     ): NewUserResponseDomainModel {
-        // TODO GC DELETE APPDATABASE and DA0
-//        userDao.insertUser(user.toEntity())
         return webService.registerUser(user.toNetworkEntity()).toDomainModel()
     }
 

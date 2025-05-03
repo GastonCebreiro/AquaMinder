@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "383323212520",
+    "project_id": "aquaminder-55635",
+    "storage_bucket": "aquaminder-55635.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383323212520:android:f5f113b317c7f49769d75d",
+        "android_client_info": {
+          "package_name": "com.example.aquaminder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3S0hKcEvmrXdCLrY7QF-cyhCrjl7_AO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
