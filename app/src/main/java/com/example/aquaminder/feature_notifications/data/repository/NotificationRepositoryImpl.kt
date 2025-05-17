@@ -22,14 +22,17 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class NotificationRepositoryImpl @Inject constructor(
-    private val webService: WebService,
+    private val sharedPreferences: SharedPreferencesUtil
 ) : NotificationRepository {
 
-    override suspend fun sendToken(
+    override  fun saveToken(
         token: String
-    ): TokenResponseDomainModel {
-        val response = webService.sendToken(token)
-        return response.toDomainModel()
+    ) {
+        sharedPreferences.setToken(token)
+    }
+
+    override  fun getToken(): String {
+        return sharedPreferences.getToken()
     }
 
 }

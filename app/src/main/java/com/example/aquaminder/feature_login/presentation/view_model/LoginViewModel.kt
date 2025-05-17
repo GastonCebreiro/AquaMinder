@@ -16,6 +16,7 @@ import com.example.aquaminder.feature_login.domain.use_case.SaveKeepValuesUseCas
 import com.example.aquaminder.feature_login.domain.use_case.SaveUserLoggedUseCase
 import com.example.aquaminder.feature_login.utils.LoginState
 import com.example.aquaminder.feature_login.utils.NewUserState
+import com.example.aquaminder.feature_notifications.domain.use_case.GetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +33,7 @@ class LoginViewModel @Inject constructor(
     private val saveKeepValuesUseCase: SaveKeepValuesUseCase,
     private val getUserLoggedUseCase: GetUserLoggedUseCase,
     private val getKeepValuesUseCase: GetKeepValuesUseCase,
+    private val getTokenUseCase: GetTokenUseCase,
 ) : ViewModel() {
 
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
@@ -151,7 +153,9 @@ class LoginViewModel @Inject constructor(
         _isLoading.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
-            getUserUseCase.invoke(name, password)
+            val token = getTokenUseCase.invoke()
+
+            getUserUseCase.invoke(name, password, token)
                 .collect { res ->
                     when (res) {
                         is ResultEvent.Success -> {

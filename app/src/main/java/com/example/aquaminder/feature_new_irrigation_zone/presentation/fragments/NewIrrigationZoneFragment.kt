@@ -19,6 +19,8 @@ import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentNewIrrigationZoneBinding
 import com.example.aquaminder.feature_new_irrigation_zone.presentation.adapter.LogoViewPagerAdapter
 import com.example.aquaminder.feature_new_irrigation_zone.presentation.view_model.NewIrrigationZoneViewModel
+import com.example.aquaminder.feature_new_irrigation_zone.utils.IrrigationZoneUtils.getColors
+import com.example.aquaminder.feature_new_irrigation_zone.utils.IrrigationZoneUtils.getLogos
 import com.example.aquaminder.feature_new_irrigation_zone.utils.NewIrrigationZoneState
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -110,8 +112,8 @@ class NewIrrigationZoneFragment : Fragment() {
 
     private fun setLogoAdapter() {
 
-        val logoList = viewModel.getLogos()
-        val colorList = viewModel.getColors()
+        val logoList = getLogos()
+        val colorList = getColors()
 
         val adapter = LogoViewPagerAdapter(logoList, colorList)
 

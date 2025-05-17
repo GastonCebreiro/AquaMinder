@@ -20,20 +20,15 @@ import kotlinx.coroutines.launch
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d("GASTON", "Refreshed token: $token")
 
         val entryPoint = EntryPointAccessors.fromApplication(
             applicationContext,
             MyFirebaseMessagingServiceEntryPoint::class.java
         )
 
-        val sendTokenUseCase = entryPoint.sendTokenUseCase()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val isSuccess = sendTokenUseCase.invoke(token)
-            Log.d("GASTON", "Token sent: $isSuccess")
-        }
-
+        val saveTokenUseCase = entryPoint.saveTokenUseCase()
+        Log.d("GASTON", "Refreshed token: $token")
+        saveTokenUseCase.invoke(token)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

@@ -18,12 +18,14 @@ class GetUserUseCase @Inject constructor(
 
     suspend operator fun invoke(
         name: String,
-        password: String
+        password: String,
+        token: String
     ): Flow<ResultEvent<UserDomainModel>> = flow {
         try {
             val userRequest = LoginUserRequestDomainModel(
                 name = name,
-                password = password
+                password = password,
+                token = token
             )
             val response = userRepository.loginUser(userRequest)
             when (response.status) {

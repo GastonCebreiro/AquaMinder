@@ -58,6 +58,16 @@ class SharedPreferencesUtil(context: Context) {
         return sharedPreferences.getString(IRRIGATION_ZONE_ID_SELECTED, "").orEmpty()
     }
 
+    fun setToken(id: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString(TOKEN, id)
+        editor.apply()
+    }
+
+    fun getToken(): String {
+        return sharedPreferences.getString(TOKEN, "").orEmpty()
+    }
+
     companion object {
         private const val SHARED_PREFERENCES_NAME = "SHARED_PREFERENCES_NAME"
         const val USER_LOGGED_NAME = "USER_LOGGED_NAME"
@@ -65,5 +75,6 @@ class SharedPreferencesUtil(context: Context) {
         const val USER_LOGGED_PASSWORD = "USER_LOGGED_PASSWORD"
         const val LOGIN_KEEP_VALUES = "LOGIN_KEEP_VALUES"
         const val IRRIGATION_ZONE_ID_SELECTED = "IRRIGATION_ZONE_ID_SELECTED"
+        const val TOKEN = "TOKEN"
     }
 }

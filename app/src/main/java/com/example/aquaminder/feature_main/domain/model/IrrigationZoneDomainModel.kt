@@ -13,8 +13,7 @@ data class IrrigationZoneDomainModel(
 ): Parcelable
 
 fun IrrigationZoneDomainModel.toNetworkEntity() = IrrigationZoneNetworkEntity(
-    uuid = uuid,
+    id = uuid,
     name = name,
-    logoId = logoId,
-    colorId = colorId
+    logoId = logoId
 )

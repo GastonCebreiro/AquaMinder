@@ -10,19 +10,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import com.example.aquaminder.R
-import com.example.aquaminder.feature_notifications.domain.use_case.SendTokenUseCase
+import com.example.aquaminder.feature_notifications.domain.use_case.SaveTokenUseCase
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var sendTokenUseCase: SendTokenUseCase
+    lateinit var saveTokenUseCase: SaveTokenUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,17 +89,10 @@ class LoginActivity : AppCompatActivity() {
                 return@addOnCompleteListener
             }
 
-            // Get new FCM registration token
             val token = task.result
 
-            // Log and toast
             Log.d("GASTON", "FCM token: $token")
-//            Toast.makeText(this, "token: $token", Toast.LENGTH_SHORT).show()
-            // TODO GC CHECK IF NEEDED THIS SEND EVERY TIME
-//            lifecycleScope.launch {
-//                val isSuccess = sendTokenUseCase.invoke(token)
-//                Log.d("GASTON", "Token sent: $isSuccess")
-//            }
+            saveTokenUseCase.invoke(token)
         }
     }
 

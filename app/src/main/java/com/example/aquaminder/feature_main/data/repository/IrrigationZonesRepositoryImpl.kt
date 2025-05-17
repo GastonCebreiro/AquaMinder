@@ -16,6 +16,8 @@ import com.example.aquaminder.feature_main.domain.model.request.GetIrrigationZon
 import com.example.aquaminder.feature_main.domain.model.response.GetIrrigationZonesResponseDomainModel
 import com.example.aquaminder.feature_main.domain.repository.IrrigationZonesRepository
 import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
+import com.example.aquaminder.feature_main.domain.model.request.toNetworkEntity
+import com.example.aquaminder.feature_main.domain.model.toNetworkEntity
 import com.example.aquaminder.feature_new_irrigation_zone.data.remote.model.response.SaveIrrigationZoneResponseNetworkEntity
 import com.example.aquaminder.feature_new_irrigation_zone.data.remote.model.response.toDomainModel
 import com.example.aquaminder.feature_new_irrigation_zone.domain.model.response.SaveIrrigationZoneResponseDomainModel
@@ -27,48 +29,48 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
     private val sharedPreferences: SharedPreferencesUtil
 ) : IrrigationZonesRepository {
 
-    override suspend fun getIrrigationZones(request: GetIrrigationZonesRequestDomainModel): GetIrrigationZonesResponseDomainModel {
+    override suspend fun getIrrigationZones(): GetIrrigationZonesResponseDomainModel {
         // TODO GC ADD SERVICE CALL FOR IRRIGATION ZONES
-//        val response: GetIrrigationZonesResponseNetworkEntity = webService.getIrrigationZones(request.toNetworkEntity())
-        delay(2000)
-        val response = GetIrrigationZonesResponseNetworkEntity(
-            status = 200,
-//            emptyList()
-            irrigationZones = listOf(
-                IrrigationZoneNetworkEntity(
-                    uuid = "123456",
-                    name = "JARDIN",
-                    logoId = R.drawable.ic_card_house,
-                    colorId = R.color.card_light_blue
-                ),
-                IrrigationZoneNetworkEntity(
-                    uuid = "123457",
-                    name = "BALCON HABITACION",
-                    logoId = R.drawable.ic_card_balcony,
-                    colorId = R.color.card_blue_pool
-                ),
-                IrrigationZoneNetworkEntity(
-                    uuid = "123458",
-                    name = "PARQUE DEL FONDO",
-                    logoId = R.drawable.ic_card_park,
-                    colorId = R.color.card_green_water
-                ),
-                IrrigationZoneNetworkEntity(
-                    uuid = "123459",
-                    name = "INVERNADERO",
-                    logoId = R.drawable.ic_card_flowers,
-                    colorId = R.color.card_gray
-                )
-            )
-        )
+        val response: GetIrrigationZonesResponseNetworkEntity = webService.getIrrigationZones()
+//        delay(1000)
+//        val response = GetIrrigationZonesResponseNetworkEntity(
+//            status = 200,
+////            emptyList()
+//            irrigationZones = listOf(
+//                IrrigationZoneNetworkEntity(
+//                    uuid = "123456",
+//                    name = "JARDIN",
+//                    logoId = R.drawable.ic_card_house,
+//                    colorId = R.color.card_light_blue
+//                ),
+//                IrrigationZoneNetworkEntity(
+//                    uuid = "123457",
+//                    name = "BALCON HABITACION",
+//                    logoId = R.drawable.ic_card_balcony,
+//                    colorId = R.color.card_blue_pool
+//                ),
+//                IrrigationZoneNetworkEntity(
+//                    uuid = "123458",
+//                    name = "PARQUE DEL FONDO",
+//                    logoId = R.drawable.ic_card_park,
+//                    colorId = R.color.card_green_water
+//                ),
+//                IrrigationZoneNetworkEntity(
+//                    uuid = "123459",
+//                    name = "INVERNADERO",
+//                    logoId = R.drawable.ic_card_flowers,
+//                    colorId = R.color.card_gray
+//                )
+//            )
+//        )
         return response.toDomainModel()
     }
 
     override suspend fun saveIrrigationZone(request: IrrigationZoneDomainModel): SaveIrrigationZoneResponseDomainModel {
         // TODO GC ADD SERVICE CALL FOR IRRIGATION ZONES
-//        val response: SaveIrrigationZoneResponseNetworkEntity = webService.saveIrrigationZone(request.toNetworkEntity())
-        val response = SaveIrrigationZoneResponseNetworkEntity(status = 200)
-        delay(2000)
+        val response: SaveIrrigationZoneResponseNetworkEntity = webService.saveIrrigationZone(request.toNetworkEntity())
+//        val response = SaveIrrigationZoneResponseNetworkEntity(status = 200)
+//        delay(1000)
         return response.toDomainModel()
     }
 

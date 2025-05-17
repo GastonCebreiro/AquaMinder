@@ -63,6 +63,9 @@
 
 
     <string name="fragment_weather_title">Clima</string>
+    <string name="fragment_weather_humidity_label">Humedad</string>
+    <string name="fragment_weather_rain_label">Probabilidad de Lluvia</string>
+    <string name="fragment_weather_wind_label">Viento</string>
 
     <string name="error_msg_invalid_password">Clave Incorrecta</string>
     <string name="error_msg_enter_password">Ingrese una clave</string>

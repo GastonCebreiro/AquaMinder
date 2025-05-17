@@ -1,8 +1,9 @@
 package com.example.aquaminder.feature_main.data.remote.model
 
+import com.google.gson.annotations.SerializedName
+
 data class IrrigationZoneNetworkEntity(
-    val uuid: String? = null,
+    val id: String? = null,
     val name: String? = null,
-    var logoId: Int? = null,
-    var colorId: Int? = null
+    var logoId: Int? = null
 )

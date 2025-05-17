@@ -5,7 +5,7 @@ import com.example.aquaminder.R
 object AppConstants {
 
     // todo gc if change go to netowrok security config xml
-    const val BASE_URL = "http://181.10.71.31:3000/"
+    const val BASE_URL = "http://181.12.227.253:3000/"
 
     const val STATUS_OK = 200
 

@@ -10,7 +10,7 @@ import com.example.aquaminder.feature_new_irrigation_zone.domain.model.response.
 
 interface IrrigationZonesRepository {
 
-    suspend fun getIrrigationZones(request: GetIrrigationZonesRequestDomainModel): GetIrrigationZonesResponseDomainModel
+    suspend fun getIrrigationZones(): GetIrrigationZonesResponseDomainModel
 
     suspend fun saveIrrigationZone(request: IrrigationZoneDomainModel): SaveIrrigationZoneResponseDomainModel
 

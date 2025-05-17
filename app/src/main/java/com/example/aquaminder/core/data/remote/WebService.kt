@@ -6,8 +6,11 @@ import com.example.aquaminder.feature_login.data.remote.model.request.LoginUserR
 import com.example.aquaminder.feature_login.data.remote.model.request.NewUserRequestNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.response.LoginUserResponseNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.response.NewUserResponseNetworkEntity
+import com.example.aquaminder.feature_main.data.remote.model.IrrigationZoneNetworkEntity
 import com.example.aquaminder.feature_main.data.remote.model.request.GetIrrigationZonesRequestNetworkEntity
 import com.example.aquaminder.feature_main.data.remote.model.response.GetIrrigationZonesResponseNetworkEntity
+import com.example.aquaminder.feature_new_irrigation_zone.data.remote.model.response.SaveIrrigationZoneResponseNetworkEntity
+import com.example.aquaminder.feature_new_irrigation_zone.domain.model.response.SaveIrrigationZoneResponseDomainModel
 import com.example.aquaminder.feature_notifications.data.remote.model.response.TokenResponseNetworkEntity
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -26,20 +29,20 @@ interface WebService {
     suspend fun loginUser(@Body user: LoginUserRequestNetworkEntity): LoginUserResponseNetworkEntity
 
     @GET(GET_IRRIGATION_ZONES)
-    suspend fun getIrrigationZones(@Body request: GetIrrigationZonesRequestNetworkEntity): GetIrrigationZonesResponseNetworkEntity
+    suspend fun getIrrigationZones(): GetIrrigationZonesResponseNetworkEntity
+
+    @POST(SAVE_IRRIGATION_ZONE)
+    suspend fun saveIrrigationZone(@Body request: IrrigationZoneNetworkEntity): SaveIrrigationZoneResponseNetworkEntity
 
     @GET(GET_IRRIGATION_ZONE_DETAILS)
     suspend fun getIrrigationZoneDetails(@Body request: GetIrrigationZoneDetailsRequestNetworkEntity): GetIrrigationZoneDetailsResponseNetworkEntity
 
-    @POST(SEND_TOKEN)
-    suspend fun sendToken(@Body token: String): TokenResponseNetworkEntity
-
     companion object {
         private const val REGISTER_USER = "register"
-        private const val LOGIN_USER = "loginuser"
-        private const val SEND_TOKEN = "sendtoken"
+        private const val LOGIN_USER = "login"
         private const val ASK_NEW_PASSWORD = "asknewpassword"
-        private const val GET_IRRIGATION_ZONES = "getirrigationzones"
-        private const val GET_IRRIGATION_ZONE_DETAILS = "getirrigationzonedetails"
+        private const val GET_IRRIGATION_ZONES = "equipos"
+        private const val SAVE_IRRIGATION_ZONE = "addEquipo"
+        private const val GET_IRRIGATION_ZONE_DETAILS = "configuracionEquipo"
     }
 }

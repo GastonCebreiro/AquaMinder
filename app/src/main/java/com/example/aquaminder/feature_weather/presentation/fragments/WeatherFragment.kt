@@ -41,11 +41,17 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val webView = binding.webview.apply {
+        val webView = binding.wbIcon.apply {
             setBackgroundColor(Color.TRANSPARENT)
-            settings.javaScriptEnabled = true  // Required for SMIL/CSS animations
+            settings.javaScriptEnabled = true
             loadUrl("file:///android_asset/rainy.html")
         }
+
+        binding.tvTemperature.text = "22"
+        binding.tvDescription.text = "LLUVIOSO"
+        binding.tvHumidity.text = "54%"
+        binding.tvRainProbability.text = "17%"
+        binding.tvWind.text = "16 km/h"
 
 
         lifecycleScope.launchWhenStarted {

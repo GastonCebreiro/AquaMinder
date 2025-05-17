@@ -16,10 +16,9 @@ class GetIrrigationZonesUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        request: GetIrrigationZonesRequestDomainModel
     ): Flow<ResultEvent<List<IrrigationZoneDomainModel>>> = flow {
         try {
-            val response = irrigationZonesRepository.getIrrigationZones(request)
+            val response = irrigationZonesRepository.getIrrigationZones()
             when (response.status) {
                 STATUS_OK -> {
                     if (response.irrigationZones.isNotEmpty())

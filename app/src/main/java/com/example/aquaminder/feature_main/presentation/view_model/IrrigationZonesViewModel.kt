@@ -38,45 +38,39 @@ class IrrigationZonesViewModel @Inject constructor(
         _irrigationZoneState.value = IrrigationZoneState.Idle
 
         viewModelScope.launch {
-            when (val res = getUserLoggedUseCase.invoke()) {
-                is ResultEvent.Success -> {
-                    val userLogged = res.data
 
-                    getIrrigationZonesUseCase.invoke(GetIrrigationZonesRequestDomainModel(userLogged.name))
-                        .collect { result ->
-                            when (result) {
-                                is ResultEvent.Success -> {
-                                    _irrigationZoneState.value =
-                                        IrrigationZoneState.Success(result.data)
+            getIrrigationZonesUseCase.invoke()
+                .collect { result ->
+                    when (result) {
+                        is ResultEvent.Success -> {
+                            _irrigationZoneState.value =
+                                IrrigationZoneState.Success(result.data)
+                        }
+
+                        is ResultEvent.Error -> {
+                            when (result.error) {
+                                is AppError.EmptyList -> {
+                                    _irrigationZoneState.value = IrrigationZoneState.EmptyList(
+                                        resources.getString(R.string.error_msg_ir_empty_list)
+                                    )
                                 }
-                                is ResultEvent.Error -> {
-                                    when (result.error) {
-                                        is AppError.EmptyList -> {
-                                            _irrigationZoneState.value = IrrigationZoneState.EmptyList(
-                                                resources.getString(R.string.error_msg_ir_empty_list)
-                                            )
-                                        }
-                                        is AppError.GenericError -> {
-                                            _irrigationZoneState.value = IrrigationZoneState.Error(
-                                                resources.getString(R.string.error_msg_ir_generic)
-                                            )
-                                        }
-                                        else -> {
-                                            _irrigationZoneState.value = IrrigationZoneState.Error("")
-                                        }
-                                    }
 
+                                is AppError.GenericError -> {
+                                    _irrigationZoneState.value = IrrigationZoneState.Error(
+                                        resources.getString(R.string.error_msg_ir_generic)
+                                    )
+                                }
+
+                                else -> {
+                                    _irrigationZoneState.value = IrrigationZoneState.Error("")
                                 }
                             }
-                            _isLoading.value = false
+
                         }
+                    }
+                    _isLoading.value = false
                 }
 
-                is ResultEvent.Error -> {
-                    _isLoading.value = false
-                    _irrigationZoneState.value = IrrigationZoneState.Error("")
-                }
-            }
         }
     }
 

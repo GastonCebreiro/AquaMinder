@@ -10,6 +10,7 @@ import com.example.aquaminder.core.utils.IdentifierUtils
 import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
 import com.example.aquaminder.feature_new_irrigation_zone.domain.use_case.SaveIrrigationZoneUseCase
+import com.example.aquaminder.feature_new_irrigation_zone.utils.IrrigationZoneUtils
 import com.example.aquaminder.feature_new_irrigation_zone.utils.NewIrrigationZoneState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,8 +47,8 @@ class NewIrrigationZoneViewModel @Inject constructor(
         _irrigationZoneState.value = NewIrrigationZoneState.Idle
         val id = inputId.trim()
         val name = inputName.trim()
-        val logo = getLogos()[inputLogo]
-        val color = getColors()[inputLogo]
+        val logo = IrrigationZoneUtils.getLogos()[inputLogo]
+        val color = IrrigationZoneUtils.getColors()[inputLogo]
 
         if (id.isBlank()) {
             _irrigationZoneState.value = NewIrrigationZoneState.Error(
@@ -118,17 +119,5 @@ class NewIrrigationZoneViewModel @Inject constructor(
         Log.d("GASTON", "id=$id\nname=$name\nlogo=$logo\ncolor=$color")
     }
 
-    fun getLogos(): List<Int> = listOf(
-        R.drawable.ic_card_house,
-        R.drawable.ic_card_balcony,
-        R.drawable.ic_card_flowers,
-        R.drawable.ic_card_park
-    )
 
-    fun getColors(): List<Int> = listOf(
-        R.color.card_light_blue,
-        R.color.card_blue_pool,
-        R.color.card_green_water,
-        R.color.card_gray
-    )
 }

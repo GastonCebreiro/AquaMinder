@@ -5,5 +5,6 @@ import com.example.aquaminder.feature_notifications.domain.model.response.TokenR
 
 interface NotificationRepository {
 
-    suspend fun sendToken(token: String): TokenResponseDomainModel
+     fun saveToken(token: String)
+     fun getToken(): String
 }

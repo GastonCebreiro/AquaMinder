@@ -2,6 +2,9 @@ package com.example.aquaminder.core.di
 
 import com.example.aquaminder.core.data.remote.WebService
 import com.example.aquaminder.core.utils.AppConstants.BASE_URL
+import com.example.aquaminder.core.utils.UsernameInterceptor
+import com.example.aquaminder.feature_login.domain.use_case.GetUserLoggedUseCase
+import com.example.aquaminder.feature_login.domain.use_case.GetUsernameUseCase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -13,6 +16,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
@@ -28,13 +32,25 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient.Builder {
+    fun provideUsernameInterceptor(
+        getUsernameUseCaseProvider: Provider<GetUsernameUseCase>
+    ): UsernameInterceptor {
+        return UsernameInterceptor(getUsernameUseCaseProvider)
+    }
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(
+        logging: HttpLoggingInterceptor,
+        usernameInterceptor: UsernameInterceptor
+    ): OkHttpClient.Builder {
         return OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .callTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(logging)
+            .addInterceptor(usernameInterceptor)
     }
 
     @Singleton
@@ -52,7 +68,7 @@ object RetrofitModule {
             .client(okHttpClient.build())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-        }
+    }
 
     @Singleton
     @Provides
