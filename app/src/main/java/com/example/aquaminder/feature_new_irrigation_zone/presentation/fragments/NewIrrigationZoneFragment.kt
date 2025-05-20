@@ -1,12 +1,20 @@
 package com.example.aquaminder.feature_new_irrigation_zone.presentation.fragments
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,14 +25,19 @@ import androidx.navigation.fragment.findNavController
 import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentNewIrrigationZoneBinding
+import com.example.aquaminder.feature_main.domain.model.toSingleString
+import com.example.aquaminder.feature_main.utils.AddressUtils.getAddressModelByCoordinates
 import com.example.aquaminder.feature_new_irrigation_zone.presentation.adapter.LogoViewPagerAdapter
 import com.example.aquaminder.feature_new_irrigation_zone.presentation.view_model.NewIrrigationZoneViewModel
 import com.example.aquaminder.feature_new_irrigation_zone.utils.IrrigationZoneUtils.getColors
 import com.example.aquaminder.feature_new_irrigation_zone.utils.IrrigationZoneUtils.getLogos
 import com.example.aquaminder.feature_new_irrigation_zone.utils.NewIrrigationZoneState
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
 class NewIrrigationZoneFragment : Fragment() {
@@ -32,6 +45,9 @@ class NewIrrigationZoneFragment : Fragment() {
     private val viewModel: NewIrrigationZoneViewModel by viewModels()
 
     private lateinit var binding: FragmentNewIrrigationZoneBinding
+
+    private lateinit var locationPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,13 +71,14 @@ class NewIrrigationZoneFragment : Fragment() {
         setLogoAdapter()
         setFocusListener()
         setInputId()
+        setLocation()
 
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                 launch {
                     viewModel.isLoading.collect { isLoading ->
-                        binding.progressBar.isVisible = isLoading
+                        binding.includeProgressBar.clProgressBar.isVisible = isLoading
                     }
                 }
 
@@ -92,6 +109,63 @@ class NewIrrigationZoneFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setLocation() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        locationPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                getUserLocation()
+            } else {
+                Toast.makeText(requireContext(), "Permisos de Geolocalizador denegados.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.clLocation.setOnClickListener {
+            checkLocationPermissionAndFetch()
+        }
+
+    }
+
+    private fun checkLocationPermissionAndFetch() {
+        when {
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED -> {
+                getUserLocation()
+            }
+            else -> {
+                locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getUserLocation() {
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            location?.let {
+                val lat = location.latitude
+                val lon = location.longitude
+                Log.d("GASTON","lat=$lat")
+                Log.d("GASTON","lon=$lon")
+                getAddressFromCoordinates(lat, lon)
+            } ?: run {
+                showErrorMessage(getString(R.string.fragment_new_irrigation_zone_location_not_found_error))
+            }
+        }
+    }
+
+    private fun getAddressFromCoordinates(lat: Double, lon: Double) {
+        val addressModel = getAddressModelByCoordinates(requireContext(), lat, lon)
+        addressModel?.let {
+            viewModel.saveLocation(lat, lon, it)
+            binding.tvLocation.text = it.toSingleString()
+        } ?: run {
+            showErrorMessage(getString(R.string.fragment_new_irrigation_zone_location_not_found_error))
+        }
+
     }
 
     private fun setFocusListener() {

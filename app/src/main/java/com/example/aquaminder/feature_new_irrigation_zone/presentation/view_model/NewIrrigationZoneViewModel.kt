@@ -8,7 +8,9 @@ import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.IdentifierUtils
 import com.example.aquaminder.core.utils.ResultEvent
+import com.example.aquaminder.feature_main.domain.model.Address
 import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
+import com.example.aquaminder.feature_main.domain.model.Location
 import com.example.aquaminder.feature_new_irrigation_zone.domain.use_case.SaveIrrigationZoneUseCase
 import com.example.aquaminder.feature_new_irrigation_zone.utils.IrrigationZoneUtils
 import com.example.aquaminder.feature_new_irrigation_zone.utils.NewIrrigationZoneState
@@ -31,12 +33,23 @@ class NewIrrigationZoneViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
+    private var location: Location? = null
+
     fun checkValidID(id: String) {
         _irrigationZoneState.value = NewIrrigationZoneState.Idle
         if (IdentifierUtils.isValidID(id))
             _irrigationZoneState.value = NewIrrigationZoneState.ValidID(id)
         else
             _irrigationZoneState.value = NewIrrigationZoneState.InvalidID
+    }
+
+    fun saveLocation(lat: Double, lon: Double, address: Address) {
+        location = Location(
+            latitude = lat,
+            longitude = lon,
+            address = address
+        )
+
     }
 
     fun saveIrrigationZone(
@@ -50,17 +63,22 @@ class NewIrrigationZoneViewModel @Inject constructor(
         val logo = IrrigationZoneUtils.getLogos()[inputLogo]
         val color = IrrigationZoneUtils.getColors()[inputLogo]
 
-        if (id.isBlank()) {
-            _irrigationZoneState.value = NewIrrigationZoneState.Error(
-                resources.getString(R.string.error_msg_new_irrigation_zone_invalid_id)
-            )
-            return
-        }
-
         when {
+            id.isBlank() -> {
+                _irrigationZoneState.value = NewIrrigationZoneState.Error(
+                    resources.getString(R.string.error_msg_new_irrigation_zone_invalid_id)
+                )
+                return
+            }
             name.isBlank() -> {
                 _irrigationZoneState.value = NewIrrigationZoneState.Error(
                     resources.getString(R.string.error_msg_new_irrigation_zone_invalid_name)
+                )
+                return
+            }
+            location == null -> {
+                _irrigationZoneState.value = NewIrrigationZoneState.Error(
+                    resources.getString(R.string.error_msg_new_irrigation_zone_invalid_address)
                 )
                 return
             }
@@ -81,7 +99,8 @@ class NewIrrigationZoneViewModel @Inject constructor(
                     uuid = id,
                     name = name,
                     logoId = logo,
-                    colorId = color
+                    colorId = color,
+                    location = location!!
                 )
             ).collect { result ->
                 when (result) {

@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             launch {
                 viewModel.isLoading.collect { isLoading ->
-                    binding.progressBar.isVisible = isLoading
+                    binding.includeProgressBar.clProgressBar.isVisible = isLoading
                 }
             }
 

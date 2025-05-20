@@ -45,14 +45,19 @@
     <string name="fragment_new_irrigation_zone_input_id">ID del dispostivo</string>
     <string name="fragment_new_irrigation_zone_copy_message">¡Has pegado el ID!</string>
     <string name="fragment_new_irrigation_zone_copy_message_error">Formato de ID inválido</string>
+    <string name="fragment_new_irrigation_zone_address_not_found_error">Dirección no encontrada</string>
+    <string name="fragment_new_irrigation_zone_location_not_found_error">No se puede obtener la localización</string>
     <string name="fragment_new_irrigation_zone_select_logo">Seleccione el Logo del dispositivo</string>
     <string name="fragment_new_irrigation_zone_select_name">Ingrese un Nombre del dispositivo</string>
     <string name="fragment_new_irrigation_zone_input_name">Nombre del dispositivo</string>
+    <string name="fragment_new_irrigation_zone_input_location">Ingrese su dirección</string>
+    <string name="fragment_new_irrigation_zone_location">Dirección</string>
     <string name="fragment_new_irrigation_zone_success_message">¡Zona de Riego creada con exito!</string>
     <string name="fragment_new_irrigation_zone_btn_verify">VERIFICAR</string>
     <string name="fragment_new_irrigation_zone_btn_save">GUARDAR</string>
 
     <string name="fragment_home_title">Nombre de la Zona de Riego</string>
+    <string name="fragment_home_valve_description">Valvula %1$s</string>
 
     <string name="fragment_configuration_title">Configuración</string>
     <string name="fragment_configuration_switch_on">ON</string>
@@ -82,6 +87,7 @@
     <string name="error_msg_new_user_username_unavailable">El nombre de usuario ingresado no está disponible</string>
     <string name="error_msg_new_irrigation_zone_invalid_id">Ingrese un ID válido</string>
     <string name="error_msg_new_irrigation_zone_invalid_name">Ingrese un nombre</string>
+    <string name="error_msg_new_irrigation_zone_invalid_address">Ingrese una dirección</string>
     <string name="error_msg_invalid_id_selected">No se encuentra la Zona de Riego seleccionada</string>
     <string name="error_msg_network">Ha ocurrido un problema de conexión</string>
     <string name="error_msg_catch">Ha ocurrido un error: %s</string>

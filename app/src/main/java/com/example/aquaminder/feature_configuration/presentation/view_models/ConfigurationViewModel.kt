@@ -9,7 +9,7 @@ import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.core.utils.SoundManager
 import com.example.aquaminder.feature_configuration.utils.ConfigurationState
-import com.example.aquaminder.feature_home.domain.model.request.GetIrrigationZoneDetailsRequestDomainModel
+import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequest
 import com.example.aquaminder.feature_home.domain.use_case.GetIrrigationZoneDetailsUseCase
 import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZoneIdSelectedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,7 +42,7 @@ class ConfigurationViewModel @Inject constructor(
                 is ResultEvent.Success -> {
                     val idSelected = res.data
 
-                    getIrrigationZoneDetailsUseCase.invoke(GetIrrigationZoneDetailsRequestDomainModel(idSelected))
+                    getIrrigationZoneDetailsUseCase.invoke(GetIrrigationZoneDetailsRequest(idSelected))
                         .collect { result ->
                             when (result) {
                                 is ResultEvent.Success -> {

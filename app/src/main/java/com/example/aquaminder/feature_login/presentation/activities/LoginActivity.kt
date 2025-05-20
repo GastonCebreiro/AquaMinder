@@ -24,8 +24,12 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         askNotificationPermission()
+        
         setContentView(R.layout.activity_login)
+
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.light_blue)
 
         fetchFcmToken()
     }

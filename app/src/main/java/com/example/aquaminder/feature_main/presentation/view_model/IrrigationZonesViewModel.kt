@@ -7,7 +7,6 @@ import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.feature_login.domain.use_case.GetUserLoggedUseCase
-import com.example.aquaminder.feature_main.domain.model.request.GetIrrigationZonesRequestDomainModel
 import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZoneIdSelectedUseCase
 import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZonesUseCase
 import com.example.aquaminder.feature_main.domain.use_case.SaveIrrigationZoneIdSelectedUseCase

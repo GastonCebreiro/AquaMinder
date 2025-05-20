@@ -3,6 +3,7 @@ package com.example.aquaminder.feature_main.presentation.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.DialogUtils
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.light_blue)
     }
 
 

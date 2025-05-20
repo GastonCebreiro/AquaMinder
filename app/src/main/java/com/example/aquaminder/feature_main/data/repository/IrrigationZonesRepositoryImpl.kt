@@ -2,22 +2,15 @@ package com.example.aquaminder.feature_main.data.repository
 
 import com.example.aquaminder.R
 import com.example.aquaminder.core.data.remote.WebService
-import com.example.aquaminder.core.utils.IdentifierUtils
 import com.example.aquaminder.core.utils.SharedPreferencesUtil
-import com.example.aquaminder.feature_home.data.model.IrrigationZoneDetailsNetworkEntity
-import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponseNetworkEntity
-import com.example.aquaminder.feature_home.data.model.response.toDomainModel
-import com.example.aquaminder.feature_home.domain.model.request.GetIrrigationZoneDetailsRequestDomainModel
-import com.example.aquaminder.feature_home.domain.model.response.GetIrrigationZoneDetailsResponseDomainModel
+import com.example.aquaminder.feature_home.data.model.ValveNetworkEntity
+import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequest
+import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponse
 import com.example.aquaminder.feature_main.data.remote.model.IrrigationZoneNetworkEntity
-import com.example.aquaminder.feature_main.data.remote.model.response.GetIrrigationZonesResponseNetworkEntity
-import com.example.aquaminder.feature_main.data.remote.model.response.toDomainModel
-import com.example.aquaminder.feature_main.domain.model.request.GetIrrigationZonesRequestDomainModel
-import com.example.aquaminder.feature_main.domain.model.response.GetIrrigationZonesResponseDomainModel
-import com.example.aquaminder.feature_main.domain.repository.IrrigationZonesRepository
+import com.example.aquaminder.feature_main.data.remote.model.response.GetIrrigationZonesResponse
 import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
-import com.example.aquaminder.feature_main.domain.model.request.toNetworkEntity
 import com.example.aquaminder.feature_main.domain.model.toNetworkEntity
+import com.example.aquaminder.feature_main.domain.repository.IrrigationZonesRepository
 import com.example.aquaminder.feature_new_irrigation_zone.data.remote.model.response.SaveIrrigationZoneResponseNetworkEntity
 import com.example.aquaminder.feature_new_irrigation_zone.data.remote.model.response.toDomainModel
 import com.example.aquaminder.feature_new_irrigation_zone.domain.model.response.SaveIrrigationZoneResponseDomainModel
@@ -29,20 +22,19 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
     private val sharedPreferences: SharedPreferencesUtil
 ) : IrrigationZonesRepository {
 
-    override suspend fun getIrrigationZones(): GetIrrigationZonesResponseDomainModel {
+    override suspend fun getIrrigationZones(): GetIrrigationZonesResponse {
         // TODO GC ADD SERVICE CALL FOR IRRIGATION ZONES
-        val response: GetIrrigationZonesResponseNetworkEntity = webService.getIrrigationZones()
+//        val response: GetIrrigationZonesResponse = webService.getIrrigationZones()
 //        delay(1000)
-//        val response = GetIrrigationZonesResponseNetworkEntity(
-//            status = 200,
-////            emptyList()
-//            irrigationZones = listOf(
-//                IrrigationZoneNetworkEntity(
-//                    uuid = "123456",
-//                    name = "JARDIN",
-//                    logoId = R.drawable.ic_card_house,
-//                    colorId = R.color.card_light_blue
-//                ),
+        val response = GetIrrigationZonesResponse(
+            status = 200,
+//            emptyList()
+            irrigationZones = listOf(
+                IrrigationZoneNetworkEntity(
+                    id = "123456",
+                    name = "JARDIN",
+                    logoId = R.drawable.ic_card_house,
+                ),
 //                IrrigationZoneNetworkEntity(
 //                    uuid = "123457",
 //                    name = "BALCON HABITACION",
@@ -61,9 +53,9 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
 //                    logoId = R.drawable.ic_card_flowers,
 //                    colorId = R.color.card_gray
 //                )
-//            )
-//        )
-        return response.toDomainModel()
+            )
+        )
+        return response
     }
 
     override suspend fun saveIrrigationZone(request: IrrigationZoneDomainModel): SaveIrrigationZoneResponseDomainModel {
@@ -82,20 +74,32 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
         return sharedPreferences.getIrrigationZoneIdSelected()
     }
 
-    override suspend fun getIrrigationZoneDetails(request: GetIrrigationZoneDetailsRequestDomainModel): GetIrrigationZoneDetailsResponseDomainModel {
+    override suspend fun getIrrigationZoneDetails(request: GetIrrigationZoneDetailsRequest): GetIrrigationZoneDetailsResponse {
         // TODO GC ADD SERVICE CALL FOR IRRIGATION ZONE DETAILS
-//        val response: GetIrrigationZoneDetailsResponseNetworkEntity = webService.getIrrigationZoneDetails(request.toNetworkEntity())
+//        val response: GetIrrigationZoneDetailsResponse = webService.getIrrigationZoneDetails(request.toMap())
         delay(1000)
-        val response = GetIrrigationZoneDetailsResponseNetworkEntity(
+        val response = GetIrrigationZoneDetailsResponse(
             status = 200,
-            IrrigationZoneDetailsNetworkEntity(
                 uuid = "123456",
                 name = "JARDIN",
                 logoId = R.drawable.ic_card_house,
-                colorId = R.color.card_light_blue
+                address = "Av. Juan Bautista Alberdi 1045, C1424 Cdad. Autónoma de Buenos Aires, Argentina",
+                valves = listOf(
+                    ValveNetworkEntity(
+                        id = 1,
+                        selectedHumidity = 30,
+                    ),
+                    ValveNetworkEntity(
+                        id = 2,
+                        selectedHumidity = 30,
+                    ),
+                    ValveNetworkEntity(
+                        id = 3,
+                        selectedHumidity = 30,
+                    )
+                )
             )
-        )
-        return response.toDomainModel()
+        return response
     }
 
 }

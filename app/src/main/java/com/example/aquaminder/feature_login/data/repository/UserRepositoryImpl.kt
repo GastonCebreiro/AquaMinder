@@ -34,7 +34,7 @@ class UserRepositoryImpl @Inject constructor(
             mail = "asd@mail.com",
             password = "1234"
         )
-        delay(1000)
+//        delay(2000)
         return response.toDomainModel()
     }
 

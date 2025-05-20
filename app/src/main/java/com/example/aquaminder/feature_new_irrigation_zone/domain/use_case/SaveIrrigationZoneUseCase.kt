@@ -14,7 +14,7 @@ class SaveIrrigationZoneUseCase @Inject constructor(
     private val irrigationZonesRepository: IrrigationZonesRepository
 ) {
 
-    suspend operator fun invoke(
+    operator fun invoke(
         request: IrrigationZoneDomainModel
     ): Flow<ResultEvent<Boolean>> = flow {
         try {

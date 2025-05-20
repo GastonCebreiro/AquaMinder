@@ -44,7 +44,7 @@ class ConfigurationFragment : Fragment() {
 
                 launch {
                     viewModel.isLoading.collect { isLoading ->
-                        binding.clProgressBar.isVisible = isLoading
+                        binding.includeProgressBar.clProgressBar.isVisible = isLoading
                     }
                 }
 

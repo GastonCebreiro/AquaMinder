@@ -19,6 +19,7 @@
     <color name="yellow_transparent">#80FFEB3B</color>
     <color name="blue">#1C37ED</color>
     <color name="light_blue">#00A6DA</color>
+    <color name="loading_transparent">#638EE2FB</color>
     <color name="light_blue_finish">#8EE2FB</color>
     <color name="light_blue_card">#E0F5FD</color>
     <color name="light_blue_weather">#2974F6</color>

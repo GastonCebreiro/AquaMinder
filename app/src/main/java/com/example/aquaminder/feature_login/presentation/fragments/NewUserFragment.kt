@@ -56,7 +56,7 @@ class NewUserFragment : Fragment() {
 
                 launch {
                     viewModel.isLoading.collect { isLoading ->
-                        binding.progressBar.isVisible = isLoading
+                        binding.includeProgressBar.clProgressBar.isVisible = isLoading
                     }
                 }
 

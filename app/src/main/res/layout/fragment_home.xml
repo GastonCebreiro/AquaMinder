@@ -24,6 +24,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginStart="30dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
         app:layout_constraintEnd_toStartOf="@+id/tvTitle"
@@ -36,42 +37,89 @@
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
         android:layout_marginStart="120dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
         android:textColor="@color/white"
         android:textSize="35sp"
         android:textStyle="bold"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/vSemiDrop"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         tools:text="JARDIN" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/vSemiDrop">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:indeterminateTint="@color/light_blue"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/ivLocation"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:contentDescription="@null"
+                app:tint="@color/card_light_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/tvStreetAndNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvStreetAndNumber"
+                app:srcCompat="@drawable/ic_location" />
+
+            <TextView
+                android:id="@+id/tvStreetAndNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/card_light_blue"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivLocation"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Av Rivadavia 325" />
+
+            <TextView
+                android:id="@+id/tvCity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/card_light_blue"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/tvStreetAndNumber"
+                app:layout_constraintTop_toBottomOf="@+id/tvStreetAndNumber"
+                tools:text="(Cdad de Buenos Aires)" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Spinner
+            android:id="@+id/spValves"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clAddress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <include
+        android:id="@+id/includeProgressBar"
+        layout="@layout/view_progress_overlay" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

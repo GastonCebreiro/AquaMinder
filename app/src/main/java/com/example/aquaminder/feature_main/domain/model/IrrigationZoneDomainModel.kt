@@ -9,11 +9,15 @@ data class IrrigationZoneDomainModel(
     val uuid: String,
     val name: String,
     var logoId: Int,
-    var colorId: Int
+    var colorId: Int,
+    var location: Location
 ): Parcelable
 
 fun IrrigationZoneDomainModel.toNetworkEntity() = IrrigationZoneNetworkEntity(
     id = uuid,
     name = name,
-    logoId = logoId
+    logoId = logoId,
+    latitude = location.latitude,
+    longitude = location.longitude,
+    address = location.address.toSingleString(),
 )
