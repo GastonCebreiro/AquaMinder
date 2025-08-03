@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/light_blue_card"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tvHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="13hs"
+        android:textColor="@color/light_blue"
+        android:textSize="20sp"
+        android:layout_gravity="center" />
+
+    <WebView
+        android:id="@+id/wbIcon"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/tvTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        tools:text="8°C"
+        android:textColor="@color/light_blue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/tvHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        tools:text="65%"
+        android:textColor="@color/light_blue"
+        android:textSize="20sp"
+        android:layout_gravity="center" />
+
+</LinearLayout>

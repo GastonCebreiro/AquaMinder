@@ -29,7 +29,7 @@
         android:gravity="center"
         android:text="@string/fragment_configuration_title"
         android:textColor="@color/white"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/vSemiDrop"
         app:layout_constraintEnd_toEndOf="parent"

@@ -5,16 +5,25 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
+    android:background="@color/white"
     tools:context=".feature_login.presentation.fragments.LoginFragment">
 
+    <View
+        android:id="@+id/vSemiDrop"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_semi_drop_little"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
@@ -26,19 +35,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ivLocation"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:contentDescription="@null"
+        android:layout_marginEnd="6dp"
+        app:tint="@color/card_light_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLocation"
+        app:layout_constraintEnd_toStartOf="@+id/tvLocation"
+        app:layout_constraintTop_toTopOf="@id/tvLocation"
+        app:srcCompat="@drawable/ic_location" />
+
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/light_blue"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/vSemiDrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Av Alberdi 1045"/>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cvWeather"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
-        android:backgroundTint="@color/light_gray_transparent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/light_blue_card"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+        app:layout_constraintTop_toBottomOf="@+id/tvLocation">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -55,14 +87,14 @@
                 app:layout_constraintEnd_toStartOf="@id/tvTemperature"
                 />
 
-            <TextView
+            x<TextView
                 android:id="@+id/tvTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:textColor="@color/light_blue_weather"
+                android:textColor="@color/light_blue"
                 android:textSize="60sp"
                 android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/wbIcon"
                 app:layout_constraintBottom_toBottomOf="@id/wbIcon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/wbIcon"
@@ -72,8 +104,7 @@
                 android:id="@+id/tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/light_blue_weather"
+                android:textColor="@color/light_blue"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -86,103 +117,17 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvInfo"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHourly"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="40dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/light_gray_transparent_2"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="200dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/cvWeather"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp">
-
-            <TextView
-                android:id="@+id/tvHumidityLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_weather_humidity_label"
-                android:textColor="@color/light_blue_weather"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvRainProbabilityLabel"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvHumidity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/light_blue_weather"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/tvHumidityLabel"
-                app:layout_constraintStart_toStartOf="@id/tvHumidityLabel"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="58%"/>
-
-            <TextView
-                android:id="@+id/tvRainProbabilityLabel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="6dp"
-                android:text="@string/fragment_weather_rain_label"
-                android:textColor="@color/light_blue_weather"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:maxLines="2"
-                app:layout_constraintEnd_toStartOf="@+id/tvWindLabel"
-                app:layout_constraintStart_toEndOf="@id/tvHumidityLabel"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                android:id="@+id/tvRainProbability"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/light_blue_weather"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/tvRainProbabilityLabel"
-                app:layout_constraintStart_toStartOf="@id/tvRainProbabilityLabel"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="10%"/>
-
-            <TextView
-                android:id="@+id/tvWindLabel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_weather_wind_label"
-                android:textColor="@color/light_blue_weather"
-                android:textSize="22sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvRainProbabilityLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvWind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/light_blue_weather"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/tvWindLabel"
-                app:layout_constraintStart_toStartOf="@id/tvWindLabel"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="16km/h"/>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_hourly_weather" />
 
     <include
         android:id="@+id/includeProgressBar"
