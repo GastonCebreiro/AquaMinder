@@ -74,6 +74,8 @@ class WeatherFragment : Fragment() {
                             }
 
                             is ConfigurationState.Idle -> {}
+                            is ConfigurationState.ConfigModified -> {
+                            }
                         }
                     }
                 }

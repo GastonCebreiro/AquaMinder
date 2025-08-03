@@ -11,7 +11,7 @@
     <View
         android:id="@+id/vSemiDrop"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:layout_centerInParent="true"
         android:background="@drawable/shape_semi_drop_little"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,12 +22,12 @@
         android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:gravity="center"
         android:text="@string/fragment_new_user_btn_register"
         android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/vSemiDrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

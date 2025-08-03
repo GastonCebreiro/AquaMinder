@@ -2,11 +2,11 @@ package com.example.aquaminder.feature_home.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.time.LocalTime
 
 @Parcelize
-data class ValveDomainModel(
-    val id: Int,
-    val humidity: Int,
-    val schedule: ScheduleDomainModel?,
-    val isActive: Boolean,
+data class ScheduleDomainModel(
+    val startTime: LocalTime,
+    val intervalHours: Int,
+    val duration: Int,
 ): Parcelable

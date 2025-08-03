@@ -155,47 +155,44 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val token = getTokenUseCase.invoke()
 
-            getUserUseCase.invoke(name, password, token)
-                .collect { res ->
-                    when (res) {
-                        is ResultEvent.Success -> {
+            when (val res = getUserUseCase.invoke(name, password, token)) {
+                is ResultEvent.Success -> {
 
-                            saveUserLoggedUseCase.invoke(res.data)
+                    saveUserLoggedUseCase.invoke(res.data)
 
+                    _loginState.value =
+                        LoginState.Success(resources.getString(R.string.success_msg_login_successful))
+                }
+
+                is ResultEvent.Error -> {
+                    when (res.error) {
+                        is AppError.WrongPassword -> {
                             _loginState.value =
-                                LoginState.Success(resources.getString(R.string.success_msg_login_successful))
+                                LoginState.WrongPassword(resources.getString(R.string.error_msg_invalid_password))
                         }
 
-                        is ResultEvent.Error -> {
-                            when (res.error) {
-                                is AppError.WrongPassword -> {
-                                    _loginState.value =
-                                        LoginState.WrongPassword(resources.getString(R.string.error_msg_invalid_password))
-                                }
+                        is AppError.UsernameNotFound -> {
+                            _loginState.value =
+                                LoginState.UsernameNotFound(resources.getString(R.string.error_msg_new_user_not_found))
+                        }
 
-                                is AppError.UsernameNotFound -> {
-                                    _loginState.value =
-                                        LoginState.UsernameNotFound(resources.getString(R.string.error_msg_new_user_not_found))
-                                }
+                        is AppError.NetworkError -> {
+                            _loginState.value =
+                                LoginState.Error(
+                                    resources.getString(R.string.error_msg_network),
+                                    R.drawable.ic_error_network
+                                )
+                        }
 
-                                is AppError.NetworkError -> {
-                                    _loginState.value =
-                                        LoginState.Error(
-                                            resources.getString(R.string.error_msg_network),
-                                            R.drawable.ic_error_network
-                                        )
-                                }
-
-                                else -> {
-                                    _loginState.value = LoginState.Error("")
-                                }
-                            }
-
+                        else -> {
+                            _loginState.value = LoginState.Error("")
                         }
                     }
-                    _isLoading.value = false
+
                 }
+            }
+            _isLoading.value = false
         }
     }
-
 }
+

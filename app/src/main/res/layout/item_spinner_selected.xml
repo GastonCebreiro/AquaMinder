@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="12dp"
-    android:background="@color/background_light_blue">
+    android:background="@drawable/background_spinner">
 
     <ImageView
         android:id="@+id/ivLogo"

@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,11 +19,13 @@ import com.example.aquaminder.databinding.FragmentHomeBinding
 import com.example.aquaminder.databinding.ItemSpinnerDropdownBinding
 import com.example.aquaminder.databinding.ItemSpinnerSelectedBinding
 import com.example.aquaminder.feature_home.domain.model.IrrigationZoneDetailsDomainModel
+import com.example.aquaminder.feature_home.domain.model.ScheduleDomainModel
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
 import com.example.aquaminder.feature_home.presentation.view_models.HomeViewModel
 import com.example.aquaminder.feature_home.utils.HomeState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalTime
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -75,15 +79,58 @@ class HomeFragment : Fragment() {
         val streetAndNumber = "${details.address.street} ${details.address.number}"
         val city = "(${details.address.city})"
 
-        binding.clAddress.visibility = View.VISIBLE
+        binding.clHome.visibility = View.VISIBLE
+
         binding.tvTitle.text = details.name
         binding.ivLogo.setImageResource(details.logoId)
         binding.tvStreetAndNumber.text = streetAndNumber
         binding.tvCity.text = city
+
         setValveSelector(details.valves)
+
+//        // TODO GC DELETE MOCK
+//        val valves = listOf(
+//            ValveDomainModel(
+//                id = 1,
+//                humidity = 45,
+//                schedule = ScheduleDomainModel(
+//                    startHour = LocalTime.of(8, 30), // 08:30
+//                    intervalHours = 6,
+//                    durationMinutes = 20
+//                ),
+//                isActive = true
+//            ),
+//            ValveDomainModel(
+//                id = 2,
+//                humidity = 55,
+//                schedule = ScheduleDomainModel(
+//                    startHour = LocalTime.of(14, 0), // 14:00
+//                    intervalHours = 8,
+//                    durationMinutes = 30
+//                ),
+//                isActive = false
+//            ),
+//            ValveDomainModel(
+//                id = 3,
+//                humidity = 35,
+//                schedule = ScheduleDomainModel(
+//                    startHour = LocalTime.of(20, 15), // 20:15
+//                    intervalHours = 12,
+//                    durationMinutes = 45
+//                ),
+//                isActive = true
+//            )
+//        )
+//        setValveSelector(emptyList())
+
     }
 
     private fun setValveSelector(valves: List<ValveDomainModel>) {
+        if (valves.isEmpty()) {
+            showEmptyValves()
+            return
+        }
+
         val valvesDescription = valves.map { valve ->
             getString(R.string.fragment_home_valve_description, valve.id.toString())
         }
@@ -118,6 +165,45 @@ class HomeFragment : Fragment() {
         }
 
         binding.spValves.adapter = adapter
+
+        binding.spValves.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedValve = valves[position]
+                showValveInfo(selectedValve)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun showEmptyValves() {
+        binding.clEmptyValves.visibility = View.VISIBLE
+        binding.clValveInfo.visibility = View.GONE
+        binding.spValves.visibility = View.GONE
+    }
+
+    private fun showValveInfo(valve: ValveDomainModel) {
+        if (valve.isActive) {
+            binding.tvStatus.text = getString(R.string.fragment_home_valve_status_active)
+            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.light_blue))
+            binding.ivCheck.setImageResource(R.drawable.ic_check)
+        } else {
+            binding.tvStatus.text = getString(R.string.fragment_home_valve_status_inactive)
+            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            binding.ivCheck.setImageResource(R.drawable.ic_warning)
+        }
+//        val hour = valve.schedule?.startHour?.hour ?: 0
+//        val minute = valve.schedule?.startHour?.minute ?: 0
+//        val startHour = String.format("%02d:%02d", hour, minute)
+//        binding.tvSelectedHumidity.text = getString(R.string.fragment_home_valve_selected_humidity_value, valve.humidity.toString())
+//        binding.tvStartHour.text = getString(R.string.fragment_home_valve_start_hour_value ,startHour)
+//        binding.tvIntervalHours.text =  getString(R.string.fragment_home_valve_interval_hours_value, valve.schedule?.intervalHours.toString())
+//        binding.tvDuration.text =  getString(R.string.fragment_home_valve_duration_values, valve.schedule?.durationMinutes.toString())
     }
 
 //    private fun navToIrrigationZoneDetail(itemSelected: IrrigationZoneDomainModel) {

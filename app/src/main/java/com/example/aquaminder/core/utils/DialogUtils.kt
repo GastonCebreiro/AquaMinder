@@ -5,11 +5,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import com.example.aquaminder.R
 import com.example.aquaminder.databinding.DialogLogoutBinding
+import com.example.aquaminder.databinding.DialogModifyHumidityBinding
 import com.example.aquaminder.databinding.ErrorGenericDialogBinding
+import com.example.aquaminder.feature_configuration.utils.ValveUtils.getHumidityDescription
 
 object DialogUtils {
 
@@ -56,6 +57,10 @@ object DialogUtils {
         }
         dialog.show()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        val width =
+            (context.resources.displayMetrics.widthPixels * 0.85).toInt() // 85% of screen width
+        val height = WindowManager.LayoutParams.WRAP_CONTENT // or a fixed height like 600
+        dialog.window?.setLayout(width, height)
     }
 
 
@@ -84,5 +89,47 @@ object DialogUtils {
         dialog.show()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
+
+    // TODO GC DELETE
+    fun showModifyHumidityDialog(
+        context: Context,
+        humidity: Int,
+        onAcceptAction: ((Int) -> Unit)
+    ) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+
+        val binding = DialogModifyHumidityBinding
+            .inflate(LayoutInflater.from(context), null, false)
+        dialog.setContentView(binding.root)
+
+        val humidityText = getHumidityDescription(humidity)
+        binding.tvHumidity.text = humidityText
+
+        var selectedHumidity = humidity
+
+        binding.sliderHumidity.valueFrom = 0f
+        binding.sliderHumidity.valueTo = 100f
+        binding.sliderHumidity.stepSize = 1f
+        binding.sliderHumidity.value = humidity.toFloat()
+
+        binding.sliderHumidity.addOnChangeListener { _, value, _ ->
+            binding.tvHumidity.text = getHumidityDescription(value.toInt())
+            selectedHumidity = value.toInt()
+        }
+
+        binding.btnSave.setOnClickListener {
+            onAcceptAction.invoke(selectedHumidity)
+            dialog.dismiss()
+        }
+        binding.tvCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    }
+
 
 }

@@ -12,7 +12,7 @@
     <View
         android:id="@+id/vSemiDrop"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:layout_centerInParent="true"
         android:background="@drawable/shape_semi_drop_little"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,11 +23,11 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:text="@string/fragment_new_irrigation_zone_title"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/vSemiDrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,31 +45,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-           >
+            android:paddingHorizontal="16dp">
 
             <TextView
                 android:id="@+id/tvDescriptionId"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_new_irrigation_zone_select_id"
-                android:textColor="@color/gray"
+                android:textColor="@color/light_blue"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/ivEnterId"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:contentDescription="@null"
-                app:layout_constraintBottom_toBottomOf="@+id/lInputId"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/lInputId"
-                app:srcCompat="@drawable/ic_create" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lInputId"
@@ -78,13 +67,13 @@
                 android:layout_marginTop="10dp"
                 android:hint="@string/fragment_new_irrigation_zone_input_id"
                 android:paddingBottom="5dp"
-                android:textColorHint="@color/gray_hint"
+                android:textColorHint="@color/light_blue"
                 app:boxCornerRadiusBottomEnd="20dp"
                 app:boxCornerRadiusBottomStart="20dp"
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivEnterId"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDescriptionId">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -120,15 +109,15 @@
                 app:drawableStartCompat="@drawable/ic_info"
                 app:drawableTint="@color/light_blue"
                 app:layout_constraintEnd_toEndOf="@+id/lInputId"
-                app:layout_constraintStart_toStartOf="@id/ivEnterId"
+                app:layout_constraintStart_toStartOf="@id/lInputId"
                 app:layout_constraintTop_toBottomOf="@+id/lInputId" />
 
             <View
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/light_gray"
+                android:background="@color/light_blue_finish"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDescriptionIdInfo" />
@@ -139,42 +128,53 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/fragment_new_irrigation_zone_select_name"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/light_blue"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view1" />
 
-                <EditText
-                    android:id="@+id/etInputName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:autofillHints="text"
-                    android:gravity="center"
-                    android:hint="@string/fragment_new_irrigation_zone_input_name"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="20"
-                    android:textColor="@color/hard_gray"
-                    android:textColorHint="@color/gray_delete"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDescriptionName" />
+            <EditText
+                android:id="@+id/etInputName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:autofillHints="text"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:hint="@string/fragment_new_irrigation_zone_input_name"
+                android:inputType="textCapCharacters"
+                android:maxLength="20"
+                android:textColor="@color/light_blue"
+                android:textColorHint="@color/light_blue_hint"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDescriptionName" />
+
+            <View
+                android:id="@+id/viewUnderlined"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/light_blue"
+                app:layout_constraintEnd_toEndOf="@+id/etInputName"
+                app:layout_constraintStart_toStartOf="@+id/etInputName"
+                app:layout_constraintTop_toBottomOf="@id/etInputName" />
 
                 <View
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginTop="20dp"
-                    android:background="@color/light_gray"
+                    android:background="@color/light_blue_finish"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etInputName" />
+                    app:layout_constraintTop_toBottomOf="@id/viewUnderlined" />
 
                 <TextView
                     android:id="@+id/tvDescriptionLogo"
@@ -182,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/fragment_new_irrigation_zone_select_logo"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/light_blue"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -229,19 +229,29 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_blue_finish"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/carrouselLogo" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/carrouselLogo">
+                app:layout_constraintTop_toBottomOf="@+id/view3">
 
                 <TextView
                     android:id="@+id/tvLocationLabel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:text="@string/fragment_new_irrigation_zone_input_location"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/light_blue"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
@@ -253,6 +263,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:contentDescription="@null"
+                    app:tint="@color/card_light_blue"
                     app:layout_constraintBottom_toBottomOf="@+id/tvLocation"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tvLocation"
@@ -265,7 +276,7 @@
                     android:layout_marginStart="5dp"
                     android:text="@string/fragment_new_irrigation_zone_location"
                     android:textSize="14sp"
-                    android:textColor="@color/gray_hint"
+                    android:textColor="@color/light_blue"
                     android:background="@drawable/background_address_selector"
                     android:padding="12dp"
                     android:drawablePadding="8dp"
@@ -291,16 +302,16 @@
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/button_gradient"
         android:padding="10dp"
         android:text="@string/fragment_new_irrigation_zone_btn_save"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

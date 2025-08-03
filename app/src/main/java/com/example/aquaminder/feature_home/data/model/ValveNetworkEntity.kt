@@ -7,10 +7,17 @@ data class ValveNetworkEntity(
     @SerializedName("id_valvula")
     val id: Int? = null,
     @SerializedName("humedad_deseada")
-    val selectedHumidity: Int? = null
+    val humidity: Int? = null,
+    @SerializedName("schedule")
+    val schedule: ScheduleNetworkEntity? = null,
+    @SerializedName("is_active")
+    val isActive: Boolean? = null
+
 )
 
 fun ValveNetworkEntity.toDomainModel() = ValveDomainModel(
-    selectedHumidity = selectedHumidity ?: 0,
-    id = id ?: -1
+    humidity = humidity ?: 0,
+    id = id ?: -1,
+    schedule = schedule?.toDomainModel(),
+    isActive = isActive ?: false
 )

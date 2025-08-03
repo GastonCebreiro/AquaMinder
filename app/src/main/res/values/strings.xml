@@ -17,7 +17,7 @@
     <string name="notifications_accept">OK</string>
     <string name="notifications_reject">No, gracias</string>
 
-    <string name="fragment_new_user_btn_register">Nueva\nCuenta</string>
+    <string name="fragment_new_user_btn_register">Nueva Cuenta</string>
     <string name="fragment_new_user_name_ask">Nombre de Usuario</string>
     <string name="fragment_new_user_mail_ask">Correo electrónico</string>
     <string name="fragment_new_user_password_ask">Clave</string>
@@ -40,17 +40,17 @@
 
     <string name="fragment_new_irrigation_zone_title">Nueva Zona de Riego</string>
     <string name="fragment_new_irrigation_zone_subtitle">Cree una nueva zona de riego</string>
-    <string name="fragment_new_irrigation_zone_select_id">Ingrese el ID del dispositivo</string>
+    <string name="fragment_new_irrigation_zone_select_id">ID del dispositivo</string>
     <string name="fragment_new_irrigation_zone_select_id_info">El ID del dispositivo se encuentra en la etiqueta</string>
     <string name="fragment_new_irrigation_zone_input_id">ID del dispostivo</string>
     <string name="fragment_new_irrigation_zone_copy_message">¡Has pegado el ID!</string>
     <string name="fragment_new_irrigation_zone_copy_message_error">Formato de ID inválido</string>
     <string name="fragment_new_irrigation_zone_address_not_found_error">Dirección no encontrada</string>
     <string name="fragment_new_irrigation_zone_location_not_found_error">No se puede obtener la localización</string>
-    <string name="fragment_new_irrigation_zone_select_logo">Seleccione el Logo del dispositivo</string>
-    <string name="fragment_new_irrigation_zone_select_name">Ingrese un Nombre del dispositivo</string>
-    <string name="fragment_new_irrigation_zone_input_name">Nombre del dispositivo</string>
-    <string name="fragment_new_irrigation_zone_input_location">Ingrese su dirección</string>
+    <string name="fragment_new_irrigation_zone_select_logo">Logo del dispositivo</string>
+    <string name="fragment_new_irrigation_zone_select_name">Nombre del dispositivo</string>
+    <string name="fragment_new_irrigation_zone_input_name">Nombre</string>
+    <string name="fragment_new_irrigation_zone_input_location">Dirección del dispositivo</string>
     <string name="fragment_new_irrigation_zone_location">Dirección</string>
     <string name="fragment_new_irrigation_zone_success_message">¡Zona de Riego creada con exito!</string>
     <string name="fragment_new_irrigation_zone_btn_verify">VERIFICAR</string>
@@ -58,14 +58,40 @@
 
     <string name="fragment_home_title">Nombre de la Zona de Riego</string>
     <string name="fragment_home_valve_description">Valvula %1$s</string>
+    <string name="fragment_home_valve_status_active">ACTIVADA</string>
+    <string name="fragment_home_valve_status_inactive">DESACTIVADA</string>
+    <string name="fragment_home_valve_selected_humidity">Humedad deseada:</string>
+    <string name="fragment_home_valve_selected_humidity_value">%1$s %%</string>
+    <string name="fragment_home_valve_start_hour">Comienza:</string>
+    <string name="fragment_home_valve_start_hour_value">%1$s hs</string>
+    <string name="fragment_home_valve_interval_hours">Intervalo:</string>
+    <string name="fragment_home_valve_interval_hours_value">%1$s horas</string>
+    <string name="fragment_home_valve_duration">Duración:</string>
+    <string name="fragment_home_valve_duration_values">%1$s minutos</string>
+    <string name="fragment_home_valve_empty_valves_title">No hay válvulas configuradas</string>
+    <string name="fragment_home_valve_empty_valves_description">Configura válvulas para poder visualizarlas aquí.</string>
 
     <string name="fragment_configuration_title">Configuración</string>
+    <string name="fragment_configuration_general">Configuración general</string>
+    <string name="fragment_configuration_individual">Configuración por válvula</string>
+    <string name="fragment_configuration_btn_save">GUARDAR CAMBIOS</string>
     <string name="fragment_configuration_switch_on">ON</string>
     <string name="fragment_configuration_switch_off">OFF</string>
     <string name="fragment_configuration_switch_sensor">Medir Humedad</string>
     <string name="fragment_configuration_switch_weather">Revisar Clima</string>
-    <string name="fragment_configuration_switch_timer">Programación Horaria</string>
+    <string name="fragment_configuration_switch_timer">Activar temporizador</string>
 
+    <string name="fragment_valve_config_title">Valvula %s</string>
+    <string name="fragment_valve_config_new_title">Nueva valvula</string>
+    <string name="fragment_valve_config_btn_save">GUARDAR</string>
+    <string name="fragment_valve_config_btn_update">ACTUALIZAR</string>
+    <string name="fragment_valve_config_btn_plus">+</string>
+    <string name="fragment_valve_config_btn_minus">-</string>
+    <string name="fragment_valve_config_humidity_title">Humedad deseada</string>
+    <string name="fragment_valve_config_start_hour_title">Horario de inicio</string>
+    <string name="fragment_valve_config_interval_hours_title">Intervalo de tiempo</string>
+    <string name="fragment_valve_config_duration_title">Duracion</string>
+    <string name="fragment_valve_config_duration_label">minutos</string>
 
     <string name="fragment_weather_title">Clima</string>
     <string name="fragment_weather_humidity_label">Humedad</string>
@@ -106,6 +132,11 @@
     <string name="error_dialog_cancel">CANCELAR</string>
 
     <string name="dialog_logout_title">¿Está seguro que desea cerrar sesión?</string>
+
+    <string name="dialog_modify_humidity_title">Modificar humedad</string>
+    <string name="dialog_modify_humidity_description">Ingrese el valor de humedad deseada</string>
+    <string name="dialog_modify_humidity_btn_save">GUARDAR</string>
+    <string name="dialog_modify_humidity_btn_cancel">CANCELAR</string>
 
     <string name="bottom_bar_menu">PRINCIPAL</string>
     <string name="bottom_bar_config">CONFIGURACIÓN</string>
