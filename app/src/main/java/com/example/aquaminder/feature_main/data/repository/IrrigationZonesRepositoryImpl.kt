@@ -164,7 +164,8 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
                     ),
                     isActive = true
                 )
-            )
+            ),
+            isCheckHumidityEnabled = true
         )
         return response
     }

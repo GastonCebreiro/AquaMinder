@@ -74,6 +74,7 @@
     <string name="fragment_configuration_title">Configuración</string>
     <string name="fragment_configuration_general">Configuración general</string>
     <string name="fragment_configuration_individual">Configuración por válvula</string>
+    <string name="fragment_configuration_edit">EDITAR</string>
     <string name="fragment_configuration_btn_save">GUARDAR CAMBIOS</string>
     <string name="fragment_configuration_switch_on">ON</string>
     <string name="fragment_configuration_switch_off">OFF</string>

@@ -218,6 +218,80 @@
 
             </androidx.cardview.widget.CardView>
 
+
+            <!--            <androidx.cardview.widget.CardView-->
+            <!--                android:id="@+id/cvTimer"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="20dp"-->
+            <!--                android:backgroundTint="@color/background_light_blue"-->
+            <!--                app:cardCornerRadius="10dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/spValves">-->
+
+            <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent">-->
+
+            <!--                    <ImageView-->
+            <!--                        android:id="@+id/ivTimer"-->
+            <!--                        android:layout_width="30dp"-->
+            <!--                        android:layout_height="30dp"-->
+            <!--                        android:layout_marginStart="10dp"-->
+            <!--                        android:contentDescription="@null"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                        app:layout_constraintStart_toStartOf="parent"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent"-->
+            <!--                        app:srcCompat="@drawable/ic_timer"-->
+            <!--                        app:tint="@color/gray_delete" />-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/tvTimer"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginStart="10dp"-->
+            <!--                        android:text="@string/fragment_configuration_switch_timer"-->
+            <!--                        android:textColor="@color/gray_delete"-->
+            <!--                        android:textSize="20sp"-->
+            <!--                        android:textStyle="bold"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                        app:layout_constraintStart_toEndOf="@+id/ivTimer"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/tvTimerState"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginEnd="10dp"-->
+            <!--                        android:text="@string/fragment_configuration_switch_off"-->
+            <!--                        android:textColor="@color/gray_delete"-->
+            <!--                        android:textSize="22sp"-->
+            <!--                        android:textStyle="bold"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                        app:layout_constraintEnd_toStartOf="@+id/switchTimer"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--                    <androidx.appcompat.widget.SwitchCompat-->
+            <!--                        android:id="@+id/switchTimer"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginEnd="20dp"-->
+            <!--                        android:background="@android:color/transparent"-->
+            <!--                        android:checked="false"-->
+            <!--                        android:scaleX="1.5"-->
+            <!--                        android:scaleY="1.5"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="@id/tvTimer"-->
+            <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                        app:layout_constraintTop_toTopOf="@+id/tvTimer"-->
+            <!--                        app:switchPadding="10dp"-->
+            <!--                        app:thumbTint="@color/switch_thumb_tint"-->
+            <!--                        app:trackTint="@color/switch_track_tint" />-->
+
+            <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+            <!--            </androidx.cardview.widget.CardView>-->
+
             <TextView
                 android:id="@+id/tvIndividual"
                 android:layout_width="wrap_content"
@@ -241,86 +315,13 @@
                 app:layout_constraintTop_toBottomOf="@id/tvIndividual"
                 tools:listitem="@layout/item_spinner_selected" />
 
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/cvTimer"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:backgroundTint="@color/background_light_blue"-->
-<!--                app:cardCornerRadius="10dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/spValves">-->
-
-<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/ivTimer"-->
-<!--                        android:layout_width="30dp"-->
-<!--                        android:layout_height="30dp"-->
-<!--                        android:layout_marginStart="10dp"-->
-<!--                        android:contentDescription="@null"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"-->
-<!--                        app:srcCompat="@drawable/ic_timer"-->
-<!--                        app:tint="@color/gray_delete" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tvTimer"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="10dp"-->
-<!--                        android:text="@string/fragment_configuration_switch_timer"-->
-<!--                        android:textColor="@color/gray_delete"-->
-<!--                        android:textSize="20sp"-->
-<!--                        android:textStyle="bold"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintStart_toEndOf="@+id/ivTimer"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tvTimerState"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="10dp"-->
-<!--                        android:text="@string/fragment_configuration_switch_off"-->
-<!--                        android:textColor="@color/gray_delete"-->
-<!--                        android:textSize="22sp"-->
-<!--                        android:textStyle="bold"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintEnd_toStartOf="@+id/switchTimer"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                    <androidx.appcompat.widget.SwitchCompat-->
-<!--                        android:id="@+id/switchTimer"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="20dp"-->
-<!--                        android:background="@android:color/transparent"-->
-<!--                        android:checked="false"-->
-<!--                        android:scaleX="1.5"-->
-<!--                        android:scaleY="1.5"-->
-<!--                        app:layout_constraintBottom_toBottomOf="@id/tvTimer"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="@+id/tvTimer"-->
-<!--                        app:switchPadding="10dp"-->
-<!--                        app:thumbTint="@color/switch_thumb_tint"-->
-<!--                        app:trackTint="@color/switch_track_tint" />-->
-
-<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--            </androidx.cardview.widget.CardView>-->
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clValveInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:padding="8dp"
                 android:background="@color/background_light_blue"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -445,6 +446,39 @@
                     app:layout_constraintTop_toTopOf="@+id/tvDurationLabel"
                     tools:text="20 minutos" />
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDurationLabel">
+
+                    <TextView
+                        android:id="@+id/tvEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="end"
+                        android:text="@string/fragment_configuration_edit"
+                        android:textColor="@color/light_blue"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ivEdit" />
+
+                    <ImageView
+                        android:id="@+id/ivEdit"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvEdit"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvEdit"
+                        app:srcCompat="@drawable/ic_edit" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -466,7 +500,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <include
         android:id="@+id/includeProgressBar"
