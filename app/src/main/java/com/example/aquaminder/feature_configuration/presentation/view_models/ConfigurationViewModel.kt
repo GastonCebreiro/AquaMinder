@@ -91,40 +91,40 @@ class ConfigurationViewModel @Inject constructor(
         }
     }
 
-    fun setNewHumidity(valve: ValveDomainModel, newHumidity: Int) {
-        actualConfiguration = actualConfiguration?.copy(
-            valves = actualConfiguration?.valves?.map {
-                if (it.id == valve.id) it.copy(humidity = newHumidity)
-                else it
-            }.orEmpty()
-        )
-        checkNewConfig()
-    }
-
-    fun getNewHumidity(valve: ValveDomainModel): Int =
-        actualConfiguration?.valves?.find {
-            it.id == valve.id
-        }?.humidity ?: 0
-
-    fun setNewStartHour(valve: ValveDomainModel, newStartHour: LocalTime) {
-        actualConfiguration = actualConfiguration?.copy(
-            valves = actualConfiguration?.valves?.map {
-                if (it.id == valve.id) it.copy(schedule = it.schedule?.copy(startTime = newStartHour))
-                else it
-            }.orEmpty()
-        )
-        checkNewConfig()
-    }
-
-    fun setNewIntervalHours(valve: ValveDomainModel, newIntervalHours: Int) {
-        actualConfiguration = actualConfiguration?.copy(
-            valves = actualConfiguration?.valves?.map {
-                if (it.id == valve.id) it.copy(schedule = it.schedule?.copy(intervalHours = newIntervalHours))
-                else it
-            }.orEmpty()
-        )
-        checkNewConfig()
-    }
+//    fun setNewHumidity(valve: ValveDomainModel, newHumidity: Int) {
+//        actualConfiguration = actualConfiguration?.copy(
+//            valves = actualConfiguration?.valves?.map {
+//                if (it.id == valve.id) it.copy(humidity = newHumidity)
+//                else it
+//            }.orEmpty()
+//        )
+//        checkNewConfig()
+//    }
+//
+//    fun getNewHumidity(valve: ValveDomainModel): Int =
+//        actualConfiguration?.valves?.find {
+//            it.id == valve.id
+//        }?.humidity ?: 0
+//
+//    fun setNewStartHour(valve: ValveDomainModel, newStartHour: LocalTime) {
+//        actualConfiguration = actualConfiguration?.copy(
+//            valves = actualConfiguration?.valves?.map {
+//                if (it.id == valve.id) it.copy(schedule = it.schedule?.copy(startTime = newStartHour))
+//                else it
+//            }.orEmpty()
+//        )
+//        checkNewConfig()
+//    }
+//
+//    fun setNewIntervalHours(valve: ValveDomainModel, newIntervalHours: Int) {
+//        actualConfiguration = actualConfiguration?.copy(
+//            valves = actualConfiguration?.valves?.map {
+//                if (it.id == valve.id) it.copy(schedule = it.schedule?.copy(intervalHours = newIntervalHours))
+//                else it
+//            }.orEmpty()
+//        )
+//        checkNewConfig()
+//    }
 
     fun setNewDuration(valve: ValveDomainModel, newDuration: Int) {
         actualConfiguration = actualConfiguration?.copy(

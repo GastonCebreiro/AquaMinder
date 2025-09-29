@@ -9,11 +9,30 @@ object ValveUtils {
 
     fun getHumidityDescription(humidity: Int): String = "$humidity %"
 
-    fun getStartTimeDescription(time: LocalTime?): String {
+    fun getTimeDescription(time: LocalTime?): String {
         val hour = time?.hour ?: 0
         val minute = time?.minute ?: 0
         val startTime = String.format("%02d:%02d", hour, minute)
-        return "$startTime hs"
+        return startTime
+    }
+
+    fun getHourAndMinute(timeString: String?): Pair<Int, Int> {
+        return try {
+            val localTime = timeString?.let { LocalTime.parse(it) } ?: LocalTime.MIDNIGHT
+            localTime.hour to localTime.minute
+        } catch (e: Exception) {
+            0 to 0 // fallback if parsing fails
+        }
+    }
+
+    fun parseTimeFromString(timeString: String?): LocalTime? {
+        return try {
+            timeString?.let {
+                LocalTime.parse(it) // expects format HH:mm or HH:mm:ss
+            }
+        } catch (e: Exception) {
+            null // return null if parsing fails
+        }
     }
 
     fun getIntervalHoursDescription(intervalHours: Int?): String =

@@ -9,6 +9,8 @@ import com.example.aquaminder.feature_home.data.model.ScheduleNetworkEntity
 import com.example.aquaminder.feature_home.data.model.ValveNetworkEntity
 import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequest
 import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponse
+import com.example.aquaminder.feature_home.domain.model.ControlMode
+import com.example.aquaminder.feature_home.domain.model.FrequencyMode
 import com.example.aquaminder.feature_main.data.remote.model.IrrigationZoneNetworkEntity
 import com.example.aquaminder.feature_main.data.remote.model.response.GetIrrigationZonesResponse
 import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
@@ -92,31 +94,25 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
             valves = listOf(
                 ValveNetworkEntity(
                     id = 1,
-                    humidity = 45,
+                    humidityMin = 45,
                     schedule = ScheduleNetworkEntity(
-                        startHour = LocalTime.of(8, 30), // 08:30
-                        intervalHours = 6,
-                        durationMinutes = 20
+                        duration = 20
                     ),
                     isActive = true
                 ),
                 ValveNetworkEntity(
                     id = 2,
-                    humidity = 55,
+                    humidityMin = 55,
                     schedule = ScheduleNetworkEntity(
-                        startHour = LocalTime.of(14, 0), // 14:00
-                        intervalHours = 8,
-                        durationMinutes = 30
+                        duration = 30
                     ),
                     isActive = false
                 ),
                 ValveNetworkEntity(
                     id = 3,
-                    humidity = 35,
+                    humidityMin = 35,
                     schedule = ScheduleNetworkEntity(
-                        startHour = LocalTime.of(20, 15), // 20:15
-                        intervalHours = 12,
-                        durationMinutes = 45
+                        duration = 45
                     ),
                     isActive = true
                 )
@@ -136,32 +132,51 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
             valves = listOf(
                 ValveNetworkEntity(
                     id = 1,
-                    humidity = 45,
+                    controlMode = ControlMode.SCHEDULED,
+                    humidityMin = 45,
+                    humidityMax = 80,
+                    isWeatherChecked = true,
                     schedule = ScheduleNetworkEntity(
-                        startHour = LocalTime.of(8, 30), // 08:30
-                        intervalHours = 6,
-                        durationMinutes = 20
+                        frequencyMode = FrequencyMode.INTERVAL_DAYS,
+                        intervalDays = 5,
+                        waterTimes = listOf(
+                            "10:30",
+                            "15:50",
+                            "22:00"
+                        ),
+                        duration = 20
                     ),
                     isActive = true
                 ),
                 ValveNetworkEntity(
                     id = 2,
-                    humidity = 55,
+                    controlMode = ControlMode.SENSOR,
+                    humidityMin = 55,
+                    humidityMax = 75,
                     schedule = ScheduleNetworkEntity(
-                        startHour = LocalTime.of(14, 0), // 14:00
-                        intervalHours = 8,
-                        durationMinutes = 30
+                        duration = 30
                     ),
+                    isWeatherChecked = false,
                     isActive = false
                 ),
                 ValveNetworkEntity(
                     id = 3,
-                    humidity = 35,
+                    controlMode = ControlMode.SCHEDULED,
                     schedule = ScheduleNetworkEntity(
-                        startHour = LocalTime.of(20, 15), // 20:15
-                        intervalHours = 12,
-                        durationMinutes = 45
+                        frequencyMode = FrequencyMode.SELECTED_DAYS,
+                        daysOfWeek = listOf(
+                            "MONDAY",
+                            "TUESDAY",
+                            "SATURDAY"
+                        ),
+                        waterTimes = listOf(
+                            "8:30",
+                            "13:50",
+                            "19:00"
+                        ),
+                        duration = 45
                     ),
+                    isWeatherChecked = true,
                     isActive = true
                 )
             ),

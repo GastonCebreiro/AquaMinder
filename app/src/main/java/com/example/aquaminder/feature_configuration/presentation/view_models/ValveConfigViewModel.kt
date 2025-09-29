@@ -11,12 +11,16 @@ import com.example.aquaminder.core.utils.SoundManager
 import com.example.aquaminder.feature_configuration.data.model.request.GetIrrigationZoneConfigRequest
 import com.example.aquaminder.feature_configuration.domain.use_case.GetIrrigationZoneConfigUseCase
 import com.example.aquaminder.feature_configuration.utils.ValveConfigState
+import com.example.aquaminder.feature_home.domain.model.ControlMode
+import com.example.aquaminder.feature_home.domain.model.FrequencyMode
+import com.example.aquaminder.feature_home.domain.model.ScheduleDomainModel
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
 import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZoneIdSelectedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -36,7 +40,6 @@ class ValveConfigViewModel @Inject constructor(
     val isLoading: StateFlow<Boolean> = _isLoading
 
     private var initialValve: ValveDomainModel? = null
-    private var actualValve: ValveDomainModel? = null
 
     fun getIrrigationZoneConfiguration() {
         _isLoading.value = true
@@ -84,8 +87,7 @@ class ValveConfigViewModel @Inject constructor(
     }
 
     fun setSelectedValve(valve: ValveDomainModel?) {
-        initialValve = valve?.copy()
-        actualValve = valve?.copy()
+        initialValve = valve?.copy() ?: getInitialValve()
         valve?.let {
             _valveConfigState.value = ValveConfigState.EditValve(valve)
         } ?: run {
@@ -104,54 +106,108 @@ class ValveConfigViewModel @Inject constructor(
     }
 
     fun saveValveConfig() {
-        println(actualValve)
+        println(initialValve)
     }
 
     fun createNewValve() {
-        println(actualValve)
+        println(initialValve)
     }
 
-    fun setHumidity(selectedHumidity: Int) {
-        actualValve = actualValve?.copy(
-            humidity = selectedHumidity
+    fun setWeatherChecked(isChecked: Boolean) {
+        initialValve = initialValve?.copy(
+            isWeatherChecked = isChecked
         )
-        checkModifications()
     }
 
-    fun setStartTime(selectedTime: LocalTime) {
-        actualValve = actualValve?.copy(
-            schedule = actualValve?.schedule?.copy(
-                startTime = selectedTime
+    private fun getInitialValve(): ValveDomainModel =
+        ValveDomainModel(
+            0,
+            ControlMode.SCHEDULED,
+            false,
+            0,
+            100,
+            ScheduleDomainModel(
+                FrequencyMode.INTERVAL_DAYS,
+                1,
+                emptyList(),
+                emptyList(),
+                0
+            ),
+            false
+        )
+
+    fun setControlMode(controlMode: ControlMode) {
+        initialValve = initialValve?.copy(
+            controlMode = controlMode
+        )
+    }
+
+    fun setFrequencyMode(frequencyMode: FrequencyMode) {
+        initialValve = initialValve?.copy(
+            schedule = initialValve?.schedule?.copy(
+                frequencyMode = frequencyMode
             )
         )
-        checkModifications()
     }
 
-    fun setIntervalHours(selectedIntervalHours: Int) {
-        actualValve = actualValve?.copy(
-            schedule = actualValve?.schedule?.copy(
-                intervalHours = selectedIntervalHours
+    fun setIntervalDays(days: Int) {
+        initialValve = initialValve?.copy(
+            schedule = initialValve?.schedule?.copy(
+                intervalDays = days
             )
         )
-        checkModifications()
     }
 
-    fun setDuration(selectedDuration: Int) {
-        actualValve = actualValve?.copy(
-            schedule = actualValve?.schedule?.copy(
-                duration = selectedDuration
+    fun addDayOfWeek(day: DayOfWeek) {
+        initialValve = initialValve?.copy(
+            schedule = initialValve?.schedule?.copy(
+                daysOfWeek = (initialValve?.schedule?.daysOfWeek ?: emptyList()) + day
             )
         )
-        checkModifications()
     }
 
-    private fun checkModifications() {
-        actualValve?.let {
-            _valveConfigState.value = ValveConfigState.EditValve(
-                valve = it,
-                isModified = it != initialValve
+    fun removeDayOfWeek(day: DayOfWeek) {
+        initialValve = initialValve?.copy(
+            schedule = initialValve?.schedule?.copy(
+                daysOfWeek = (initialValve?.schedule?.daysOfWeek ?: emptyList()) - day
             )
-        }
+        )
+    }
+
+    fun addTime(pickedTime: LocalTime) {
+        initialValve = initialValve?.copy(
+            schedule = initialValve?.schedule?.copy(
+                waterTimes = (initialValve?.schedule?.waterTimes ?: emptyList()) + pickedTime
+            )
+        )
+    }
+
+    fun removeTime(pickedTime: LocalTime) {
+        initialValve = initialValve?.copy(
+            schedule = initialValve?.schedule?.copy(
+                waterTimes = (initialValve?.schedule?.waterTimes ?: emptyList()) - pickedTime
+            )
+        )
+    }
+
+    fun setDuration(duration: Int) {
+        initialValve = initialValve?.copy(
+            schedule = initialValve?.schedule?.copy(
+                duration = duration
+            )
+        )
+    }
+
+    fun setHumidityMin(minHum: Int) {
+        initialValve = initialValve?.copy(
+            humidityMin = minHum
+        )
+    }
+
+    fun setHumidityMax(maxHum: Int) {
+        initialValve = initialValve?.copy(
+            humidityMax = maxHum
+        )
     }
 
 }

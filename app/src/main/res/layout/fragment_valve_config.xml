@@ -47,226 +47,456 @@
         app:layout_constraintTop_toBottomOf="@+id/vSemiDrop">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clConfiguration"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:paddingHorizontal="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vSemiDrop">
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
+            <!-- Modo de control -->
             <TextView
-                android:id="@+id/tvHumidityTitle"
+                android:id="@+id/tvControlMode"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
-                android:gravity="center"
-                android:text="@string/fragment_valve_config_humidity_title"
+                android:text="@string/fragment_valve_config_control"
                 android:textColor="@color/light_blue"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <RadioGroup
+                android:id="@+id/rgControlMode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvControlMode">
+
+                <RadioButton
+                    android:id="@+id/rbScheduled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_address_selector"
+                    android:padding="4dp"
+                    android:checked="true"
+                    android:text="@string/fragment_valve_config_scheduled"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="0dp" />
+
+                <RadioButton
+                    android:id="@+id/rbSensor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_address_selector"
+                    android:padding="4dp"
+                    android:text="@string/fragment_valve_config_sensor"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+            <!-- Considerar clima -->
             <TextView
-                android:id="@+id/tvHumidity"
+                android:id="@+id/tvWeather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:gravity="center"
+                android:text="@string/fragment_valve_config_weather"
                 android:textColor="@color/light_blue"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvHumidityTitle"
-                tools:text="45%" />
+                app:layout_constraintTop_toBottomOf="@id/rgControlMode" />
 
-            <com.google.android.material.slider.Slider
-                android:id="@+id/sliderHumidity"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchWeather"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="@id/tvHumidity"
-                app:layout_constraintStart_toEndOf="@+id/tvHumidity"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/transparent"
+                android:checked="false"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                app:layout_constraintBaseline_toBaselineOf="@id/tvWeather"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tvHumidity"
-                tools:value="0.45" />
+                app:switchPadding="10dp"
+                app:thumbTint="@color/switch_thumb_tint"
+                app:trackTint="@color/switch_track_tint" />
 
-            <View
-                android:id="@+id/view1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/light_blue_finish"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvHumidity" />
 
+            <!-- Sección: Programado -->
             <TextView
-                android:id="@+id/tvStartHourTitle"
-                android:layout_width="0dp"
+                android:id="@+id/tvFrequency"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
-                android:gravity="center"
-                android:text="@string/fragment_valve_config_start_hour_title"
+                android:text="@string/fragment_valve_config_frequency"
                 android:textColor="@color/light_blue"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view1" />
+                app:layout_constraintTop_toBottomOf="@id/tvWeather" />
 
-            <TextView
-                android:id="@+id/tvStartHour"
+            <RadioGroup
+                android:id="@+id/rgFrequencyType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvFrequency">
+
+                <!-- RadioButton for "Every N Days" -->
+                <RadioButton
+                    android:id="@+id/rbEveryNDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/fragment_valve_config_every_n_days"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- Extra UI next to "Every N Days" -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal"
+                    android:gravity="top"
+                    android:layout_marginStart="4dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilEveryNDays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:paddingBottom="10dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEveryNDays"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="number"
+                            android:text="2"
+                            android:gravity="center"
+                            android:textColor="@color/light_blue"
+                            android:textSize="20sp"
+                            android:textStyle="bold"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/tvDaysSuffix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/fragment_valve_config_days"
+                        android:textColor="@color/gray"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <!-- RadioButton for "Choose Days" -->
+                <RadioButton
+                    android:id="@+id/rbChooseDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/background_address_selector"
+                    android:text="@string/fragment_valve_config_choose_days"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+            </RadioGroup>
+
+
+            <!-- Checkboxes for days of the week -->
+            <CheckBox
+                android:id="@+id/cbL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/custom_checkbox"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/fragment_valve_config_l"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/cbM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/custom_checkbox"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/fragment_valve_config_m"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/cbX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/custom_checkbox"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/fragment_valve_config_x"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/cbJ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/custom_checkbox"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/fragment_valve_config_j"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/cbV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/custom_checkbox"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/fragment_valve_config_v"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/cbS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/custom_checkbox"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/fragment_valve_config_s"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/cbD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/custom_checkbox"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/fragment_valve_config_d"
+                android:textStyle="bold" />
+
+            <!-- Flow arranges them automatically -->
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/flowDaysOfWeek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:padding="16dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                android:background="@drawable/button_background_selector"
+                app:constraint_referenced_ids="cbL,cbM,cbX,cbJ,cbV,cbS,cbD"
+                app:flow_horizontalGap="4dp"
+                app:flow_wrapMode="aligned"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvStartHourTitle"
-                tools:text="08:30 hs" />
+                app:layout_constraintTop_toBottomOf="@id/rgFrequencyType" />
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/light_blue_finish"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvStartHour" />
-
-
+            <!-- Horario de riego -->
             <TextView
-                android:id="@+id/tvIntervalHoursTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
-                android:gravity="center"
-                android:text="@string/fragment_valve_config_interval_hours_title"
-                android:textColor="@color/light_blue"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-            <TextView
-                android:id="@+id/tvIntervalHours"
+                android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/fragment_valve_config_time"
                 android:textColor="@color/light_blue"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/btnPlus"
-                app:layout_constraintStart_toEndOf="@+id/btnMinus"
-                app:layout_constraintTop_toBottomOf="@id/tvIntervalHoursTitle"
-                tools:text="6 horas" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnMinus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_background_selector"
-                android:text="@string/fragment_valve_config_btn_minus"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="40sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvIntervalHours"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvIntervalHours" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnPlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/button_background_selector"
-                android:text="@string/fragment_valve_config_btn_plus"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="40sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvIntervalHours"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvIntervalHours" />
-
-            <View
-                android:id="@+id/view3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/light_blue_finish"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnPlus" />
-
-            <TextView
-                android:id="@+id/tvDurationTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
-                android:gravity="center"
-                android:text="@string/fragment_valve_config_duration_title"
-                android:textColor="@color/light_blue"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
+                app:layout_constraintTop_toBottomOf="@id/flowDaysOfWeek" />
 
-            <EditText
-                android:id="@+id/etDuration"
+            <ImageView
+                android:id="@+id/btnPickTime"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="80dp"
-                android:autofillHints="text"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:inputType="numberDecimal"
-                android:maxLength="2"
-                android:textColor="@color/light_blue"
-                android:textColorHint="@color/light_blue_hint"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_schedule"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDurationTitle"
-                tools:text="20" />
-
-            <View
-                android:id="@+id/viewUnderlined"
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/light_blue"
-                app:layout_constraintEnd_toEndOf="@+id/etDuration"
-                app:layout_constraintStart_toStartOf="@+id/etDuration"
-                app:layout_constraintTop_toBottomOf="@id/etDuration" />
+                app:layout_constraintTop_toBottomOf="@id/tvTime"
+                app:tint="@color/light_blue" />
 
             <TextView
-                android:id="@+id/tvMinutesLabel"
+                android:id="@+id/tvNewTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/fragment_valve_config_new_time"
+                android:textColor="@color/light_blue"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/btnPickTime"
+                app:layout_constraintStart_toStartOf="@+id/btnPickTime"
+                app:layout_constraintTop_toBottomOf="@+id/btnPickTime" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTimes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toBottomOf="@+id/tvNewTime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnPickTime"
+                app:layout_constraintTop_toTopOf="@id/btnPickTime"
+                tools:listitem="@layout/item_time_chip" />
+
+            <!-- Duración del riego -->
+            <TextView
+                android:id="@+id/tvDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:text="@string/fragment_valve_config_duration_label"
+                android:layout_marginTop="20dp"
+                android:text="@string/fragment_valve_config_duration"
                 android:textColor="@color/light_blue"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/etDuration"
-                app:layout_constraintStart_toEndOf="@+id/etDuration"
-                app:layout_constraintTop_toTopOf="@+id/etDuration" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvNewTime" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:paddingBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="@id/tvDuration"
+                app:layout_constraintStart_toEndOf="@+id/tvDuration"
+                app:layout_constraintTop_toTopOf="@id/tvDuration">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_address_selector"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:text="3"
+                    android:textColor="@color/light_blue"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvDurationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:text="@string/fragment_valve_config_minutes"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tilDuration"
+                app:layout_constraintStart_toEndOf="@id/tilDuration"
+                app:layout_constraintTop_toTopOf="@id/tilDuration" />
+
+            <!-- Sección: Por Humedad -->
+            <TextView
+                android:id="@+id/tvHumMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/fragment_valve_config_min_hum"
+                android:textColor="@color/light_blue"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWeather" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderHumMin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:value="45"
+                android:valueFrom="0"
+                android:valueTo="100"
+                app:layout_constraintEnd_toStartOf="@id/tvHumMinVal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHumMin" />
+
+            <TextView
+                android:id="@+id/tvHumMinVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45%"
+                android:textColor="@color/light_blue"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/sliderHumMin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/sliderHumMin" />
+
+            <TextView
+                android:id="@+id/tvHumMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/fragment_valve_config_max_hum"
+                android:textColor="@color/light_blue"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sliderHumMin" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderHumMax"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:value="80"
+                android:valueFrom="0"
+                android:valueTo="100"
+                app:layout_constraintEnd_toStartOf="@id/tvHumMaxVal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHumMax" />
+
+            <TextView
+                android:id="@+id/tvHumMaxVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="80%"
+                android:textColor="@color/light_blue"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/sliderHumMax"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/sliderHumMax" />
+
+            <!-- Helpers: Grupos para mostrar/ocultar -->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupScheduled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:constraint_referenced_ids="tvFrequency,rgFrequencyType,cbL,cbM,cbX,cbJ,cbV,cbS,cbD,flowDaysOfWeek,tvTime, tvNewTime, btnPickTime, rvTimes, tvDuration,tilDuration, tvDurationLabel" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupSensor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="tvHumMin,sliderHumMin,tvHumMinVal,tvHumMax,sliderHumMax,tvHumMaxVal" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -280,7 +510,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_background_selector"
-        android:enabled="false"
+        android:enabled="true"
         android:text="@string/fragment_valve_config_btn_save"
         android:textAllCaps="true"
         android:textColor="@color/white"

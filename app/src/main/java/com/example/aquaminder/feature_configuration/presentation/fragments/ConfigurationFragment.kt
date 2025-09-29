@@ -28,7 +28,7 @@ import com.example.aquaminder.feature_configuration.utils.ConfigurationState
 import com.example.aquaminder.feature_configuration.utils.ValveUtils.getDurationDescription
 import com.example.aquaminder.feature_configuration.utils.ValveUtils.getHumidityDescription
 import com.example.aquaminder.feature_configuration.utils.ValveUtils.getIntervalHoursDescription
-import com.example.aquaminder.feature_configuration.utils.ValveUtils.getStartTimeDescription
+import com.example.aquaminder.feature_configuration.utils.ValveUtils.getTimeDescription
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -152,7 +152,7 @@ class ConfigurationFragment : Fragment() {
     private fun setTextColorStatus(textView: TextView, isEnable: Boolean) {
         textView.setTextColor(
             if (isEnable)
-                ContextCompat.getColor(requireContext(), R.color.light_blue)
+                ContextCompat.getColor(requireContext(), R.color.gray)
             else
                 ContextCompat.getColor(requireContext(), R.color.gray_delete)
         )
@@ -238,10 +238,10 @@ class ConfigurationFragment : Fragment() {
             binding.ivCheck.setImageResource(R.drawable.ic_warning)
         }
 
-        binding.tvSelectedHumidity.text = getHumidityDescription(valve.humidity)
-        binding.tvStartHour.text = getStartTimeDescription(valve.schedule?.startTime)
-        binding.tvIntervalHours.text = getIntervalHoursDescription(valve.schedule?.intervalHours)
-        binding.tvDuration.text = getDurationDescription(valve.schedule?.duration)
+//        binding.tvSelectedHumidity.text = getHumidityDescription(valve.humidity)
+//        binding.tvStartHour.text = getTimeDescription(valve.schedule?.startTime)
+//        binding.tvIntervalHours.text = getIntervalHoursDescription(valve.schedule?.intervalHours)
+//        binding.tvDuration.text = getDurationDescription(valve.schedule?.duration)
 
 //        setUpDialogs(valve)
     }

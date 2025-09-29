@@ -84,15 +84,30 @@
 
     <string name="fragment_valve_config_title">Valvula %s</string>
     <string name="fragment_valve_config_new_title">Nueva valvula</string>
+    <string name="fragment_valve_config_control">Modo de control</string>
     <string name="fragment_valve_config_btn_save">GUARDAR</string>
     <string name="fragment_valve_config_btn_update">ACTUALIZAR</string>
-    <string name="fragment_valve_config_btn_plus">+</string>
-    <string name="fragment_valve_config_btn_minus">-</string>
-    <string name="fragment_valve_config_humidity_title">Humedad deseada</string>
-    <string name="fragment_valve_config_start_hour_title">Horario de inicio</string>
-    <string name="fragment_valve_config_interval_hours_title">Intervalo de tiempo</string>
-    <string name="fragment_valve_config_duration_title">Duracion</string>
-    <string name="fragment_valve_config_duration_label">minutos</string>
+    <string name="fragment_valve_config_scheduled">Programado</string>
+    <string name="fragment_valve_config_sensor">Por humedad</string>
+    <string name="fragment_valve_config_weather">Considerar clima:</string>
+    <string name="fragment_valve_config_frequency">Frecuencia:</string>
+    <string name="fragment_valve_config_choose_days">Días de la semana</string>
+    <string name="fragment_valve_config_every_n_days">Cada</string>
+    <string name="fragment_valve_config_days">días</string>
+    <string name="fragment_valve_config_l">L</string>
+    <string name="fragment_valve_config_m">M</string>
+    <string name="fragment_valve_config_x">X</string>
+    <string name="fragment_valve_config_j">J</string>
+    <string name="fragment_valve_config_v">V</string>
+    <string name="fragment_valve_config_s">S</string>
+    <string name="fragment_valve_config_d">D</string>
+    <string name="fragment_valve_config_time">Horario de riego:</string>
+    <string name="fragment_valve_config_duration">Duración del riego:</string>
+    <string name="fragment_valve_config_minutes">minutos</string>
+    <string name="fragment_valve_config_new_time">Nuevo</string>
+    <string name="fragment_valve_config_removed">Item eliminado %s</string>
+    <string name="fragment_valve_config_days_error">Ingrese un valor entre 1 y 31</string>
+    <string name="fragment_valve_config_duration_error">Ingrese un valor entre 1 y 60</string>
 
     <string name="fragment_weather_title">Clima</string>
     <string name="fragment_weather_humidity_label">Humedad</string>
@@ -142,5 +157,7 @@
     <string name="bottom_bar_menu">PRINCIPAL</string>
     <string name="bottom_bar_config">CONFIGURACIÓN</string>
     <string name="bottom_bar_weather">CLIMA</string>
+    <string name="fragment_valve_config_min_hum">Humedad mínima:</string>
+    <string name="fragment_valve_config_max_hum">Humedad máxima:</string>
 
 </resources>
