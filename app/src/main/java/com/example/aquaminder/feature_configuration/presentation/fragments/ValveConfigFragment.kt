@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -18,6 +20,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentValveConfigBinding
@@ -166,19 +169,32 @@ class ValveConfigFragment : Fragment() {
     }
 
     private fun setFrequencyMode() {
-        binding.rgFrequencyType.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.rbEveryNDays -> {
-                    setDaysCheckbox(false)
-                    viewModel.setFrequencyMode(FrequencyMode.INTERVAL_DAYS)
-                }
+        binding.rgFrequencyType.setOnCheckedChangeListener(null)
 
-                R.id.rbChooseDays -> {
-                    setDaysCheckbox(true)
-                    viewModel.setFrequencyMode(FrequencyMode.SELECTED_DAYS)
+        val rbEveryNDays = binding.rbEveryNDays
+        val rbChooseDays = binding.rbChooseDays
+
+
+        val listener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                when (buttonView.id) {
+                    R.id.rbEveryNDays -> {
+                        rbChooseDays.isChecked = false
+                        setDaysCheckbox(false)
+                        viewModel.setFrequencyMode(FrequencyMode.INTERVAL_DAYS)
+                    }
+
+                    R.id.rbChooseDays -> {
+                        rbEveryNDays.isChecked = false
+                        setDaysCheckbox(true)
+                        viewModel.setFrequencyMode(FrequencyMode.SELECTED_DAYS)
+                    }
                 }
             }
         }
+
+        rbEveryNDays.setOnCheckedChangeListener(listener)
+        rbChooseDays.setOnCheckedChangeListener(listener)
     }
 
     private fun setDaysCheckbox(isEnabled: Boolean) {
@@ -189,6 +205,18 @@ class ValveConfigFragment : Fragment() {
 
     private fun setWeather() {
         binding.switchWeather.setOnCheckedChangeListener { _, isChecked ->
+            binding.tvWeatherState.text = if (isChecked)
+                getString(R.string.fragment_configuration_switch_on)
+            else
+                getString(R.string.fragment_configuration_switch_off)
+
+            binding.tvWeatherState.setTextColor(
+                if (isChecked)
+                    ContextCompat.getColor(requireContext(), R.color.light_blue)
+                else
+                    ContextCompat.getColor(requireContext(), R.color.gray_delete)
+            )
+
             viewModel.setWeatherChecked(isChecked)
             viewModel.setSwitchSound(isChecked)
         }
@@ -230,6 +258,11 @@ class ValveConfigFragment : Fragment() {
             }
         )
 
+        binding.rvTimes.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
         binding.rvTimes.adapter = adapter
 
         binding.btnPickTime.setOnClickListener {
@@ -279,11 +312,13 @@ class ValveConfigFragment : Fragment() {
                 binding.groupScheduled.isVisible = true
                 binding.groupSensor.isVisible = false
             }
+
             ControlMode.SENSOR -> {
                 binding.rbSensor.isChecked = true
                 binding.groupScheduled.isVisible = false
                 binding.groupSensor.isVisible = true
             }
+
             null -> binding.rbScheduled.isChecked = true
         }
 
@@ -294,10 +329,12 @@ class ValveConfigFragment : Fragment() {
                 binding.rbChooseDays.isChecked = true
                 setDaysCheckbox(true)
             }
+
             FrequencyMode.INTERVAL_DAYS -> {
                 binding.rbEveryNDays.isChecked = true
                 setDaysCheckbox(false)
             }
+
             null -> binding.rbEveryNDays.isChecked = true
         }
 
