@@ -525,7 +525,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvWeather" />
+                app:layout_constraintTop_toBottomOf="@id/cvWeather" />
 
             <com.google.android.material.slider.Slider
                 android:id="@+id/sliderHumMin"
