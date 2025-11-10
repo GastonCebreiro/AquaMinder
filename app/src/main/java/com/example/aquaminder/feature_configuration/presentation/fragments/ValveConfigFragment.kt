@@ -2,15 +2,15 @@ package com.example.aquaminder.feature_configuration.presentation.fragments
 
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentValveConfigBinding
+import com.example.aquaminder.databinding.ItemSpinnerDropdownBinding
+import com.example.aquaminder.databinding.ItemSpinnerSelectedBinding
 import com.example.aquaminder.feature_configuration.presentation.adapter.TimeAdapter
 import com.example.aquaminder.feature_configuration.presentation.view_models.ValveConfigViewModel
 import com.example.aquaminder.feature_configuration.utils.ValveConfigState
@@ -33,7 +35,6 @@ import com.example.aquaminder.feature_configuration.utils.ValveUtils.parseTimeFr
 import com.example.aquaminder.feature_home.domain.model.ControlMode
 import com.example.aquaminder.feature_home.domain.model.FrequencyMode
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
-import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
@@ -50,7 +51,6 @@ class ValveConfigFragment : Fragment() {
 
     private lateinit var checkBoxes: List<Pair<CheckBox, DayOfWeek>>
 
-    private val args: ValveConfigFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,12 +63,12 @@ class ValveConfigFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val valve = args.valve
-        viewModel.setSelectedValve(valve)
+        viewModel.getIrrigationZoneConfiguration()
 
+        setButton()
         setCheckBoxes()
-
         setMode()
+        setActive()
         setWeather()
         setFrequencyMode()
         setIntervalDays()
@@ -89,14 +89,8 @@ class ValveConfigFragment : Fragment() {
                 launch {
                     viewModel.valveConfigState.collect { valveConfigState ->
                         when (valveConfigState) {
-                            is ValveConfigState.NewValve -> {
-                                setCreateValveState()
-                            }
-
-                            is ValveConfigState.EditValve -> {
-                                setInitialState(
-                                    valveConfigState.valve
-                                )
+                            is ValveConfigState.Success -> {
+                                setValveSelector(valveConfigState.configuration.valves)
                             }
 
                             is ValveConfigState.Error -> {
@@ -104,10 +98,70 @@ class ValveConfigFragment : Fragment() {
                             }
 
                             is ValveConfigState.Idle -> {}
+
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun setValveSelector(valves: List<ValveDomainModel>) {
+        if (valves.isEmpty()) {
+            return
+        }
+
+        val valvesDescription = valves.map { valve ->
+            getString(R.string.fragment_home_valve_description, valve.id.toString())
+        }
+
+        val adapter = object : ArrayAdapter<String>(
+            requireContext(),
+            R.layout.item_spinner_selected,
+            valvesDescription
+        ) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val binding = if (convertView == null) {
+                    ItemSpinnerSelectedBinding.inflate(LayoutInflater.from(context), parent, false)
+                } else {
+                    ItemSpinnerSelectedBinding.bind(convertView)
+                }
+
+                binding.tvSpinnerSelected.text = getItem(position)
+
+                return binding.root
+            }
+
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val binding = if (convertView == null) {
+                    ItemSpinnerDropdownBinding.inflate(LayoutInflater.from(context), parent, false)
+                } else {
+                    ItemSpinnerDropdownBinding.bind(convertView)
+                }
+
+                binding.tvSpinnerDropdown.text = getItem(position)
+                return binding.root
+            }
+        }
+
+        binding.spValves.adapter = adapter
+
+        binding.spValves.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedValve = viewModel.getSelectedValve(position)
+                setValveParameters(selectedValve)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
@@ -140,8 +194,24 @@ class ValveConfigFragment : Fragment() {
     private fun setDuration() {
         binding.etDuration.addTextChangedListener { editable ->
             val value = editable?.toString()?.trim()?.toIntOrNull() ?: 0
-            if (value in MIN_DURATION_MINUTES..MAX_DURATION_MINUTES) {
-                viewModel.setDuration(value)
+            when {
+                value < MIN_DURATION_MINUTES -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.fragment_valve_config_min_duration, MIN_DURATION_MINUTES.toString()),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    viewModel.setDuration(MIN_DURATION_MINUTES)
+                }
+                value > MAX_DURATION_MINUTES -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.fragment_valve_config_max_duration, MAX_DURATION_MINUTES.toString()),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    viewModel.setDuration(MAX_DURATION_MINUTES)
+                }
+                else -> viewModel.setDuration(value)
             }
         }
     }
@@ -149,6 +219,7 @@ class ValveConfigFragment : Fragment() {
     @SuppressLint("NewApi")
     private fun setSelectedDays() {
         checkBoxes.forEach { (checkBox, day) ->
+            checkBox.setOnCheckedChangeListener(null)
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     viewModel.addDayOfWeek(day)
@@ -174,18 +245,19 @@ class ValveConfigFragment : Fragment() {
         val rbEveryNDays = binding.rbEveryNDays
         val rbChooseDays = binding.rbChooseDays
 
-
         val listener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 when (buttonView.id) {
                     R.id.rbEveryNDays -> {
                         rbChooseDays.isChecked = false
+                        rbEveryNDays.isChecked = true
                         setDaysCheckbox(false)
                         viewModel.setFrequencyMode(FrequencyMode.INTERVAL_DAYS)
                     }
 
                     R.id.rbChooseDays -> {
                         rbEveryNDays.isChecked = false
+                        rbChooseDays.isChecked = true
                         setDaysCheckbox(true)
                         viewModel.setFrequencyMode(FrequencyMode.SELECTED_DAYS)
                     }
@@ -202,6 +274,26 @@ class ValveConfigFragment : Fragment() {
             checkBox.isEnabled = isEnabled
         }
     }
+
+    private fun setActive() {
+        binding.switchActive.setOnCheckedChangeListener { _, isChecked ->
+            binding.tvActiveState.text = if (isChecked)
+                getString(R.string.fragment_configuration_switch_on)
+            else
+                getString(R.string.fragment_configuration_switch_off)
+
+            binding.tvActiveState.setTextColor(
+                if (isChecked)
+                    ContextCompat.getColor(requireContext(), R.color.light_blue)
+                else
+                    ContextCompat.getColor(requireContext(), R.color.gray_delete)
+            )
+
+            viewModel.setActiveChecked(isChecked)
+            viewModel.setSwitchSound(isChecked)
+        }
+    }
+
 
     private fun setWeather() {
         binding.switchWeather.setOnCheckedChangeListener { _, isChecked ->
@@ -292,20 +384,8 @@ class ValveConfigFragment : Fragment() {
         timePicker.show()
     }
 
-    private fun setCreateValveState() {
-        setButton(isEdition = false)
-        binding.tvTitle.text = getString(R.string.fragment_valve_config_new_title)
-    }
-
-    private fun setInitialState(valve: ValveDomainModel) {
-        setButton(isEdition = true)
-        setValveParameters(valve)
-    }
-
     @SuppressLint("NewApi")
     private fun setValveParameters(valve: ValveDomainModel) {
-        binding.tvTitle.text = getString(R.string.fragment_valve_config_title, valve.id.toString())
-
         when (valve.controlMode) {
             ControlMode.SCHEDULED -> {
                 binding.rbScheduled.isChecked = true
@@ -323,6 +403,7 @@ class ValveConfigFragment : Fragment() {
         }
 
         binding.switchWeather.isChecked = valve.isWeatherChecked
+        binding.switchActive.isChecked = valve.isActive
 
         when (valve.schedule?.frequencyMode) {
             FrequencyMode.SELECTED_DAYS -> {
@@ -341,9 +422,18 @@ class ValveConfigFragment : Fragment() {
         binding.etEveryNDays.setText((valve.schedule?.intervalDays ?: 2).toString())
 
         checkBoxes.forEach { (checkBox, day) ->
+            checkBox.setOnCheckedChangeListener(null)
             checkBox.isChecked = valve.schedule?.daysOfWeek?.contains(day) ?: false
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    viewModel.addDayOfWeek(day)
+                } else {
+                    viewModel.removeDayOfWeek(day)
+                }
+            }
         }
 
+        adapter.cleanTimes()
         valve.schedule?.waterTimes?.forEach { time ->
             adapter.addTime(getTimeDescription(time))
         }
@@ -359,17 +449,9 @@ class ValveConfigFragment : Fragment() {
         binding.tvHumMaxVal.text = "$maxHum%"
     }
 
-    private fun setButton(isEdition: Boolean) {
-        if (isEdition) {
-            binding.btnSave.text = getString(R.string.fragment_valve_config_btn_update)
-            binding.btnSave.setOnClickListener {
-                viewModel.saveValveConfig()
-            }
-        } else {
-            binding.btnSave.text = getString(R.string.fragment_valve_config_btn_save)
-            binding.btnSave.setOnClickListener {
-                viewModel.createNewValve()
-            }
+    private fun setButton() {
+        binding.btnSave.setOnClickListener {
+            viewModel.saveValveConfig()
         }
     }
 

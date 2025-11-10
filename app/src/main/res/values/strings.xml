@@ -80,10 +80,11 @@
     <string name="fragment_configuration_switch_off">OFF</string>
     <string name="fragment_configuration_switch_sensor">Medir Humedad</string>
     <string name="fragment_configuration_switch_weather">Revisar Clima</string>
+    <string name="fragment_configuration_switch_active">Activar Válvula</string>
     <string name="fragment_configuration_switch_timer">Activar temporizador</string>
 
     <string name="fragment_valve_config_title">Valvula %s</string>
-    <string name="fragment_valve_config_new_title">Nueva valvula</string>
+    <string name="fragment_valve_config_new_title">Configuración</string>
     <string name="fragment_valve_config_control">Modo de control</string>
     <string name="fragment_valve_config_btn_save">GUARDAR</string>
     <string name="fragment_valve_config_btn_update">ACTUALIZAR</string>
@@ -105,7 +106,9 @@
     <string name="fragment_valve_config_duration">Duración del riego:</string>
     <string name="fragment_valve_config_minutes">minutos</string>
     <string name="fragment_valve_config_new_time">Nuevo</string>
-    <string name="fragment_valve_config_removed">Item eliminado %s</string>
+    <string name="fragment_valve_config_removed">Horario eliminado %s</string>
+    <string name="fragment_valve_config_max_duration">La duración maxima es %s minutos</string>
+    <string name="fragment_valve_config_min_duration">La duración minima es %s minuto</string>
     <string name="fragment_valve_config_days_error">Ingrese un valor entre 1 y 31</string>
     <string name="fragment_valve_config_duration_error">Ingrese un valor entre 1 y 60</string>
 

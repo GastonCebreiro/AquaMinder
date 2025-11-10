@@ -12,26 +12,26 @@
         tools:layout="@layout/fragment_home"/>
 
     <fragment
-        android:id="@+id/configurationFragment"
-        android:name="com.example.aquaminder.feature_configuration.presentation.fragments.ConfigurationFragment"
-        android:label="fragment_configuration"
-        tools:layout="@layout/fragment_configuration" >
-        <action
-            android:id="@+id/action_configurationFragment_to_valveConfigFragment"
-            app:destination="@id/valveConfigFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/valveConfigFragment"
         android:name="com.example.aquaminder.feature_configuration.presentation.fragments.ValveConfigFragment"
         android:label="fragment_valve_config"
         tools:layout="@layout/fragment_valve_config" >
-
-        <argument
-            android:name="valve"
-            app:argType="com.example.aquaminder.feature_home.domain.model.ValveDomainModel"
-            app:nullable="true" />
+<!--        <action-->
+<!--            android:id="@+id/action_configurationFragment_to_valveConfigFragment"-->
+<!--            app:destination="@id/valveConfigFragment" />-->
     </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/valveConfigFragment"-->
+<!--        android:name="com.example.aquaminder.feature_configuration.presentation.fragments.ValveConfigFragment"-->
+<!--        android:label="fragment_valve_config"-->
+<!--        tools:layout="@layout/fragment_valve_config" >-->
+
+<!--        <argument-->
+<!--            android:name="valve"-->
+<!--            app:argType="com.example.aquaminder.feature_home.domain.model.ValveDomainModel"-->
+<!--            app:nullable="true" />-->
+<!--    </fragment>-->
 
 
 

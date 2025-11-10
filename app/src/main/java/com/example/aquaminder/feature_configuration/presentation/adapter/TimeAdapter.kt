@@ -30,14 +30,15 @@ class TimeAdapter(
         val time = times[position]
         holder.chip.text = time
 
-        // Remove (close icon)
         holder.chip.setOnCloseIconClickListener {
-            val removed = times.removeAt(position)
-            notifyItemRemoved(position)
-            onRemove(removed)
+            val pos = holder.bindingAdapterPosition
+            if (pos != RecyclerView.NO_POSITION) {
+                val removed = times.removeAt(pos)
+                notifyItemRemoved(pos)
+                onRemove(removed)
+            }
         }
 
-        // Edit (tap chip)
         holder.chip.setOnClickListener {
             onEdit(time)
         }
@@ -56,5 +57,10 @@ class TimeAdapter(
             times[index] = newTime
             notifyItemChanged(index)
         }
+    }
+
+    fun cleanTimes() {
+        times.clear()
+        notifyDataSetChanged()
     }
 }

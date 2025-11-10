@@ -72,151 +72,151 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvSensor"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="@color/background_light_blue"
-                app:cardCornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvGeneral">
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/cvSensor"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:backgroundTint="@color/background_light_blue"-->
+<!--                app:cardCornerRadius="10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tvGeneral">-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <ImageView
-                        android:id="@+id/ivSensor"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="10dp"
-                        android:contentDescription="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_sensor"
-                        app:tint="@color/gray_delete" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/ivSensor"-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:contentDescription="@null"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        app:srcCompat="@drawable/ic_sensor"-->
+<!--                        app:tint="@color/gray_delete" />-->
 
-                    <TextView
-                        android:id="@+id/tvSensor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/fragment_configuration_switch_sensor"
-                        android:textColor="@color/gray_delete"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivSensor"
-                        app:layout_constraintTop_toTopOf="parent" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvSensor"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:text="@string/fragment_configuration_switch_sensor"-->
+<!--                        android:textColor="@color/gray_delete"-->
+<!--                        android:textSize="20sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintStart_toEndOf="@+id/ivSensor"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <TextView
-                        android:id="@+id/tvSensorState"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/fragment_configuration_switch_off"
-                        android:textColor="@color/gray_delete"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/switchSensor"
-                        app:layout_constraintTop_toTopOf="parent" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvSensorState"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginEnd="10dp"-->
+<!--                        android:text="@string/fragment_configuration_switch_off"-->
+<!--                        android:textColor="@color/gray_delete"-->
+<!--                        android:textSize="22sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toStartOf="@+id/switchSensor"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchSensor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:background="@android:color/transparent"
-                        android:checked="false"
-                        android:scaleX="1.5"
-                        android:scaleY="1.5"
-                        app:layout_constraintBottom_toBottomOf="@id/tvSensor"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tvSensor"
-                        app:switchPadding="10dp"
-                        app:thumbTint="@color/switch_thumb_tint"
-                        app:trackTint="@color/switch_track_tint" />
+<!--                    <androidx.appcompat.widget.SwitchCompat-->
+<!--                        android:id="@+id/switchSensor"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginEnd="20dp"-->
+<!--                        android:background="@android:color/transparent"-->
+<!--                        android:checked="false"-->
+<!--                        android:scaleX="1.5"-->
+<!--                        android:scaleY="1.5"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/tvSensor"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/tvSensor"-->
+<!--                        app:switchPadding="10dp"-->
+<!--                        app:thumbTint="@color/switch_thumb_tint"-->
+<!--                        app:trackTint="@color/switch_track_tint" />-->
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-            </androidx.cardview.widget.CardView>
+<!--            </androidx.cardview.widget.CardView>-->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvWeather"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="@color/background_light_blue"
-                app:cardCornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cvSensor">
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/cvWeather"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:backgroundTint="@color/background_light_blue"-->
+<!--                app:cardCornerRadius="10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cvSensor">-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <ImageView
-                        android:id="@+id/ivWeather"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="10dp"
-                        android:contentDescription="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_weather"
-                        app:tint="@color/gray_delete" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/ivWeather"-->
+<!--                        android:layout_width="30dp"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:contentDescription="@null"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        app:srcCompat="@drawable/ic_weather"-->
+<!--                        app:tint="@color/gray_delete" />-->
 
-                    <TextView
-                        android:id="@+id/tvWeather"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/fragment_configuration_switch_weather"
-                        android:textColor="@color/gray_delete"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivWeather"
-                        app:layout_constraintTop_toTopOf="parent" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvWeather"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:text="@string/fragment_configuration_switch_weather"-->
+<!--                        android:textColor="@color/gray_delete"-->
+<!--                        android:textSize="20sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintStart_toEndOf="@+id/ivWeather"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <TextView
-                        android:id="@+id/tvWeatherState"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/fragment_configuration_switch_off"
-                        android:textColor="@color/gray_delete"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/switchWeather"
-                        app:layout_constraintTop_toTopOf="parent" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvWeatherState"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginEnd="10dp"-->
+<!--                        android:text="@string/fragment_configuration_switch_off"-->
+<!--                        android:textColor="@color/gray_delete"-->
+<!--                        android:textSize="22sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toStartOf="@+id/switchWeather"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switchWeather"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:background="@android:color/transparent"
-                        android:checked="false"
-                        android:scaleX="1.5"
-                        android:scaleY="1.5"
-                        app:layout_constraintBottom_toBottomOf="@id/tvWeather"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tvWeather"
-                        app:switchPadding="10dp"
-                        app:thumbTint="@color/switch_thumb_tint"
-                        app:trackTint="@color/switch_track_tint" />
+<!--                    <androidx.appcompat.widget.SwitchCompat-->
+<!--                        android:id="@+id/switchWeather"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginEnd="20dp"-->
+<!--                        android:background="@android:color/transparent"-->
+<!--                        android:checked="false"-->
+<!--                        android:scaleX="1.5"-->
+<!--                        android:scaleY="1.5"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/tvWeather"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/tvWeather"-->
+<!--                        app:switchPadding="10dp"-->
+<!--                        app:thumbTint="@color/switch_thumb_tint"-->
+<!--                        app:trackTint="@color/switch_track_tint" />-->
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-            </androidx.cardview.widget.CardView>
+<!--            </androidx.cardview.widget.CardView>-->
 
 
             <!--            <androidx.cardview.widget.CardView-->

@@ -39,7 +39,9 @@ class ValveConfigViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    private var initialValve: ValveDomainModel? = null
+    private var actualValve: ValveDomainModel = getInitialValve()
+    private var valves: MutableList<ValveDomainModel> = mutableListOf()
+    private var valveSelectedPosition: Int = 0
 
     fun getIrrigationZoneConfiguration() {
         _isLoading.value = true
@@ -53,8 +55,9 @@ class ValveConfigViewModel @Inject constructor(
                         .collect { result ->
                             when (result) {
                                 is ResultEvent.Success -> {
-//                                    _valveConfigState.value =
-//                                        ValveConfigState.Success(result.data)
+                                    valves = result.data.valves.toMutableList()
+                                    _valveConfigState.value =
+                                        ValveConfigState.Success(result.data)
                                 }
 
                                 is ResultEvent.Error -> {
@@ -86,13 +89,10 @@ class ValveConfigViewModel @Inject constructor(
         }
     }
 
-    fun setSelectedValve(valve: ValveDomainModel?) {
-        initialValve = valve?.copy() ?: getInitialValve()
-        valve?.let {
-            _valveConfigState.value = ValveConfigState.EditValve(valve)
-        } ?: run {
-            _valveConfigState.value = ValveConfigState.NewValve
-        }
+    fun getSelectedValve(position: Int): ValveDomainModel {
+        valveSelectedPosition = position
+        actualValve = valves[valveSelectedPosition]
+        return actualValve
     }
 
     fun setSwitchSound(isChecked: Boolean) {
@@ -106,17 +106,7 @@ class ValveConfigViewModel @Inject constructor(
     }
 
     fun saveValveConfig() {
-        println(initialValve)
-    }
-
-    fun createNewValve() {
-        println(initialValve)
-    }
-
-    fun setWeatherChecked(isChecked: Boolean) {
-        initialValve = initialValve?.copy(
-            isWeatherChecked = isChecked
-        )
+        println(valves)
     }
 
     private fun getInitialValve(): ValveDomainModel =
@@ -136,78 +126,103 @@ class ValveConfigViewModel @Inject constructor(
             false
         )
 
-    fun setControlMode(controlMode: ControlMode) {
-        initialValve = initialValve?.copy(
-            controlMode = controlMode
+    fun setActiveChecked(isChecked: Boolean) {
+        actualValve = actualValve.copy(
+            isActive = isChecked
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
+    fun setWeatherChecked(isChecked: Boolean) {
+        actualValve = actualValve.copy(
+            isWeatherChecked = isChecked
+        )
+        valves[valveSelectedPosition] = actualValve
+    }
+
+    fun setControlMode(controlMode: ControlMode) {
+        actualValve = actualValve.copy(
+            controlMode = controlMode
+        )
+        valves[valveSelectedPosition] = actualValve
+    }
+
+
     fun setFrequencyMode(frequencyMode: FrequencyMode) {
-        initialValve = initialValve?.copy(
-            schedule = initialValve?.schedule?.copy(
+        actualValve = actualValve.copy(
+            schedule = actualValve.schedule?.copy(
                 frequencyMode = frequencyMode
             )
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
     fun setIntervalDays(days: Int) {
-        initialValve = initialValve?.copy(
-            schedule = initialValve?.schedule?.copy(
+        actualValve = actualValve.copy(
+            schedule = actualValve.schedule?.copy(
                 intervalDays = days
             )
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
     fun addDayOfWeek(day: DayOfWeek) {
-        initialValve = initialValve?.copy(
-            schedule = initialValve?.schedule?.copy(
-                daysOfWeek = (initialValve?.schedule?.daysOfWeek ?: emptyList()) + day
+        actualValve = actualValve.copy(
+            schedule = actualValve.schedule?.copy(
+                daysOfWeek = (actualValve.schedule?.daysOfWeek ?: emptyList()) + day
             )
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
     fun removeDayOfWeek(day: DayOfWeek) {
-        initialValve = initialValve?.copy(
-            schedule = initialValve?.schedule?.copy(
-                daysOfWeek = (initialValve?.schedule?.daysOfWeek ?: emptyList()) - day
+        actualValve = actualValve.copy(
+            schedule = actualValve.schedule?.copy(
+                daysOfWeek = (actualValve.schedule?.daysOfWeek ?: emptyList()) - day
             )
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
     fun addTime(pickedTime: LocalTime) {
-        initialValve = initialValve?.copy(
-            schedule = initialValve?.schedule?.copy(
-                waterTimes = (initialValve?.schedule?.waterTimes ?: emptyList()) + pickedTime
+        actualValve = actualValve.copy(
+            schedule = actualValve.schedule?.copy(
+                waterTimes = (actualValve.schedule?.waterTimes ?: emptyList()) + pickedTime
             )
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
     fun removeTime(pickedTime: LocalTime) {
-        initialValve = initialValve?.copy(
-            schedule = initialValve?.schedule?.copy(
-                waterTimes = (initialValve?.schedule?.waterTimes ?: emptyList()) - pickedTime
+        actualValve = actualValve.copy(
+            schedule = actualValve.schedule?.copy(
+                waterTimes = (actualValve.schedule?.waterTimes ?: emptyList()) - pickedTime
             )
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
     fun setDuration(duration: Int) {
-        initialValve = initialValve?.copy(
-            schedule = initialValve?.schedule?.copy(
+        actualValve = actualValve.copy(
+            schedule = actualValve.schedule?.copy(
                 duration = duration
             )
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
     fun setHumidityMin(minHum: Int) {
-        initialValve = initialValve?.copy(
+        actualValve = actualValve.copy(
             humidityMin = minHum
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
     fun setHumidityMax(maxHum: Int) {
-        initialValve = initialValve?.copy(
+        actualValve = actualValve.copy(
             humidityMax = maxHum
         )
+        valves[valveSelectedPosition] = actualValve
     }
 
 }

@@ -90,7 +90,7 @@ class ConfigurationFragment : Fragment() {
     private fun setInitialState(config: IrrigationZoneConfigDomainModel) {
         binding.clConfiguration.visibility = View.VISIBLE
         setButton()
-        setSwitch(config.isCheckHumidityEnabled, config.isCheckWeatherEnabled)
+//        setSwitch(config.isCheckHumidityEnabled, config.isCheckWeatherEnabled)
         setValveSelector(config.valves)
     }
 
@@ -100,46 +100,46 @@ class ConfigurationFragment : Fragment() {
         }
     }
 
-    private fun goToValveConfig(selectedValve: ValveDomainModel) {
-        val action = ConfigurationFragmentDirections
-            .actionConfigurationFragmentToValveConfigFragment(selectedValve)
+//    private fun goToValveConfig(selectedValve: ValveDomainModel) {
+//        val action = ConfigurationFragmentDirections
+//            .actionConfigurationFragmentToValveConfigFragment(selectedValve)
+//
+//        findNavController().navigate(action)
+//    }
 
-        findNavController().navigate(action)
-    }
-
-    private fun setSwitch(checkHumidityEnabled: Boolean, checkWeatherEnabled: Boolean) {
-
-        setCheckHumidityStatus(checkHumidityEnabled)
-        setCheckWeatherStatus(checkWeatherEnabled)
-
-        binding.switchSensor.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setCheckHumidity(isChecked)
-            viewModel.setSwitchSound(isChecked)
-            setCheckHumidityStatus(isChecked)
-        }
-
-        binding.switchWeather.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setCheckWeather(isChecked)
-            viewModel.setSwitchSound(isChecked)
-            setCheckWeatherStatus(isChecked)
-        }
-    }
-
-    private fun setCheckHumidityStatus(isChecked: Boolean) {
-        binding.switchSensor.isChecked = isChecked
-        setTextStatus(binding.tvSensorState, isChecked)
-        setTextColorStatus(binding.tvSensorState, isChecked)
-        setTextColorStatus(binding.tvSensor, isChecked)
-        setImageColorStatus(binding.ivSensor, isChecked)
-    }
-
-    private fun setCheckWeatherStatus(isChecked: Boolean) {
-        binding.switchWeather.isChecked = isChecked
-        setTextStatus(binding.tvWeatherState, isChecked)
-        setTextColorStatus(binding.tvWeatherState, isChecked)
-        setTextColorStatus(binding.tvWeather, isChecked)
-        setImageColorStatus(binding.ivWeather, isChecked)
-    }
+//    private fun setSwitch(checkHumidityEnabled: Boolean, checkWeatherEnabled: Boolean) {
+//
+//        setCheckHumidityStatus(checkHumidityEnabled)
+//        setCheckWeatherStatus(checkWeatherEnabled)
+//
+//        binding.switchSensor.setOnCheckedChangeListener { _, isChecked ->
+//            viewModel.setCheckHumidity(isChecked)
+//            viewModel.setSwitchSound(isChecked)
+//            setCheckHumidityStatus(isChecked)
+//        }
+//
+//        binding.switchWeather.setOnCheckedChangeListener { _, isChecked ->
+//            viewModel.setCheckWeather(isChecked)
+//            viewModel.setSwitchSound(isChecked)
+//            setCheckWeatherStatus(isChecked)
+//        }
+//    }
+//
+//    private fun setCheckHumidityStatus(isChecked: Boolean) {
+//        binding.switchSensor.isChecked = isChecked
+//        setTextStatus(binding.tvSensorState, isChecked)
+//        setTextColorStatus(binding.tvSensorState, isChecked)
+//        setTextColorStatus(binding.tvSensor, isChecked)
+//        setImageColorStatus(binding.ivSensor, isChecked)
+//    }
+//
+//    private fun setCheckWeatherStatus(isChecked: Boolean) {
+//        binding.switchWeather.isChecked = isChecked
+//        setTextStatus(binding.tvWeatherState, isChecked)
+//        setTextColorStatus(binding.tvWeatherState, isChecked)
+//        setTextColorStatus(binding.tvWeather, isChecked)
+//        setImageColorStatus(binding.ivWeather, isChecked)
+//    }
 
     private fun setTextStatus(textView: TextView, isEnable: Boolean) {
         textView.text =
@@ -219,7 +219,7 @@ class ConfigurationFragment : Fragment() {
                 val selectedValve = valves[position]
                 showValveInfo(selectedValve)
                 binding.clEdit.setOnClickListener {
-                    goToValveConfig(selectedValve)
+//                    goToValveConfig(selectedValve)
                 }
             }
 

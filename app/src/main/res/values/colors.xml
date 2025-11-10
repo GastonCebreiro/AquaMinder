@@ -12,7 +12,8 @@
     <color name="gray_hint">#787373</color>
     <color name="gray_delete">#9D9595</color>
     <color name="light_gray">#D8D8D8</color>
-    <color name="light_gray_card">#EBEBEB</color>
+    <color name="light_gray_card">#F6F6F6</color>
+    <color name="light_blue_back">#4DCFF9FF</color>ó
     <color name="light_gray_transparent">#BBEBEBEB</color>
     <color name="light_gray_transparent_2">#80EBEBEB</color>
     <color name="yellow">#FFEB3B</color>

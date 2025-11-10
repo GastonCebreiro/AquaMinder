@@ -36,83 +36,121 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spValves"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vSemiDrop"
+        tools:listitem="@layout/item_spinner_selected" />
+
     <ScrollView
         android:id="@id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vSemiDrop">
+        app:layout_constraintTop_toBottomOf="@+id/spValves">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/light_blue_back"
             android:padding="16dp">
 
-            <!-- Modo de control -->
-            <TextView
-                android:id="@+id/tvControlMode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/fragment_valve_config_control"
-                android:textColor="@color/light_blue"
-                android:textSize="20sp"
-                android:textStyle="bold"
+            <!-- Considerar clima -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvActive"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/background_address_selector"
+                app:cardCornerRadius="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <RadioGroup
-                android:id="@+id/rgControlMode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvControlMode">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_switch_selector">
 
-                <RadioButton
-                    android:id="@+id/rbScheduled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_address_selector"
-                    android:checked="true"
-                    android:padding="4dp"
-                    android:text="@string/fragment_valve_config_scheduled"
-                    android:textColor="@color/gray"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/ivActive"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
+                        android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_active"
+                        app:tint="@color/light_blue" />
 
-                <Space
-                    android:layout_width="16dp"
-                    android:layout_height="0dp" />
+                    <TextView
+                        android:id="@+id/tvActive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/fragment_configuration_switch_active"
+                        android:textColor="@color/gray"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ivActive"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <RadioButton
-                    android:id="@+id/rbSensor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_address_selector"
-                    android:padding="4dp"
-                    android:text="@string/fragment_valve_config_sensor"
-                    android:textColor="@color/gray"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </RadioGroup>
+                    <TextView
+                        android:id="@+id/tvActiveState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/fragment_configuration_switch_off"
+                        android:textColor="@color/gray_delete"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/switchActive"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchActive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:background="@android:color/transparent"
+                        android:checked="false"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        app:layout_constraintBottom_toBottomOf="@id/tvActive"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvActive"
+                        app:switchPadding="10dp"
+                        app:thumbTint="@color/switch_thumb_tint"
+                        app:trackTint="@color/switch_track_tint" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <!-- Considerar clima -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvWeather"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/background_address_selector"
                 app:cardCornerRadius="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rgControlMode">
+                app:layout_constraintTop_toBottomOf="@+id/cvActive">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -177,6 +215,58 @@
 
             </androidx.cardview.widget.CardView>
 
+            <!-- Modo de control -->
+            <TextView
+                android:id="@+id/tvControlMode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/fragment_valve_config_control"
+                android:textColor="@color/light_blue"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvWeather" />
+
+            <RadioGroup
+                android:id="@+id/rgControlMode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvControlMode">
+
+                <RadioButton
+                    android:id="@+id/rbScheduled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_address_selector"
+                    android:checked="true"
+                    android:padding="4dp"
+                    android:text="@string/fragment_valve_config_scheduled"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="0dp" />
+
+                <RadioButton
+                    android:id="@+id/rbSensor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_address_selector"
+                    android:padding="4dp"
+                    android:text="@string/fragment_valve_config_sensor"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
 
             <View
                 android:id="@+id/view1"
@@ -186,7 +276,7 @@
                 android:background="@color/light_blue_finish"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cvWeather" />
+                app:layout_constraintTop_toBottomOf="@id/rgControlMode" />
 
 
             <!-- Sección: Programado -->
@@ -525,7 +615,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cvWeather" />
+                app:layout_constraintTop_toBottomOf="@id/rgControlMode" />
 
             <com.google.android.material.slider.Slider
                 android:id="@+id/sliderHumMin"
@@ -591,7 +681,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:constraint_referenced_ids="tvFrequency,rgFrequencyType,cbL,cbM,cbX,cbJ,cbV,cbS,cbD,flowDaysOfWeek,tvTime, tvNewTime, btnPickTime, rvTimes, tvDuration,tilDuration, tvDurationLabel" />
+                app:constraint_referenced_ids="tvFrequency,rgFrequencyType,cbL,cbM,cbX,cbJ,cbV,cbS,cbD,flowDaysOfWeek,tvTime, tvNewTime, btnPickTime, rvTimes, tvDuration,tilDuration, tvDurationLabel, view1, view2, view3" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupSensor"
