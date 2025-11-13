@@ -9,9 +9,9 @@ data class GetIrrigationZoneConfigResponse(
     val status: Int? = null,
     @SerializedName("id")
     val uuid: String? = null,
-    @SerializedName("medirHumedad")
+    @SerializedName("medirHumedad") //TODO GC DELETE
     val isCheckHumidityEnabled: Boolean? = null,
-    @SerializedName("revisarClima")
+    @SerializedName("revisarClima") //TODO GC DELETE
     val isCheckWeatherEnabled: Boolean? = null,
     @SerializedName("valves")
     var valves: List<ValveNetworkEntity>? = null

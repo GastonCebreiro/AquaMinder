@@ -13,7 +13,7 @@ data class GetIrrigationZoneDetailsResponse(
     val uuid: String? = null,
     @SerializedName("name")
     val name: String? = null,
-    @SerializedName("logoId")
+    @SerializedName("logo_id")
     var logoId: Int? = null,
     @SerializedName("address")
     var address: String? = null,

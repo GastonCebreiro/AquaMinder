@@ -170,7 +170,6 @@ class ConfigurationFragment : Fragment() {
 
     private fun setValveSelector(valves: List<ValveDomainModel>) {
         if (valves.isEmpty()) {
-            // TODO GC SHOW NEW VALVE
             return
         }
 

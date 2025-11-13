@@ -10,15 +10,15 @@ import java.time.LocalTime
 
 @Parcelize
 data class ScheduleNetworkEntity(
-    @SerializedName("modoFrecuencia")
+    @SerializedName("modo_frecuencia")
     val frequencyMode: FrequencyMode? = null,
-    @SerializedName("intervaloDias")
+    @SerializedName("interval_days")
     val intervalDays: Int? = null,
-    @SerializedName("diasSeleccionados") // MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY
+    @SerializedName("days_of_week") // MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY
     val daysOfWeek: List<String>? = null,
-    @SerializedName("horasDeRiego") // "06:30" "12:00" "18:45"
+    @SerializedName("water_times") // "06:30" "12:00" "18:45"
     val waterTimes: List<String>? = null,
-    @SerializedName("duracion")
+    @SerializedName("duration")
     val duration: Int? = null,
 ): Parcelable
 

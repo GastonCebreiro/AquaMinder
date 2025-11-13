@@ -1,6 +1,8 @@
 package com.example.aquaminder.core.data.remote
 
 import com.example.aquaminder.feature_configuration.data.model.response.GetIrrigationZoneConfigResponse
+import com.example.aquaminder.feature_configuration.data.model.response.SaveIrrigationZoneConfigResponse
+import com.example.aquaminder.feature_configuration.domain.model.IrrigationZoneConfigDomainModel
 import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponse
 import com.example.aquaminder.feature_login.data.remote.model.request.LoginUserRequestNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.request.NewUserRequestNetworkEntity
@@ -35,8 +37,13 @@ interface WebService {
     @GET(GET_IRRIGATION_ZONE_DETAILS)
     suspend fun getIrrigationZoneDetails(@QueryMap request: Map<String, String>): GetIrrigationZoneDetailsResponse
 
+    // TODO GC DELETE THIS, USE DETAILS INSTEAD
     @GET(GET_IRRIGATION_ZONE_CONFIGURATION)
     suspend fun getIrrigationZoneConfig(@QueryMap request: Map<String, String>): GetIrrigationZoneConfigResponse
+
+    // TODO GC ADD VALVE CONFIG NETWORK ENTITY
+    @POST(SAVE_VALVES_CONFIG)
+    suspend fun saveValvesConfig(@Body request: IrrigationZoneConfigDomainModel): SaveIrrigationZoneConfigResponse
 
     companion object {
         private const val REGISTER_USER = "register"
@@ -46,5 +53,6 @@ interface WebService {
         private const val SAVE_IRRIGATION_ZONE = "addEquipo"
         private const val GET_IRRIGATION_ZONE_DETAILS = "detallesEquipo"
         private const val GET_IRRIGATION_ZONE_CONFIGURATION = "configuracionEquipo"
+        private const val SAVE_VALVES_CONFIG = "guardarConfig"
     }
 }
