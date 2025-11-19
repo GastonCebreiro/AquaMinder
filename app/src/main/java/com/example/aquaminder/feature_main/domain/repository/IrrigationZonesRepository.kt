@@ -1,7 +1,9 @@
 package com.example.aquaminder.feature_main.domain.repository
 
 import com.example.aquaminder.feature_configuration.data.model.request.GetIrrigationZoneConfigRequest
+import com.example.aquaminder.feature_configuration.data.model.request.IrrigationZoneConfigNetworkEntity
 import com.example.aquaminder.feature_configuration.data.model.response.GetIrrigationZoneConfigResponse
+import com.example.aquaminder.feature_configuration.data.model.response.SaveIrrigationZoneConfigResponse
 import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequest
 import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponse
 import com.example.aquaminder.feature_main.data.remote.model.response.GetIrrigationZonesResponse
@@ -20,6 +22,8 @@ interface IrrigationZonesRepository {
     fun getIrrigationZoneIdSelected(): String
 
     suspend fun getIrrigationZoneDetails(request: GetIrrigationZoneDetailsRequest): GetIrrigationZoneDetailsResponse
+
+    suspend fun saveConfig(request: IrrigationZoneConfigNetworkEntity): SaveIrrigationZoneConfigResponse
 
     suspend fun getIrrigationZoneConfig(request: GetIrrigationZoneConfigRequest): GetIrrigationZoneConfigResponse
 }

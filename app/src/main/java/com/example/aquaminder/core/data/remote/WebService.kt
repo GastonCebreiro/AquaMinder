@@ -1,5 +1,6 @@
 package com.example.aquaminder.core.data.remote
 
+import com.example.aquaminder.feature_configuration.data.model.request.IrrigationZoneConfigNetworkEntity
 import com.example.aquaminder.feature_configuration.data.model.response.GetIrrigationZoneConfigResponse
 import com.example.aquaminder.feature_configuration.data.model.response.SaveIrrigationZoneConfigResponse
 import com.example.aquaminder.feature_configuration.domain.model.IrrigationZoneConfigDomainModel
@@ -41,9 +42,8 @@ interface WebService {
     @GET(GET_IRRIGATION_ZONE_CONFIGURATION)
     suspend fun getIrrigationZoneConfig(@QueryMap request: Map<String, String>): GetIrrigationZoneConfigResponse
 
-    // TODO GC ADD VALVE CONFIG NETWORK ENTITY
     @POST(SAVE_VALVES_CONFIG)
-    suspend fun saveValvesConfig(@Body request: IrrigationZoneConfigDomainModel): SaveIrrigationZoneConfigResponse
+    suspend fun saveValvesConfig(@Body request: IrrigationZoneConfigNetworkEntity): SaveIrrigationZoneConfigResponse
 
     companion object {
         private const val REGISTER_USER = "register"

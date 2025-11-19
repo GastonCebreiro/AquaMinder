@@ -4,7 +4,11 @@ import com.example.aquaminder.R
 import com.example.aquaminder.core.data.remote.WebService
 import com.example.aquaminder.core.utils.SharedPreferencesUtil
 import com.example.aquaminder.feature_configuration.data.model.request.GetIrrigationZoneConfigRequest
+import com.example.aquaminder.feature_configuration.data.model.request.IrrigationZoneConfigNetworkEntity
 import com.example.aquaminder.feature_configuration.data.model.response.GetIrrigationZoneConfigResponse
+import com.example.aquaminder.feature_configuration.data.model.response.SaveIrrigationZoneConfigResponse
+import com.example.aquaminder.feature_configuration.presentation.fragments.LastWatersDomainModel
+import com.example.aquaminder.feature_home.data.model.LastWatersNetworkEntity
 import com.example.aquaminder.feature_home.data.model.ScheduleNetworkEntity
 import com.example.aquaminder.feature_home.data.model.ValveNetworkEntity
 import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequest
@@ -94,30 +98,72 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
             valves = listOf(
                 ValveNetworkEntity(
                     id = 1,
+                    controlMode = ControlMode.SCHEDULED,
                     humidityMin = 45,
+                    humidityMax = 80,
+                    isWeatherChecked = true,
                     schedule = ScheduleNetworkEntity(
+                        frequencyMode = FrequencyMode.INTERVAL_DAYS,
+                        intervalDays = 5,
+                        waterTimes = listOf(
+                            "10:30",
+                            "15:50",
+                            "22:00"
+                        ),
                         duration = 20
                     ),
-                    isActive = true
+                    isActive = true,
+                    isWatering = true,
+                    lastWaters = listOf(
+                        LastWatersNetworkEntity(
+                            date = "2025-12-31",
+                            time = "23:40",
+                            isSkipped = false
+                        )
+                    ),
+                    lastHumidity = listOf(24,22,20,40,60)
                 ),
                 ValveNetworkEntity(
                     id = 2,
+                    controlMode = ControlMode.SENSOR,
                     humidityMin = 55,
+                    humidityMax = 75,
                     schedule = ScheduleNetworkEntity(
                         duration = 30
                     ),
+                    isWeatherChecked = false,
                     isActive = false
                 ),
                 ValveNetworkEntity(
                     id = 3,
-                    humidityMin = 35,
+                    controlMode = ControlMode.SCHEDULED,
                     schedule = ScheduleNetworkEntity(
+                        frequencyMode = FrequencyMode.SELECTED_DAYS,
+                        daysOfWeek = listOf(
+                            "MONDAY",
+                            "TUESDAY",
+                            "SATURDAY"
+                        ),
+                        waterTimes = listOf(
+                            "8:30",
+                            "13:50",
+                            "19:00"
+                        ),
                         duration = 45
                     ),
+                    isWeatherChecked = true,
                     isActive = true
                 )
             )
         )
+        return response
+    }
+
+    override suspend fun saveConfig(request: IrrigationZoneConfigNetworkEntity): SaveIrrigationZoneConfigResponse {
+//        val response: SaveIrrigationZoneConfigResponse = webService.saveValvesConfig(request)
+        // TODO GC DELETE MOCK
+        delay(3000)
+        val response = SaveIrrigationZoneConfigResponse(200)
         return response
     }
 
@@ -146,7 +192,16 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
                         ),
                         duration = 20
                     ),
-                    isActive = true
+                    isActive = true,
+                    isWatering = true,
+                    lastWaters = listOf(
+                        LastWatersNetworkEntity(
+                            date = "2025-12-31",
+                            time = "23:40",
+                            isSkipped = false
+                        )
+                    ),
+                    lastHumidity = listOf(24,22,20,40,60)
                 ),
                 ValveNetworkEntity(
                     id = 2,

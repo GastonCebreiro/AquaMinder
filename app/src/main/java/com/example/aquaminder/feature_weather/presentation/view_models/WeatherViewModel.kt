@@ -36,35 +36,35 @@ class WeatherViewModel @Inject constructor(
     val isLoading: StateFlow<Boolean> = _isLoading
 
     fun getIrrigationZoneWeather() {
-        _isLoading.value = true
-
-        viewModelScope.launch {
-            getIrrigationZoneConfigUseCase.invoke(GetIrrigationZoneConfigRequest(""))
-                .collect { result ->
-                    when (result) {
-                        is ResultEvent.Success -> {
-                            _weatherState.value =
-                                WeatherState.Success(result.data)
-                        }
-
-                        is ResultEvent.Error -> {
-                            when (result.error) {
-                                is AppError.GenericError -> {
-                                    _weatherState.value = WeatherState.Error(
-                                        resources.getString(R.string.error_msg_invalid_id_selected)
-                                    )
-                                }
-
-                                else -> {
-                                    _weatherState.value = WeatherState.Error("")
-                                }
-                            }
-
-                        }
-                    }
-                    _isLoading.value = false
-                }
-
-        }
+//        _isLoading.value = true
+//
+//        viewModelScope.launch {
+//            getIrrigationZoneConfigUseCase.invoke(GetIrrigationZoneConfigRequest(""))
+//                .collect { result ->
+//                    when (result) {
+//                        is ResultEvent.Success -> {
+//                            _weatherState.value =
+//                                WeatherState.Success(result.data)
+//                        }
+//
+//                        is ResultEvent.Error -> {
+//                            when (result.error) {
+//                                is AppError.GenericError -> {
+//                                    _weatherState.value = WeatherState.Error(
+//                                        resources.getString(R.string.error_msg_invalid_id_selected)
+//                                    )
+//                                }
+//
+//                                else -> {
+//                                    _weatherState.value = WeatherState.Error("")
+//                                }
+//                            }
+//
+//                        }
+//                    }
+//                    _isLoading.value = false
+//                }
+//
+//        }
     }
 }

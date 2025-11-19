@@ -10,11 +10,14 @@ import com.example.aquaminder.core.utils.ResultEvent
 import com.example.aquaminder.core.utils.SoundManager
 import com.example.aquaminder.feature_configuration.data.model.request.GetIrrigationZoneConfigRequest
 import com.example.aquaminder.feature_configuration.domain.use_case.GetIrrigationZoneConfigUseCase
+import com.example.aquaminder.feature_configuration.domain.use_case.SaveConfigUseCase
+import com.example.aquaminder.feature_configuration.utils.ConfigurationState
 import com.example.aquaminder.feature_configuration.utils.ValveConfigState
 import com.example.aquaminder.feature_home.domain.model.ControlMode
 import com.example.aquaminder.feature_home.domain.model.FrequencyMode
 import com.example.aquaminder.feature_home.domain.model.ScheduleDomainModel
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
+import com.example.aquaminder.feature_login.utils.LoginState
 import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZoneIdSelectedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +32,7 @@ class ValveConfigViewModel @Inject constructor(
     private val resources: Resources,
     private val getIrrigationZoneConfigUseCase: GetIrrigationZoneConfigUseCase,
     private val getIrrigationZoneIdSelectedUseCase: GetIrrigationZoneIdSelectedUseCase,
+    private val saveConfigUseCase: SaveConfigUseCase,
     private val playSoundUseCase: PlaySoundUseCase
 ) : ViewModel() {
 
@@ -43,6 +47,10 @@ class ValveConfigViewModel @Inject constructor(
     private var valves: MutableList<ValveDomainModel> = mutableListOf()
     private var valveSelectedPosition: Int = 0
 
+    fun restartState() {
+        _valveConfigState.value = ValveConfigState.Idle
+    }
+
     fun getIrrigationZoneConfiguration() {
         _isLoading.value = true
 
@@ -51,7 +59,7 @@ class ValveConfigViewModel @Inject constructor(
                 is ResultEvent.Success -> {
                     val idSelected = res.data
 
-                    getIrrigationZoneConfigUseCase.invoke(GetIrrigationZoneConfigRequest(idSelected))
+                    getIrrigationZoneConfigUseCase.invoke(idSelected)
                         .collect { result ->
                             when (result) {
                                 is ResultEvent.Success -> {
@@ -107,6 +115,53 @@ class ValveConfigViewModel @Inject constructor(
 
     fun saveValveConfig() {
         println(valves)
+        _isLoading.value = true
+        viewModelScope.launch {
+            when (val res = getIrrigationZoneIdSelectedUseCase.invoke()) {
+                is ResultEvent.Success -> {
+                    val idSelected = res.data
+                    saveConfigUseCase.invoke(idSelected, valves)
+                        .collect { result ->
+                            when (result) {
+                                is ResultEvent.Success -> {
+                                    _valveConfigState.value =
+                                        ValveConfigState.ConfigSaved
+                                }
+
+                                is ResultEvent.Error -> {
+                                    when (result.error) {
+                                        is AppError.GenericError -> {
+                                            _valveConfigState.value = ValveConfigState.Error(
+                                                resources.getString(R.string.error_msg_save_config)
+                                            )
+                                        }
+
+                                        is AppError.NetworkError -> {
+                                            _valveConfigState.value = ValveConfigState.Error(
+                                                resources.getString(R.string.error_msg_network),
+                                                R.drawable.ic_error_network
+                                            )
+                                        }
+
+                                        else -> {
+                                            _valveConfigState.value = ValveConfigState.Error("Algo fallo")
+                                        }
+                                    }
+
+                                }
+                            }
+                            _isLoading.value = false
+                        }
+                }
+
+                is ResultEvent.Error -> {
+                    _isLoading.value = false
+                    _valveConfigState.value = ValveConfigState.Error(
+                        resources.getString(R.string.error_msg_invalid_id_selected)
+                    )
+                }
+            }
+        }
     }
 
     private fun getInitialValve(): ValveDomainModel =
@@ -123,7 +178,10 @@ class ValveConfigViewModel @Inject constructor(
                 emptyList(),
                 0
             ),
-            false
+            false,
+            isWatering = false,
+            lastWaters = emptyList(),
+            lastHumidity = emptyList()
         )
 
     fun setActiveChecked(isChecked: Boolean) {

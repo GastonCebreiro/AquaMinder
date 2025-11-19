@@ -44,51 +44,51 @@ class ConfigurationViewModel @Inject constructor(
     }
 
     fun getIrrigationZoneConfiguration() {
-        restartState()
-        _isLoading.value = true
-
-        viewModelScope.launch {
-            when (val res = getIrrigationZoneIdSelectedUseCase.invoke()) {
-                is ResultEvent.Success -> {
-                    val idSelected = res.data
-
-                    getIrrigationZoneConfigUseCase.invoke(GetIrrigationZoneConfigRequest(idSelected))
-                        .collect { result ->
-                            when (result) {
-                                is ResultEvent.Success -> {
-                                    initialConfiguration = result.data.copy()
-                                    actualConfiguration = result.data.copy()
-                                    _configurationState.value =
-                                        ConfigurationState.Success(result.data)
-                                }
-
-                                is ResultEvent.Error -> {
-                                    when (result.error) {
-                                        is AppError.GenericError -> {
-                                            _configurationState.value = ConfigurationState.Error(
-                                                resources.getString(R.string.error_msg_invalid_id_selected)
-                                            )
-                                        }
-
-                                        else -> {
-                                            _configurationState.value = ConfigurationState.Error("")
-                                        }
-                                    }
-
-                                }
-                            }
-                            _isLoading.value = false
-                        }
-                }
-
-                is ResultEvent.Error -> {
-                    _isLoading.value = false
-                    _configurationState.value = ConfigurationState.Error(
-                        resources.getString(R.string.error_msg_invalid_id_selected)
-                    )
-                }
-            }
-        }
+//        restartState()
+//        _isLoading.value = true
+//
+//        viewModelScope.launch {
+//            when (val res = getIrrigationZoneIdSelectedUseCase.invoke()) {
+//                is ResultEvent.Success -> {
+//                    val idSelected = res.data
+//
+//                    getIrrigationZoneConfigUseCase.invoke(GetIrrigationZoneConfigRequest(idSelected))
+//                        .collect { result ->
+//                            when (result) {
+//                                is ResultEvent.Success -> {
+//                                    initialConfiguration = result.data.copy()
+//                                    actualConfiguration = result.data.copy()
+//                                    _configurationState.value =
+//                                        ConfigurationState.Success(result.data)
+//                                }
+//
+//                                is ResultEvent.Error -> {
+//                                    when (result.error) {
+//                                        is AppError.GenericError -> {
+//                                            _configurationState.value = ConfigurationState.Error(
+//                                                resources.getString(R.string.error_msg_invalid_id_selected)
+//                                            )
+//                                        }
+//
+//                                        else -> {
+//                                            _configurationState.value = ConfigurationState.Error("")
+//                                        }
+//                                    }
+//
+//                                }
+//                            }
+//                            _isLoading.value = false
+//                        }
+//                }
+//
+//                is ResultEvent.Error -> {
+//                    _isLoading.value = false
+//                    _configurationState.value = ConfigurationState.Error(
+//                        resources.getString(R.string.error_msg_invalid_id_selected)
+//                    )
+//                }
+//            }
+//        }
     }
 
 //    fun setNewHumidity(valve: ValveDomainModel, newHumidity: Int) {

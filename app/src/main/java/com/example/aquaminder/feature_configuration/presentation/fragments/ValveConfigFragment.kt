@@ -94,16 +94,27 @@ class ValveConfigFragment : Fragment() {
                             }
 
                             is ValveConfigState.Error -> {
-                                showErrorMessage(valveConfigState.errorMsg)
+                                showErrorMessage(valveConfigState.errorMsg, valveConfigState.logoId)
                             }
 
                             is ValveConfigState.Idle -> {}
-
+                            is ValveConfigState.ConfigSaved -> {
+                                showConfigSavedMessage()
+                                viewModel.restartState()
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun showConfigSavedMessage() {
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.fragment_valve_config_saved),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun setValveSelector(valves: List<ValveDomainModel>) {
