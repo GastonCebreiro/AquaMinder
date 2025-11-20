@@ -95,7 +95,6 @@
                 android:layout_marginStart="5dp"
                 android:textColor="@color/light_blue"
                 android:textSize="18sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/ivLocation"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Av Juan Bautista Alberdi 1045" />
@@ -106,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/light_blue"
                 android:textSize="16sp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@id/tvStreetAndNumber"
                 app:layout_constraintTop_toBottomOf="@+id/tvStreetAndNumber"
                 tools:text="(Cdad Autonoma de Buenos Aires)" />
@@ -173,7 +173,7 @@
             android:id="@+id/clValveInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spValves">
@@ -182,7 +182,9 @@
                 android:id="@+id/tvStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:textColor="@color/light_blue"
+                android:background="@color/light_blue_card"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -194,11 +196,47 @@
                 android:id="@+id/ivCheck"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginEnd="5dp"
                 android:contentDescription="@null"
                 app:layout_constraintTop_toTopOf="@+id/tvStatus"
                 app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
                 app:layout_constraintEnd_toEndOf="@+id/tvStatus"
                 tools:srcCompat="@drawable/ic_check" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/humidityChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/tvStatus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:visibility="visible"/>
+
+<!--            <HorizontalScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="300dp"-->
+<!--                android:scrollbars="horizontal"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tvStatus"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="300dp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/tvStatus">-->
+
+<!--                    <com.github.mikephil.charting.charts.LineChart-->
+<!--                        android:id="@+id/humidityChart"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent" />-->
+
+<!--                </LinearLayout>-->
+
+<!--            </HorizontalScrollView>-->
 
 <!--            <TextView-->
 <!--                android:id="@+id/tvSelectedHumidityLabel"-->

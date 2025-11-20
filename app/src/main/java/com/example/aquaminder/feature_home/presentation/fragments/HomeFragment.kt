@@ -1,5 +1,6 @@
 package com.example.aquaminder.feature_home.presentation.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,14 +19,19 @@ import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentHomeBinding
 import com.example.aquaminder.databinding.ItemSpinnerDropdownBinding
 import com.example.aquaminder.databinding.ItemSpinnerSelectedBinding
+import com.example.aquaminder.feature_home.domain.model.ControlMode
 import com.example.aquaminder.feature_home.domain.model.IrrigationZoneDetailsDomainModel
-import com.example.aquaminder.feature_home.domain.model.ScheduleDomainModel
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
 import com.example.aquaminder.feature_home.presentation.view_models.HomeViewModel
+import com.example.aquaminder.feature_home.utils.GraphUtils
 import com.example.aquaminder.feature_home.utils.HomeState
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.time.LocalTime
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -33,6 +39,8 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var binding: FragmentHomeBinding
+
+    private val humidityCache = mutableMapOf<Int, LineData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -197,6 +205,9 @@ class HomeFragment : Fragment() {
             binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
             binding.ivCheck.setImageResource(R.drawable.ic_warning)
         }
+
+        setupChart(valve.id, valve.lastHumidity, valve.controlMode)
+
 //        val hour = valve.schedule?.startHour?.hour ?: 0
 //        val minute = valve.schedule?.startHour?.minute ?: 0
 //        val startHour = String.format("%02d:%02d", hour, minute)
@@ -210,6 +221,103 @@ class HomeFragment : Fragment() {
 //        val action = FragmentDirections.actionHomeFragmentToPayCardFragment(cardSelected)
 //        findNavController().navigate(action)
 //    }
+
+    private fun setupChart(valveId: Int, lastHumidity: List<Int>, controlMode: ControlMode?) {
+        if (controlMode != ControlMode.SENSOR) {
+            binding.humidityChart.visibility = View.GONE
+            return
+        }
+
+        binding.humidityChart.visibility = View.VISIBLE
+
+        val cached = humidityCache[valveId]
+
+        if (cached != null) {
+            binding.humidityChart.data = cached
+            applyChartConfig()
+            binding.humidityChart.invalidate()
+
+            binding.humidityChart.post {
+                binding.humidityChart.moveViewToX(cached.getEntryCount().toFloat())
+            }
+
+            return
+        }
+
+        val entries = lastHumidity.mapIndexed { index, value ->
+            Entry(index.toFloat(), value.toFloat())
+        }
+
+        val dataSet = LineDataSet(entries, "Humedad").apply {
+            lineWidth = 2f
+            setDrawCircles(true)
+            setDrawCircleHole(false)
+            circleRadius = 4f
+            setDrawValues(false)
+            color = ContextCompat.getColor(requireContext(), R.color.light_blue)
+            setCircleColor(ContextCompat.getColor(requireContext(), R.color.light_blue))
+            enableDashedLine(10f, 5f, 0f)
+        }
+
+        val lineData = LineData(dataSet)
+
+        // guardar en cache
+        humidityCache[valveId] = lineData
+
+        binding.humidityChart.data = lineData
+
+        // reusar config
+        applyChartConfig()
+
+        binding.humidityChart.invalidate()
+
+        binding.humidityChart.post {
+            binding.humidityChart.moveViewToX(entries.size.toFloat())
+        }
+    }
+
+    private fun applyChartConfig() {
+        binding.humidityChart.description.isEnabled = false
+
+        // Eje Y
+        binding.humidityChart.axisLeft.apply {
+            axisMinimum = 0f
+            axisMaximum = 100f
+            granularity = 10f
+            setLabelCount(11, true)
+        }
+        binding.humidityChart.axisRight.isEnabled = false
+
+        // Labels eje X
+        val labels = GraphUtils.getLast24HoursLabels()
+        binding.humidityChart.xAxis.apply {
+            position = XAxis.XAxisPosition.BOTTOM
+            granularity = 1f
+            labelCount = 24
+            valueFormatter = IndexAxisValueFormatter(labels)
+        }
+
+        // Grid
+        binding.humidityChart.axisLeft.gridColor =
+            ContextCompat.getColor(requireContext(), R.color.light_gray)
+        binding.humidityChart.axisLeft.gridLineWidth = 0.5f
+
+        binding.humidityChart.xAxis.gridColor =
+            ContextCompat.getColor(requireContext(), R.color.light_gray)
+        binding.humidityChart.xAxis.gridLineWidth = 0.5f
+
+        // Textos
+        binding.humidityChart.xAxis.typeface = Typeface.DEFAULT_BOLD
+        binding.humidityChart.axisLeft.typeface = Typeface.DEFAULT_BOLD
+
+        // Scroll
+        binding.humidityChart.setDragEnabled(true)
+        binding.humidityChart.setScaleEnabled(false)
+        binding.humidityChart.setVisibleXRangeMaximum(6f)
+        binding.humidityChart.setVisibleXRangeMinimum(6f)
+    }
+
+
 
     private fun showErrorMessage(message: String, logoId: Int? = null) {
         DialogUtils.showErrorDialog(

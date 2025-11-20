@@ -121,7 +121,7 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
                             isSkipped = false
                         )
                     ),
-                    lastHumidity = listOf(24,22,20,40,60)
+                    lastHumidity = listOf(0,10,20,30,40,50,60,70,80,90,100,90,80,70,60,50,40,30,20,10,0,10,20,30)
                 ),
                 ValveNetworkEntity(
                     id = 2,
@@ -132,7 +132,8 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
                         duration = 30
                     ),
                     isWeatherChecked = false,
-                    isActive = false
+                    isActive = false,
+                    lastHumidity = listOf(0,10,20,30,40,50,60,70,80,90,100,90,80,70,60,50,40,30,20,10,0,10,20,30)
                 ),
                 ValveNetworkEntity(
                     id = 3,

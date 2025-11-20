@@ -119,6 +119,8 @@ dependencies {
 //    implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-messaging")
 
+    // Graficos
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 // Local unit tests
     testImplementation("androidx.test:core:1.4.0")
