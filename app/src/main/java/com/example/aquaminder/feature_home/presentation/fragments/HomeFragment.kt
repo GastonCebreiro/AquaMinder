@@ -14,14 +14,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aquaminder.R
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentHomeBinding
 import com.example.aquaminder.databinding.ItemSpinnerDropdownBinding
 import com.example.aquaminder.databinding.ItemSpinnerSelectedBinding
+import com.example.aquaminder.feature_configuration.presentation.fragments.LastWatersDomainModel
 import com.example.aquaminder.feature_home.domain.model.ControlMode
 import com.example.aquaminder.feature_home.domain.model.IrrigationZoneDetailsDomainModel
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
+import com.example.aquaminder.feature_home.presentation.adapter.LastWatersAdapter
 import com.example.aquaminder.feature_home.presentation.view_models.HomeViewModel
 import com.example.aquaminder.feature_home.utils.GraphUtils
 import com.example.aquaminder.feature_home.utils.HomeState
@@ -41,6 +44,8 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private val humidityCache = mutableMapOf<Int, LineData>()
+
+    private lateinit var adapter: LastWatersAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -133,6 +138,15 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun setLastWatersAdapter(lastWaters: List<LastWatersDomainModel>?) {
+        lastWaters?.let {
+            adapter = LastWatersAdapter(it)
+            binding.rvLastWaters.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            binding.rvLastWaters.adapter = adapter
+        }
+    }
+
     private fun setValveSelector(valves: List<ValveDomainModel>) {
         if (valves.isEmpty()) {
             showEmptyValves()
@@ -199,14 +213,18 @@ class HomeFragment : Fragment() {
         if (valve.isActive) {
             binding.tvStatus.text = getString(R.string.fragment_home_valve_status_active)
             binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.light_blue))
+            binding.tvStatus.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_last_water)
             binding.ivCheck.setImageResource(R.drawable.ic_check)
         } else {
             binding.tvStatus.text = getString(R.string.fragment_home_valve_status_inactive)
-            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
+            binding.tvStatus.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_last_water_skipped)
             binding.ivCheck.setImageResource(R.drawable.ic_warning)
         }
 
         setupChart(valve.id, valve.lastHumidity, valve.controlMode)
+
+        setLastWatersAdapter(valve.lastWaters)
 
 //        val hour = valve.schedule?.startHour?.hour ?: 0
 //        val minute = valve.schedule?.startHour?.minute ?: 0
@@ -225,10 +243,12 @@ class HomeFragment : Fragment() {
     private fun setupChart(valveId: Int, lastHumidity: List<Int>, controlMode: ControlMode?) {
         if (controlMode != ControlMode.SENSOR) {
             binding.humidityChart.visibility = View.GONE
+            binding.tvLastHumidity.visibility = View.GONE
             return
         }
 
         binding.humidityChart.visibility = View.VISIBLE
+        binding.tvLastHumidity.visibility = View.VISIBLE
 
         val cached = humidityCache[valveId]
 
@@ -248,7 +268,7 @@ class HomeFragment : Fragment() {
             Entry(index.toFloat(), value.toFloat())
         }
 
-        val dataSet = LineDataSet(entries, "Humedad").apply {
+        val dataSet = LineDataSet(entries, "% Humedad").apply {
             lineWidth = 2f
             setDrawCircles(true)
             setDrawCircleHole(false)

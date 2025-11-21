@@ -13,11 +13,11 @@
     <color name="gray_delete">#9D9595</color>
     <color name="light_gray">#D8D8D8</color>
     <color name="light_gray_card">#F6F6F6</color>
-    <color name="light_blue_back">#4DCFF9FF</color>ó
+    <color name="light_blue_back">#4DCFF9FF</color>
     <color name="light_gray_transparent">#BBEBEBEB</color>
     <color name="light_gray_transparent_2">#80EBEBEB</color>
     <color name="yellow">#FFEB3B</color>
-    <color name="yellow_transparent">#80FFEB3B</color>
+    <color name="yellow_transparent">#FBE3C0</color>
     <color name="blue">#1C37ED</color>
     <color name="light_blue">#00A6DA</color>
     <color name="loading_transparent">#638EE2FB</color>
@@ -28,6 +28,7 @@
     <color name="light_blue_weather_end">#5992F4</color>
     <color name="background_light_blue">#DAF3FF</color>
     <color name="red">#F44336</color>
+    <color name="orange">#FF9800</color>
     <color name="card_light_blue">#4AB4D5</color>
     <color name="card_blue_pool">#59C2C5</color>
     <color name="card_green_water">#5EB3AC</color>

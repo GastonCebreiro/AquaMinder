@@ -43,7 +43,7 @@ class ValveConfigViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    private var actualValve: ValveDomainModel = getInitialValve()
+    var actualValve: ValveDomainModel = getInitialValve()
     private var valves: MutableList<ValveDomainModel> = mutableListOf()
     private var valveSelectedPosition: Int = 0
 
@@ -225,9 +225,13 @@ class ValveConfigViewModel @Inject constructor(
     }
 
     fun addDayOfWeek(day: DayOfWeek) {
+        val current = actualValve.schedule?.daysOfWeek ?: emptyList()
+
+        if (current.contains(day)) return
+
         actualValve = actualValve.copy(
             schedule = actualValve.schedule?.copy(
-                daysOfWeek = (actualValve.schedule?.daysOfWeek ?: emptyList()) + day
+                daysOfWeek = current + day
             )
         )
         valves[valveSelectedPosition] = actualValve

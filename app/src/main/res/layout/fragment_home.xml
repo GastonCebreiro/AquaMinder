@@ -23,9 +23,9 @@
         android:id="@+id/ivLogo"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="@+id/vSemiDrop"
         app:layout_constraintEnd_toStartOf="@+id/tvTitle"
@@ -58,9 +58,9 @@
         android:layout_height="0dp"
         android:paddingHorizontal="16dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vSemiDrop"
         tools:visibility="visible">
 
@@ -69,24 +69,23 @@
             android:id="@+id/clAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background_address_selector"
             android:paddingHorizontal="10dp"
             android:paddingVertical="8dp"
-            android:background="@drawable/background_address_selector"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/ivLocation"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:contentDescription="@null"
-                app:tint="@color/light_blue"
                 app:layout_constraintBottom_toBottomOf="@+id/tvStreetAndNumber"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvStreetAndNumber"
-                app:srcCompat="@drawable/ic_location" />
+                app:srcCompat="@drawable/ic_location"
+                app:tint="@color/light_blue" />
 
             <TextView
                 android:id="@+id/tvStreetAndNumber"
@@ -94,7 +93,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:textColor="@color/light_blue"
-                android:textSize="18sp"
+                android:textSize="12sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/ivLocation"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Av Juan Bautista Alberdi 1045" />
@@ -116,11 +116,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
+            android:background="@drawable/background_error_dialog"
             android:padding="20dp"
             android:visibility="gone"
-            android:background="@drawable/background_error_dialog"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clAddress">
 
             <ImageView
@@ -142,9 +142,9 @@
                 android:textColor="@color/gray"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivWarning"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvWarningDescription"
@@ -153,193 +153,117 @@
                 android:text="@string/fragment_home_valve_empty_valves_description"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tvWarningTitle"
-                app:layout_constraintTop_toBottomOf="@+id/tvWarningTitle"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tvWarningTitle" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Spinner
             android:id="@+id/spValves"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="12dp"
             android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/clAddress"
-            tools:listitem="@layout/item_spinner_selected"/>
+            tools:listitem="@layout/item_spinner_selected" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clValveInfo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+        <ScrollView
+            android:id="@id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spValves">
 
-            <TextView
-                android:id="@+id/tvStatus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textColor="@color/light_blue"
-                android:background="@color/light_blue_card"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="ACTIVADA" />
-
-            <ImageView
-                android:id="@+id/ivCheck"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@null"
-                app:layout_constraintTop_toTopOf="@+id/tvStatus"
-                app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
-                app:layout_constraintEnd_toEndOf="@+id/tvStatus"
-                tools:srcCompat="@drawable/ic_check" />
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/humidityChart"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clValveInfo"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/tvStatus"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:visibility="visible"/>
+                android:layout_height="wrap_content">
 
-<!--            <HorizontalScrollView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="300dp"-->
-<!--                android:scrollbars="horizontal"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvStatus"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent">-->
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_last_water"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:textColor="@color/light_blue"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="ACTIVADA" />
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="300dp"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/tvStatus">-->
+                <ImageView
+                    android:id="@+id/ivCheck"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
+                    app:layout_constraintEnd_toEndOf="@+id/tvStatus"
+                    app:layout_constraintTop_toTopOf="@+id/tvStatus"
+                    tools:srcCompat="@drawable/ic_check" />
 
-<!--                    <com.github.mikephil.charting.charts.LineChart-->
-<!--                        android:id="@+id/humidityChart"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent" />-->
+                <TextView
+                    android:id="@+id/tvLastHumidity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/fragment_home_last_humidity"
+                    android:textColor="@color/light_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvStatus" />
 
-<!--                </LinearLayout>-->
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/humidityChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLastHumidity"
+                    tools:visibility="visible" />
 
-<!--            </HorizontalScrollView>-->
+                <TextView
+                    android:id="@+id/tvLastWaters"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/fragment_home_last_waters"
+                    android:textColor="@color/light_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/humidityChart" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvSelectedHumidityLabel"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:text="@string/fragment_home_valve_selected_humidity"-->
-<!--                android:textColor="@color/light_blue"-->
-<!--                android:textSize="20sp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/tvStatus"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvStatus"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"/>-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvLastWaters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLastWaters"
+                    tools:listitem="@layout/item_last_water" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvSelectedHumidity"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:textColor="@color/light_blue"-->
-<!--                android:textSize="20sp"-->
-<!--                android:textStyle="bold"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/tvSelectedHumidityLabel"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/tvSelectedHumidityLabel"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/tvSelectedHumidityLabel"-->
-<!--                tools:text="80%" />-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--            <TextView-->
-<!--                android:id="@+id/tvStartHourLabel"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:text="@string/fragment_home_valve_start_hour"-->
-<!--                android:textColor="@color/light_blue"-->
-<!--                android:textSize="20sp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/tvSelectedHumidityLabel"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvSelectedHumidityLabel"-->
-<!--                app:layout_constraintEnd_toEndOf="parent" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tvStartHour"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:textColor="@color/light_blue"-->
-<!--                android:textSize="20sp"-->
-<!--                android:textStyle="bold"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/tvStartHourLabel"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/tvStartHourLabel"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/tvStartHourLabel"-->
-<!--                tools:text="06:20 AM" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tvIntervalHoursLabel"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:text="@string/fragment_home_valve_interval_hours"-->
-<!--                android:textColor="@color/light_blue"-->
-<!--                android:textSize="20sp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/tvStartHourLabel"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvStartHourLabel"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"/>-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tvIntervalHours"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:textColor="@color/light_blue"-->
-<!--                android:textSize="20sp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:gravity="end"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/tvIntervalHoursLabel"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/tvIntervalHoursLabel"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/tvIntervalHoursLabel"-->
-<!--                tools:text="6 horas" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tvDurationLabel"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:text="@string/fragment_home_valve_duration"-->
-<!--                android:textColor="@color/light_blue"-->
-<!--                android:textSize="20sp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/tvIntervalHoursLabel"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvIntervalHoursLabel"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"/>-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tvDuration"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:textColor="@color/light_blue"-->
-<!--                android:textSize="20sp"-->
-<!--                android:textStyle="bold"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/tvDurationLabel"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/tvDurationLabel"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/tvDurationLabel"-->
-<!--                tools:text="20 minutos" />-->
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

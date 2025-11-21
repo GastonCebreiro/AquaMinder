@@ -70,6 +70,8 @@
     <string name="fragment_home_valve_duration_values">%1$s minutos</string>
     <string name="fragment_home_valve_empty_valves_title">No hay válvulas configuradas</string>
     <string name="fragment_home_valve_empty_valves_description">Configura válvulas para poder visualizarlas aquí.</string>
+    <string name="fragment_home_last_waters">Ultimos riegos:</string>
+    <string name="fragment_home_last_humidity">Humedad medida:</string>
 
     <string name="fragment_configuration_title">Configuración</string>
     <string name="fragment_configuration_general">Configuración general</string>
@@ -93,7 +95,7 @@
     <string name="fragment_valve_config_weather">Considerar clima:</string>
     <string name="fragment_valve_config_frequency">Frecuencia:</string>
     <string name="fragment_valve_config_choose_days">Días de la semana</string>
-    <string name="fragment_valve_config_every_n_days">Cada</string>
+    <string name="fragment_valve_config_every_n_days">Cada N días</string>
     <string name="fragment_valve_config_days">días</string>
     <string name="fragment_valve_config_l">L</string>
     <string name="fragment_valve_config_m">M</string>
@@ -102,6 +104,7 @@
     <string name="fragment_valve_config_v">V</string>
     <string name="fragment_valve_config_s">S</string>
     <string name="fragment_valve_config_d">D</string>
+    <string name="fragment_valve_config_all">TODOS</string>
     <string name="fragment_valve_config_time">Horario de riego:</string>
     <string name="fragment_valve_config_duration">Duración del riego:</string>
     <string name="fragment_valve_config_minutes">minutos</string>
@@ -164,5 +167,7 @@
     <string name="bottom_bar_weather">CLIMA</string>
     <string name="fragment_valve_config_min_hum">Humedad mínima:</string>
     <string name="fragment_valve_config_max_hum">Humedad máxima:</string>
+    <string name="home_fragment_last_water_skipped">SALTADO</string>
+    <string name="home_fragment_last_water_irrigated">REGADO</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.aquaminder.feature_configuration.presentation.fragments
 
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,9 @@ class ValveConfigFragment : Fragment() {
     private lateinit var adapter: TimeAdapter
 
     private lateinit var checkBoxes: List<Pair<CheckBox, DayOfWeek>>
+
+    // Para evitar loops de checkbox All
+    private var isBulkUpdating = false
 
 
     override fun onCreateView(
@@ -229,17 +233,53 @@ class ValveConfigFragment : Fragment() {
 
     @SuppressLint("NewApi")
     private fun setSelectedDays() {
-        checkBoxes.forEach { (checkBox, day) ->
-            checkBox.setOnCheckedChangeListener(null)
-            checkBox.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
+//        checkBoxes.forEach { (checkBox, day) ->
+//            checkBox.setOnCheckedChangeListener(null)
+//            checkBox.setOnCheckedChangeListener { _, isChecked ->
+//                if (isBulkUpdating) return@setOnCheckedChangeListener
+//
+//                if (isChecked) {
+//                    viewModel.addDayOfWeek(day)
+//                } else {
+//                    viewModel.removeDayOfWeek(day)
+//                    binding.cbAll.isChecked = false
+//                }
+//                updateAllCheck()
+//            }
+//        }
+
+        binding.cbAll.setOnCheckedChangeListener(null)
+
+        binding.cbAll.setOnCheckedChangeListener { _, isChecked ->
+            if (isBulkUpdating) return@setOnCheckedChangeListener
+
+            isBulkUpdating = true
+
+            if (isChecked) {
+                checkBoxes.forEach { (checkBox, day) ->
+                    checkBox.isChecked = true
                     viewModel.addDayOfWeek(day)
-                } else {
+                }
+            } else {
+                checkBoxes.forEach { (checkBox, day) ->
+                    checkBox.isChecked = false
                     viewModel.removeDayOfWeek(day)
                 }
             }
+
+            isBulkUpdating = false
         }
     }
+
+    @SuppressLint("NewApi")
+    private fun updateAllCheck() {
+        val allChecked = checkBoxes.all { (cb, _) -> cb.isChecked }
+
+        isBulkUpdating = true
+        binding.cbAll.isChecked = allChecked
+        isBulkUpdating = false
+    }
+
 
     private fun setIntervalDays() {
         binding.etEveryNDays.addTextChangedListener { editable ->
@@ -251,38 +291,20 @@ class ValveConfigFragment : Fragment() {
     }
 
     private fun setFrequencyMode() {
-        binding.rgFrequencyType.setOnCheckedChangeListener(null)
+        binding.rgFrequencyType.setOnCheckedChangeListener { _, checkedId ->
 
-        val rbEveryNDays = binding.rbEveryNDays
-        val rbChooseDays = binding.rbChooseDays
+            when (checkedId) {
 
-        val listener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                when (buttonView.id) {
-                    R.id.rbEveryNDays -> {
-                        rbChooseDays.isChecked = false
-                        rbEveryNDays.isChecked = true
-                        setDaysCheckbox(false)
-                        viewModel.setFrequencyMode(FrequencyMode.INTERVAL_DAYS)
-                    }
+                R.id.rbEveryNDays -> {
+                    setFrequencyView(FrequencyMode.INTERVAL_DAYS)
+                    viewModel.setFrequencyMode(FrequencyMode.INTERVAL_DAYS)
+                }
 
-                    R.id.rbChooseDays -> {
-                        rbEveryNDays.isChecked = false
-                        rbChooseDays.isChecked = true
-                        setDaysCheckbox(true)
-                        viewModel.setFrequencyMode(FrequencyMode.SELECTED_DAYS)
-                    }
+                R.id.rbChooseDays -> {
+                    setFrequencyView(FrequencyMode.SELECTED_DAYS)
+                    viewModel.setFrequencyMode(FrequencyMode.SELECTED_DAYS)
                 }
             }
-        }
-
-        rbEveryNDays.setOnCheckedChangeListener(listener)
-        rbChooseDays.setOnCheckedChangeListener(listener)
-    }
-
-    private fun setDaysCheckbox(isEnabled: Boolean) {
-        checkBoxes.forEach { (checkBox, _) ->
-            checkBox.isEnabled = isEnabled
         }
     }
 
@@ -299,6 +321,16 @@ class ValveConfigFragment : Fragment() {
                 else
                     ContextCompat.getColor(requireContext(), R.color.gray_delete)
             )
+
+            binding.clActive.background = ContextCompat.getDrawable(requireContext(),
+                if (isChecked) R.drawable.background_switch_selector
+                else R.drawable.background_switch_selector_off
+            )
+
+            binding.ivActive.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(),
+                if (isChecked) R.color.light_blue
+                else R.color.gray_delete
+            ))
 
             viewModel.setActiveChecked(isChecked)
             viewModel.setSwitchSound(isChecked)
@@ -320,6 +352,16 @@ class ValveConfigFragment : Fragment() {
                     ContextCompat.getColor(requireContext(), R.color.gray_delete)
             )
 
+            binding.clWeather.background = ContextCompat.getDrawable(requireContext(),
+                if (isChecked) R.drawable.background_switch_selector
+                else R.drawable.background_switch_selector_off
+            )
+
+            binding.ivWeather.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(),
+                if (isChecked) R.color.light_blue
+                else R.color.gray_delete
+            ))
+
             viewModel.setWeatherChecked(isChecked)
             viewModel.setSwitchSound(isChecked)
         }
@@ -332,11 +374,15 @@ class ValveConfigFragment : Fragment() {
                     binding.groupScheduled.isVisible = true
                     binding.groupSensor.isVisible = false
                     viewModel.setControlMode(ControlMode.SCHEDULED)
+                    setFrequencyView(viewModel.actualValve.schedule?.frequencyMode)
                 }
 
                 R.id.rbSensor -> {
                     binding.groupScheduled.isVisible = false
                     binding.groupSensor.isVisible = true
+                    binding.flowDaysOfWeek.visibility = View.INVISIBLE
+                    binding.clEveryNDays.visibility = View.INVISIBLE
+                    binding.cbAll.visibility = View.INVISIBLE
                     viewModel.setControlMode(ControlMode.SENSOR)
                 }
             }
@@ -397,6 +443,21 @@ class ValveConfigFragment : Fragment() {
 
     @SuppressLint("NewApi")
     private fun setValveParameters(valve: ValveDomainModel) {
+
+        when (valve.schedule?.frequencyMode) {
+            FrequencyMode.SELECTED_DAYS -> {
+                binding.rbChooseDays.isChecked = true
+                setFrequencyView(FrequencyMode.SELECTED_DAYS)
+            }
+
+            FrequencyMode.INTERVAL_DAYS -> {
+                binding.rbEveryNDays.isChecked = true
+                setFrequencyView(FrequencyMode.INTERVAL_DAYS)
+            }
+
+            null -> binding.rbEveryNDays.isChecked = true
+        }
+
         when (valve.controlMode) {
             ControlMode.SCHEDULED -> {
                 binding.rbScheduled.isChecked = true
@@ -408,6 +469,9 @@ class ValveConfigFragment : Fragment() {
                 binding.rbSensor.isChecked = true
                 binding.groupScheduled.isVisible = false
                 binding.groupSensor.isVisible = true
+                binding.flowDaysOfWeek.visibility = View.INVISIBLE
+                binding.clEveryNDays.visibility = View.INVISIBLE
+                binding.cbAll.visibility = View.INVISIBLE
             }
 
             null -> binding.rbScheduled.isChecked = true
@@ -416,33 +480,25 @@ class ValveConfigFragment : Fragment() {
         binding.switchWeather.isChecked = valve.isWeatherChecked
         binding.switchActive.isChecked = valve.isActive
 
-        when (valve.schedule?.frequencyMode) {
-            FrequencyMode.SELECTED_DAYS -> {
-                binding.rbChooseDays.isChecked = true
-                setDaysCheckbox(true)
-            }
-
-            FrequencyMode.INTERVAL_DAYS -> {
-                binding.rbEveryNDays.isChecked = true
-                setDaysCheckbox(false)
-            }
-
-            null -> binding.rbEveryNDays.isChecked = true
-        }
-
         binding.etEveryNDays.setText((valve.schedule?.intervalDays ?: 2).toString())
 
         checkBoxes.forEach { (checkBox, day) ->
             checkBox.setOnCheckedChangeListener(null)
             checkBox.isChecked = valve.schedule?.daysOfWeek?.contains(day) ?: false
             checkBox.setOnCheckedChangeListener { _, isChecked ->
+                if (isBulkUpdating) return@setOnCheckedChangeListener
                 if (isChecked) {
                     viewModel.addDayOfWeek(day)
                 } else {
                     viewModel.removeDayOfWeek(day)
+                    isBulkUpdating = true
+                    binding.cbAll.isChecked = false
+                    isBulkUpdating = false
                 }
+                updateAllCheck()
             }
         }
+        updateAllCheck()
 
         adapter.cleanTimes()
         valve.schedule?.waterTimes?.forEach { time ->
@@ -458,6 +514,21 @@ class ValveConfigFragment : Fragment() {
         val maxHum = valve.humidityMax
         binding.sliderHumMax.value = maxHum.toFloat()
         binding.tvHumMaxVal.text = "$maxHum%"
+    }
+
+    private fun setFrequencyView(frequencyMode: FrequencyMode?) {
+        when (frequencyMode ?: FrequencyMode.INTERVAL_DAYS) {
+            FrequencyMode.SELECTED_DAYS -> {
+                binding.clEveryNDays.visibility = View.INVISIBLE
+                binding.flowDaysOfWeek.visibility = View.VISIBLE
+                binding.cbAll.visibility = View.VISIBLE
+            }
+            FrequencyMode.INTERVAL_DAYS -> {
+                binding.clEveryNDays.visibility = View.VISIBLE
+                binding.flowDaysOfWeek.visibility = View.INVISIBLE
+                binding.cbAll.visibility = View.INVISIBLE
+            }
+        }
     }
 
     private fun setButton() {

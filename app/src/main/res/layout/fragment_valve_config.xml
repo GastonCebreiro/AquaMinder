@@ -41,8 +41,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:paddingHorizontal="16dp"
         android:background="@android:color/transparent"
+        android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vSemiDrop"
@@ -52,8 +52,8 @@
         android:id="@id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_blue_back"
             android:padding="16dp">
 
             <!-- Considerar clima -->
@@ -77,6 +76,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clActive"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/background_switch_selector">
@@ -99,10 +99,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="@string/fragment_configuration_switch_active"
+                        android:textAllCaps="true"
                         android:textColor="@color/gray"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textAllCaps="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/ivActive"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -153,9 +153,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/cvActive">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clWeather"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/background_address_selector">
+                    android:background="@drawable/background_switch_selector">
 
                     <ImageView
                         android:id="@+id/ivWeather"
@@ -294,97 +295,177 @@
 
             <RadioGroup
                 android:id="@+id/rgFrequencyType"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:orientation="horizontal"
-                android:paddingTop="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvFrequency">
 
-                <!-- RadioButton for "Every N Days" -->
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/containerEveryNDays"
+                <RadioButton
+                    android:id="@+id/rbEveryNDays"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_address_selector">
+                    android:background="@drawable/background_address_selector"
+                    android:checked="true"
+                    android:paddingEnd="6dp"
+                    android:text="@string/fragment_valve_config_every_n_days"
+                    android:textStyle="bold" />
 
-                    <RadioButton
-                        android:id="@+id/rbEveryNDays"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="@string/fragment_valve_config_every_n_days"
-                        android:textColor="@color/gray"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="0dp" />
 
-                    <!-- Extra UI next to "Every N Days" -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="70dp"
-                        android:layout_marginStart="4dp"
-                        app:layout_constraintStart_toEndOf="@id/rbEveryNDays"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilEveryNDays"
-                            android:layout_width="wrap_content"
-                            android:layout_height="70dp"
-                            android:paddingBottom="6dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etEveryNDays"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="2"
-                                android:text="2"
-                                android:textColor="@color/light_blue"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <TextView
-                            android:id="@+id/tvDaysSuffix"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginEnd="4dp"
-                            android:text="@string/fragment_valve_config_days"
-                            android:textColor="@color/gray"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/tilEveryNDays"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- RadioButton for "Choose Days" -->
                 <RadioButton
                     android:id="@+id/rbChooseDays"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/background_address_selector"
+                    android:paddingEnd="10dp"
                     android:text="@string/fragment_valve_config_choose_days"
-                    android:textColor="@color/gray"
-                    android:textSize="16sp"
                     android:textStyle="bold" />
             </RadioGroup>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clEveryNDays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rgFrequencyType">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEveryNDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEveryNDays"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_address_selector"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:text="3"
+                        android:textColor="@color/light_blue"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tvDaysSuffix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/fragment_valve_config_days"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/tilEveryNDays"
+                    app:layout_constraintBottom_toBottomOf="@id/tilEveryNDays"
+                    app:layout_constraintTop_toTopOf="@id/tilEveryNDays" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <!--            <RadioGroup-->
+            <!--                android:id="@+id/rgFrequencyType"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:paddingTop="5dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tvFrequency">-->
+
+            <!--                &lt;!&ndash; RadioButton for "Every N Days" &ndash;&gt;-->
+
+            <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                    android:id="@+id/containerEveryNDays"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:background="@drawable/background_address_selector">-->
+
+            <!--                    <RadioButton-->
+            <!--                        android:id="@+id/rbEveryNDays"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:checked="true"-->
+            <!--                        android:text="@string/fragment_valve_config_every_n_days"-->
+            <!--                        android:textColor="@color/gray"-->
+            <!--                        android:textSize="16sp"-->
+            <!--                        android:textStyle="bold"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent"-->
+            <!--                        app:layout_constraintStart_toStartOf="parent"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+            <!--                    &lt;!&ndash; Extra UI next to "Every N Days" &ndash;&gt;-->
+            <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="70dp"-->
+            <!--                        android:layout_marginStart="4dp"-->
+            <!--                        app:layout_constraintStart_toEndOf="@id/rbEveryNDays"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent">-->
+
+            <!--                        <com.google.android.material.textfield.TextInputLayout-->
+            <!--                            android:id="@+id/tilEveryNDays"-->
+            <!--                            android:layout_width="wrap_content"-->
+            <!--                            android:layout_height="70dp"-->
+            <!--                            android:paddingBottom="6dp"-->
+            <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                            app:layout_constraintStart_toStartOf="parent"-->
+            <!--                            app:layout_constraintTop_toTopOf="parent">-->
+
+            <!--                            <com.google.android.material.textfield.TextInputEditText-->
+            <!--                                android:id="@+id/etEveryNDays"-->
+            <!--                                android:layout_width="match_parent"-->
+            <!--                                android:layout_height="match_parent"-->
+            <!--                                android:gravity="center"-->
+            <!--                                android:inputType="number"-->
+            <!--                                android:maxLength="2"-->
+            <!--                                android:text="2"-->
+            <!--                                android:textColor="@color/light_blue"-->
+            <!--                                android:textSize="20sp"-->
+            <!--                                android:textStyle="bold" />-->
+            <!--                        </com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/tvDaysSuffix"-->
+            <!--                            android:layout_width="wrap_content"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_marginStart="4dp"-->
+            <!--                            android:layout_marginEnd="4dp"-->
+            <!--                            android:text="@string/fragment_valve_config_days"-->
+            <!--                            android:textColor="@color/gray"-->
+            <!--                            android:textSize="16sp"-->
+            <!--                            android:textStyle="bold"-->
+            <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                            app:layout_constraintStart_toEndOf="@id/tilEveryNDays"-->
+            <!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+            <!--                &lt;!&ndash; RadioButton for "Choose Days" &ndash;&gt;-->
+            <!--                <RadioButton-->
+            <!--                    android:id="@+id/rbChooseDays"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:layout_marginStart="10dp"-->
+            <!--                    android:paddingEnd="10dp"-->
+            <!--                    android:background="@drawable/background_address_selector"-->
+            <!--                    android:text="@string/fragment_valve_config_choose_days"-->
+            <!--                    android:textColor="@color/gray"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    android:textStyle="bold" />-->
+            <!--            </RadioGroup>-->
 
 
             <!-- Checkboxes for days of the week -->
@@ -472,12 +553,31 @@
                 android:text="@string/fragment_valve_config_d"
                 android:textStyle="bold" />
 
+            <CheckBox
+                android:id="@+id/cbAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:layout_marginTop="8dp"
+                android:drawableTop="@drawable/custom_checkbox"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:visibility="invisible"
+                android:text="@string/fragment_valve_config_all"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/cbD"
+                app:layout_constraintTop_toTopOf="@id/rgFrequencyType"
+                app:layout_constraintBottom_toBottomOf="@+id/rgFrequencyType"
+                app:layout_constraintEnd_toEndOf="@id/cbD"/>
+
             <!-- Flow arranges them automatically -->
             <androidx.constraintlayout.helper.widget.Flow
                 android:id="@+id/flowDaysOfWeek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:visibility="invisible"
                 app:constraint_referenced_ids="cbL,cbM,cbX,cbJ,cbV,cbS,cbD"
                 app:flow_horizontalGap="4dp"
                 app:flow_wrapMode="aligned"
@@ -540,8 +640,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btnPickTime"
                 app:layout_constraintTop_toTopOf="@id/btnPickTime"
-                tools:listitem="@layout/item_time_chip"
-                tools:itemCount="3"/>
+                tools:itemCount="3"
+                tools:listitem="@layout/item_time_chip" />
 
             <View
                 android:id="@+id/view3"
@@ -681,7 +781,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:constraint_referenced_ids="tvFrequency,rgFrequencyType,cbL,cbM,cbX,cbJ,cbV,cbS,cbD,flowDaysOfWeek,tvTime, tvNewTime, btnPickTime, rvTimes, tvDuration,tilDuration, tvDurationLabel, view1, view2, view3" />
+                app:constraint_referenced_ids="tvFrequency,rgFrequencyType,tvTime, tvNewTime, btnPickTime, rvTimes, tvDuration,tilDuration, tvDurationLabel, view1, view2, view3 " />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupSensor"

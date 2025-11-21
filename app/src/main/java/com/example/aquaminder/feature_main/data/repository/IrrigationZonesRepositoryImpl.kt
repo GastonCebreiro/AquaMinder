@@ -116,9 +116,29 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
                     isWatering = true,
                     lastWaters = listOf(
                         LastWatersNetworkEntity(
-                            date = "2025-12-31",
+                            date = "2025-11-21",
                             time = "23:40",
                             isSkipped = false
+                        ),
+                        LastWatersNetworkEntity(
+                            date = "2025-11-21",
+                            time = "10:40",
+                            isSkipped = true
+                        ),
+                        LastWatersNetworkEntity(
+                            date = "2025-11-20",
+                            time = "12:11",
+                            isSkipped = false
+                        ),
+                        LastWatersNetworkEntity(
+                            date = "2025-10-12",
+                            time = "23:40",
+                            isSkipped = false
+                        ),
+                        LastWatersNetworkEntity(
+                            date = "2025-10-10",
+                            time = "23:40",
+                            isSkipped = true
                         )
                     ),
                     lastHumidity = listOf(0,10,20,30,40,50,60,70,80,90,100,90,80,70,60,50,40,30,20,10,0,10,20,30)
@@ -133,7 +153,34 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
                     ),
                     isWeatherChecked = false,
                     isActive = false,
-                    lastHumidity = listOf(0,10,20,30,40,50,60,70,80,90,100,90,80,70,60,50,40,30,20,10,0,10,20,30)
+                    lastHumidity = listOf(0,10,20,30,40,50,60,70,80,90,100,90,80,70,60,50,40,30,20,10,0,10,20,30),
+                    lastWaters = listOf(
+                        LastWatersNetworkEntity(
+                            date = "2025-12-31",
+                            time = "23:40",
+                            isSkipped = false
+                        ),
+                        LastWatersNetworkEntity(
+                            date = "2025-10-16",
+                            time = "10:40",
+                            isSkipped = true
+                        ),
+                        LastWatersNetworkEntity(
+                            date = "2025-11-24",
+                            time = "12:11",
+                            isSkipped = false
+                        ),
+                        LastWatersNetworkEntity(
+                            date = "2025-12-24",
+                            time = "23:40",
+                            isSkipped = false
+                        ),
+                        LastWatersNetworkEntity(
+                            date = "2025-08-30",
+                            time = "23:40",
+                            isSkipped = true
+                        )
+                    ),
                 ),
                 ValveNetworkEntity(
                     id = 3,
