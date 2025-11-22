@@ -2,8 +2,14 @@ package com.example.aquaminder.feature_new_irrigation_zone.presentation.fragment
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothGatt
+import android.bluetooth.BluetoothManager
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
@@ -49,6 +55,15 @@ class NewIrrigationZoneFragment : Fragment() {
     private lateinit var locationPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    private lateinit var bluetoothPermissionLauncher: ActivityResultLauncher<Array<String>>
+
+    private var bluetoothGatt: BluetoothGatt? = null
+    private var wifiCharacteristic: android.bluetooth.BluetoothGattCharacteristic? = null
+
+    private val WIFI_SERVICE_UUID = java.util.UUID.fromString("0000abcd-0000-1000-8000-00805f9b34fb")
+    private val WIFI_CHARACTERISTIC_UUID = java.util.UUID.fromString("0000abce-0000-1000-8000-00805f9b34fb")
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,6 +74,8 @@ class NewIrrigationZoneFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setBluetooth()
 
         binding.btnDelete.setOnClickListener {
             clearInputId()
@@ -110,6 +127,164 @@ class NewIrrigationZoneFragment : Fragment() {
             }
         }
     }
+
+    private fun setBluetooth() {
+        bluetoothPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+
+                val allGranted = permissions.entries.all { it.value }
+
+                if (allGranted) {
+                    if (!isBluetoothEnabled()) {
+                        requestEnableBluetooth()
+                        return@registerForActivityResult
+                    }
+                    startBleScan()
+                } else {
+                    showErrorMessage("Permisos de Bluetooth denegados")
+                }
+            }
+
+        binding.btnWifi.setOnClickListener {
+            checkBluetoothPermissions()
+        }
+    }
+
+    private fun isBluetoothEnabled(): Boolean {
+        val bluetoothManager =
+            requireContext().getSystemService(BluetoothManager::class.java)
+        val adapter = bluetoothManager.adapter
+        return adapter?.isEnabled == true
+    }
+
+    private fun requestEnableBluetooth() {
+        val intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+        enableBluetoothLauncher.launch(intent)
+    }
+
+    private val enableBluetoothLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                startBleScan()
+            } else {
+                showErrorMessage("Bluetooth apagado. No se puede continuar.")
+            }
+        }
+
+    private fun checkBluetoothPermissions() {
+        val permissions = mutableListOf<String>()
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            permissions.add(Manifest.permission.BLUETOOTH_SCAN)
+            permissions.add(Manifest.permission.BLUETOOTH_CONNECT)
+        } else {
+            permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        val missing = permissions.filter {
+            ContextCompat.checkSelfPermission(requireContext(), it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (missing.isEmpty()) {
+            if (!isBluetoothEnabled()) {
+                requestEnableBluetooth()
+                return
+            }
+            startBleScan()
+        } else {
+            bluetoothPermissionLauncher.launch(missing.toTypedArray())
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startBleScan() {
+        Toast.makeText(requireContext(), "Iniciando escaneo BLE…", Toast.LENGTH_SHORT).show()
+
+        val bluetoothAdapter =
+            (requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as android.bluetooth.BluetoothManager)
+                .adapter
+
+        val scanner = bluetoothAdapter.bluetoothLeScanner
+
+        scanner.startScan(scanCallback)
+    }
+
+    private val scanCallback = object : android.bluetooth.le.ScanCallback() {
+        @SuppressLint("MissingPermission")
+        override fun onScanResult(callbackType: Int, result: android.bluetooth.le.ScanResult) {
+            val device = result.device
+
+            Log.d("GASTON", "Encontrado: ${device.name} - ${device.address}")
+
+            if (device.name == "ESP32-SETUP") {
+                Toast.makeText(requireContext(), "Dispositivo detectado", Toast.LENGTH_SHORT).show()
+
+                val scanner =
+                    (requireContext().getSystemService(Context.BLUETOOTH_SERVICE)
+                            as android.bluetooth.BluetoothManager)
+                        .adapter.bluetoothLeScanner
+
+                scanner.stopScan(this)
+
+                connectToEsp32(device)
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun connectToEsp32(device: BluetoothDevice) {
+        device.connectGatt(requireContext(), false, gattCallback)
+    }
+
+    private val gattCallback = object : android.bluetooth.BluetoothGattCallback() {
+        @SuppressLint("MissingPermission")
+        override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
+            if (newState == BluetoothGatt.STATE_CONNECTED) {
+                Log.d("GASTON", "Conectado a ESP32")
+                gatt.discoverServices()
+            }
+        }
+
+        override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
+            Log.d("GASTON", "Servicios descubiertos")
+
+            bluetoothGatt = gatt
+
+            val wifiService = gatt.getService(WIFI_SERVICE_UUID)
+
+            if (wifiService == null) {
+                Log.e("GASTON", "Servicio WiFi no encontrado")
+                return
+            }
+
+            Log.d("GASTON", "wifiCharacteristic LISTA")
+
+            requireActivity().runOnUiThread {
+                DialogUtils.showWifiCredentialsDialog(
+                    context = requireContext(),
+                    onSendAction = { ssid, password ->
+                        sendWifiCredentials(ssid, password)
+                    }
+                )
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun sendWifiCredentials(ssid: String, password: String) {
+        val data = "$ssid:$password"
+        Log.d("GASTON", "Enviar: $data")
+        wifiCharacteristic?.value = data.toByteArray(Charsets.UTF_8)
+
+        val success = bluetoothGatt?.writeCharacteristic(wifiCharacteristic)
+
+        if (success == false) {
+            showErrorMessage("Error enviando credenciales al dispositivo")
+        } else {
+            Toast.makeText(requireContext(), "Enviando datos…", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     private fun setLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())

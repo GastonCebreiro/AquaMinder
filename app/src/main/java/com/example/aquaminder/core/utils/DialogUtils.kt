@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.annotation.DrawableRes
 import com.example.aquaminder.databinding.DialogLogoutBinding
 import com.example.aquaminder.databinding.DialogModifyHumidityBinding
+import com.example.aquaminder.databinding.DialogWifiCredentialsBinding
 import com.example.aquaminder.databinding.ErrorGenericDialogBinding
 import com.example.aquaminder.feature_configuration.utils.ValveUtils.getHumidityDescription
 
@@ -89,6 +90,45 @@ object DialogUtils {
         dialog.show()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
+
+    fun showWifiCredentialsDialog(
+        context: Context,
+        onSendAction: (ssid: String, password: String) -> Unit,
+        onCancelAction: (() -> Unit)? = null
+    ) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+
+        val binding = DialogWifiCredentialsBinding
+            .inflate(LayoutInflater.from(context), null, false)
+        dialog.setContentView(binding.root)
+
+        binding.btnSend.setOnClickListener {
+            val ssid = binding.etSsid.text.toString().trim()
+            val pass = binding.etPassword.text.toString().trim()
+
+            if (ssid.isEmpty()) {
+                binding.tilSsid.error = "Ingrese el SSID"
+                return@setOnClickListener
+            }
+
+            binding.tilSsid.error = null
+            binding.tilPassword.error = null
+
+            onSendAction(ssid, pass)
+            dialog.dismiss()
+        }
+
+        binding.tvCancel.setOnClickListener {
+            onCancelAction?.invoke()
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    }
+
 
     // TODO GC DELETE
     fun showModifyHumidityDialog(
