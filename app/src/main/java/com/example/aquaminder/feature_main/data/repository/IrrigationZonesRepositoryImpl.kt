@@ -12,6 +12,8 @@ import com.example.aquaminder.feature_home.data.model.LastWatersNetworkEntity
 import com.example.aquaminder.feature_home.data.model.ScheduleNetworkEntity
 import com.example.aquaminder.feature_home.data.model.ValveNetworkEntity
 import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequest
+import com.example.aquaminder.feature_home.data.model.request.GetValveWateringStatusRequest
+import com.example.aquaminder.feature_home.data.model.request.GetValveWateringStatusResponse
 import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponse
 import com.example.aquaminder.feature_home.domain.model.ControlMode
 import com.example.aquaminder.feature_home.domain.model.FrequencyMode
@@ -216,77 +218,21 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getIrrigationZoneConfig(request: GetIrrigationZoneConfigRequest): GetIrrigationZoneConfigResponse {
-        // TODO GC ADD SERVICE CALL FOR IRRIGATION ZONE Config
-//        val response: GetIrrigationZoneConfigResponse = webService.getIrrigationZoneConfig(request.toMap())
-        delay(1000)
-        val response = GetIrrigationZoneConfigResponse(
+    override suspend fun getValveWateringStatus(request: GetValveWateringStatusRequest): GetValveWateringStatusResponse {
+//        val response: GetValveWateringStatusResponse = webService.getValveWateringStatus(request.toMap())
+        // TODO GC DELETE MOCK
+        // Simulamos un pequeño delay de red
+        delay(300)
+        // Mock muy simple:
+        // Cambiemos el valor para simular que a veces está regando y a veces no
+        val isWatering = (0..1).random() == 1
+        val response = GetValveWateringStatusResponse(
             status = 200,
-            uuid = "123456",
-            valves = listOf(
-                ValveNetworkEntity(
-                    id = 1,
-                    controlMode = ControlMode.SCHEDULED,
-                    humidityMin = 45,
-                    humidityMax = 80,
-                    isWeatherChecked = true,
-                    schedule = ScheduleNetworkEntity(
-                        frequencyMode = FrequencyMode.INTERVAL_DAYS,
-                        intervalDays = 5,
-                        waterTimes = listOf(
-                            "10:30",
-                            "15:50",
-                            "22:00"
-                        ),
-                        duration = 20
-                    ),
-                    isActive = true,
-                    isWatering = true,
-                    lastWaters = listOf(
-                        LastWatersNetworkEntity(
-                            date = "2025-12-31",
-                            time = "23:40",
-                            isSkipped = false
-                        )
-                    ),
-                    lastHumidity = listOf(24,22,20,40,60)
-                ),
-                ValveNetworkEntity(
-                    id = 2,
-                    controlMode = ControlMode.SENSOR,
-                    humidityMin = 55,
-                    humidityMax = 75,
-                    schedule = ScheduleNetworkEntity(
-                        duration = 30
-                    ),
-                    isWeatherChecked = false,
-                    isActive = false
-                ),
-                ValveNetworkEntity(
-                    id = 3,
-                    controlMode = ControlMode.SCHEDULED,
-                    schedule = ScheduleNetworkEntity(
-                        frequencyMode = FrequencyMode.SELECTED_DAYS,
-                        daysOfWeek = listOf(
-                            "MONDAY",
-                            "TUESDAY",
-                            "SATURDAY"
-                        ),
-                        waterTimes = listOf(
-                            "8:30",
-                            "13:50",
-                            "19:00"
-                        ),
-                        duration = 45
-                    ),
-                    isWeatherChecked = true,
-                    isActive = true
-                )
-            ),
-            isCheckHumidityEnabled = true
+            isWatering = isWatering
         )
         return response
     }
+
 
 }
 

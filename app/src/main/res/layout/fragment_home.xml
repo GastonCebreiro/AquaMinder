@@ -189,11 +189,11 @@
                     android:id="@+id/tvStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_last_water"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
+                    android:background="@drawable/background_status"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="8dp"
                     android:textColor="@color/light_blue"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -202,14 +202,36 @@
 
                 <ImageView
                     android:id="@+id/ivCheck"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="8dp"
                     android:contentDescription="@null"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
                     app:layout_constraintEnd_toEndOf="@+id/tvStatus"
                     app:layout_constraintTop_toTopOf="@+id/tvStatus"
                     tools:srcCompat="@drawable/ic_check" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clWatering"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvStatus"
+                app:layout_constraintEnd_toEndOf="@+id/tvStatus"
+                app:layout_constraintTop_toTopOf="@+id/tvStatus">
+
+                <WebView
+                    android:id="@+id/wbWatering"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tvLastHumidity"

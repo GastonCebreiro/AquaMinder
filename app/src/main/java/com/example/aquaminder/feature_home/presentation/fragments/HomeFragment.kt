@@ -1,5 +1,6 @@
 package com.example.aquaminder.feature_home.presentation.fragments
 
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -34,6 +35,9 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -46,6 +50,10 @@ class HomeFragment : Fragment() {
     private val humidityCache = mutableMapOf<Int, LineData>()
 
     private lateinit var adapter: LastWatersAdapter
+
+    private var selectedValve: ValveDomainModel? = null
+
+    private var wateringJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,8 +92,56 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
+
+                launch {
+                    viewModel.wateringState.collect { isWatering ->
+                        showWatering(isWatering)
+                    }
+                }
             }
         }
+    }
+
+    private fun showWatering(isWatering: Boolean) {
+        if (isWatering) {
+            startWateringTextAnimation()
+            binding.ivCheck.visibility = View.GONE
+            binding.wbWatering.visibility = View.VISIBLE
+            binding.wbWatering.setBackgroundColor(Color.TRANSPARENT)
+            binding.wbWatering.settings.loadWithOverviewMode = true
+            binding.wbWatering.settings.useWideViewPort = true
+            binding.wbWatering.loadUrl("file:///android_asset/watering.html")
+            binding.tvStatus.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.background_status_watering)
+            binding.tvStatus.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.light_blue_weather_end
+                )
+            )
+        } else {
+            stopWateringTextAnimation()
+            setupStatus(selectedValve?.isActive ?: false)
+        }
+    }
+
+    private fun startWateringTextAnimation() {
+        stopWateringTextAnimation()
+        val base = getString(R.string.fragment_home_valve_status_watering)
+        val states = listOf(base, "$base.", "$base..", "$base...")
+
+        wateringJob = viewLifecycleOwner.lifecycleScope.launch {
+            var index = 0
+            while (isActive) {
+                binding.tvStatus.text = states[index]
+                index = (index + 1) % states.size
+                delay(500L)
+            }
+        }
+    }
+
+    private fun stopWateringTextAnimation() {
+        wateringJob?.cancel()
     }
 
     private fun showDetails(details: IrrigationZoneDetailsDomainModel) {
@@ -100,41 +156,6 @@ class HomeFragment : Fragment() {
         binding.tvCity.text = city
 
         setValveSelector(details.valves)
-
-//        // TODO GC DELETE MOCK
-//        val valves = listOf(
-//            ValveDomainModel(
-//                id = 1,
-//                humidity = 45,
-//                schedule = ScheduleDomainModel(
-//                    startHour = LocalTime.of(8, 30), // 08:30
-//                    intervalHours = 6,
-//                    durationMinutes = 20
-//                ),
-//                isActive = true
-//            ),
-//            ValveDomainModel(
-//                id = 2,
-//                humidity = 55,
-//                schedule = ScheduleDomainModel(
-//                    startHour = LocalTime.of(14, 0), // 14:00
-//                    intervalHours = 8,
-//                    durationMinutes = 30
-//                ),
-//                isActive = false
-//            ),
-//            ValveDomainModel(
-//                id = 3,
-//                humidity = 35,
-//                schedule = ScheduleDomainModel(
-//                    startHour = LocalTime.of(20, 15), // 20:15
-//                    intervalHours = 12,
-//                    durationMinutes = 45
-//                ),
-//                isActive = true
-//            )
-//        )
-//        setValveSelector(emptyList())
 
     }
 
@@ -174,7 +195,11 @@ class HomeFragment : Fragment() {
                 return binding.root
             }
 
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
                 val binding = if (convertView == null) {
                     ItemSpinnerDropdownBinding.inflate(LayoutInflater.from(context), parent, false)
                 } else {
@@ -195,8 +220,11 @@ class HomeFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val selectedValve = valves[position]
-                showValveInfo(selectedValve)
+                selectedValve = valves[position]
+                selectedValve?.let {
+                    viewModel.startPolling(it.id)
+                    showValveInfo(it)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -210,35 +238,35 @@ class HomeFragment : Fragment() {
     }
 
     private fun showValveInfo(valve: ValveDomainModel) {
-        if (valve.isActive) {
-            binding.tvStatus.text = getString(R.string.fragment_home_valve_status_active)
-            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.light_blue))
-            binding.tvStatus.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_last_water)
-            binding.ivCheck.setImageResource(R.drawable.ic_check)
-        } else {
-            binding.tvStatus.text = getString(R.string.fragment_home_valve_status_inactive)
-            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
-            binding.tvStatus.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_last_water_skipped)
-            binding.ivCheck.setImageResource(R.drawable.ic_warning)
-        }
+        setupStatus(valve.isActive)
 
         setupChart(valve.id, valve.lastHumidity, valve.controlMode)
 
         setLastWatersAdapter(valve.lastWaters)
-
-//        val hour = valve.schedule?.startHour?.hour ?: 0
-//        val minute = valve.schedule?.startHour?.minute ?: 0
-//        val startHour = String.format("%02d:%02d", hour, minute)
-//        binding.tvSelectedHumidity.text = getString(R.string.fragment_home_valve_selected_humidity_value, valve.humidity.toString())
-//        binding.tvStartHour.text = getString(R.string.fragment_home_valve_start_hour_value ,startHour)
-//        binding.tvIntervalHours.text =  getString(R.string.fragment_home_valve_interval_hours_value, valve.schedule?.intervalHours.toString())
-//        binding.tvDuration.text =  getString(R.string.fragment_home_valve_duration_values, valve.schedule?.durationMinutes.toString())
     }
 
-//    private fun navToIrrigationZoneDetail(itemSelected: IrrigationZoneDomainModel) {
-//        val action = FragmentDirections.actionHomeFragmentToPayCardFragment(cardSelected)
-//        findNavController().navigate(action)
-//    }
+    private fun setupStatus(isActive: Boolean) {
+        binding.ivCheck.visibility = View.VISIBLE
+        binding.wbWatering.visibility = View.GONE
+        if (isActive) {
+            binding.tvStatus.text = getString(R.string.fragment_home_valve_status_active)
+            binding.tvStatus.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.light_blue
+                )
+            )
+            binding.tvStatus.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.background_status)
+            binding.ivCheck.setImageResource(R.drawable.ic_check)
+        } else {
+            binding.tvStatus.text = getString(R.string.fragment_home_valve_status_inactive)
+            binding.tvStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
+            binding.tvStatus.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.background_status_off)
+            binding.ivCheck.setImageResource(R.drawable.ic_warning)
+        }
+    }
 
     private fun setupChart(valveId: Int, lastHumidity: List<Int>, controlMode: ControlMode?) {
         if (controlMode != ControlMode.SENSOR) {
@@ -338,7 +366,6 @@ class HomeFragment : Fragment() {
     }
 
 
-
     private fun showErrorMessage(message: String, logoId: Int? = null) {
         DialogUtils.showErrorDialog(
             context = requireContext(),
@@ -352,6 +379,11 @@ class HomeFragment : Fragment() {
 
     private fun goBack() {
         requireActivity().finish()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopPolling()
     }
 
 }

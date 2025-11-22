@@ -59,6 +59,7 @@
     <string name="fragment_home_title">Nombre de la Zona de Riego</string>
     <string name="fragment_home_valve_description">Valvula %1$s</string>
     <string name="fragment_home_valve_status_active">ACTIVADA</string>
+    <string name="fragment_home_valve_status_watering">REGANDO</string>
     <string name="fragment_home_valve_status_inactive">DESACTIVADA</string>
     <string name="fragment_home_valve_selected_humidity">Humedad deseada:</string>
     <string name="fragment_home_valve_selected_humidity_value">%1$s %%</string>

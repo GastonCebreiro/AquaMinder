@@ -4,6 +4,7 @@ import com.example.aquaminder.feature_configuration.data.model.request.Irrigatio
 import com.example.aquaminder.feature_configuration.data.model.response.GetIrrigationZoneConfigResponse
 import com.example.aquaminder.feature_configuration.data.model.response.SaveIrrigationZoneConfigResponse
 import com.example.aquaminder.feature_configuration.domain.model.IrrigationZoneConfigDomainModel
+import com.example.aquaminder.feature_home.data.model.request.GetValveWateringStatusResponse
 import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponse
 import com.example.aquaminder.feature_login.data.remote.model.request.LoginUserRequestNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.request.NewUserRequestNetworkEntity
@@ -38,9 +39,10 @@ interface WebService {
     @GET(GET_IRRIGATION_ZONE_DETAILS)
     suspend fun getIrrigationZoneDetails(@QueryMap request: Map<String, String>): GetIrrigationZoneDetailsResponse
 
-    // TODO GC DELETE THIS, USE DETAILS INSTEAD
-    @GET(GET_IRRIGATION_ZONE_CONFIGURATION)
-    suspend fun getIrrigationZoneConfig(@QueryMap request: Map<String, String>): GetIrrigationZoneConfigResponse
+    @GET(GET_VALVE_WATERING_STATUS)
+    suspend fun getValveWateringStatus(
+        @QueryMap request: Map<String, String>
+    ): GetValveWateringStatusResponse
 
     @POST(SAVE_VALVES_CONFIG)
     suspend fun saveValvesConfig(@Body request: IrrigationZoneConfigNetworkEntity): SaveIrrigationZoneConfigResponse
@@ -54,5 +56,6 @@ interface WebService {
         private const val GET_IRRIGATION_ZONE_DETAILS = "detallesEquipo"
         private const val GET_IRRIGATION_ZONE_CONFIGURATION = "configuracionEquipo"
         private const val SAVE_VALVES_CONFIG = "guardarConfig"
+        private const val GET_VALVE_WATERING_STATUS = "wateringStatus"
     }
 }
