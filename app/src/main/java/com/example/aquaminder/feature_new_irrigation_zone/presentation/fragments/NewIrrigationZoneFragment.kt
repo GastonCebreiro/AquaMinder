@@ -6,13 +6,18 @@ import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
+import android.bluetooth.BluetoothGattCharacteristic
+import android.bluetooth.BluetoothGattDescriptor
 import android.bluetooth.BluetoothManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +49,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
+import java.util.UUID
 
 @AndroidEntryPoint
 class NewIrrigationZoneFragment : Fragment() {
@@ -60,8 +66,13 @@ class NewIrrigationZoneFragment : Fragment() {
     private var bluetoothGatt: BluetoothGatt? = null
     private var wifiCharacteristic: android.bluetooth.BluetoothGattCharacteristic? = null
 
-    private val WIFI_SERVICE_UUID = java.util.UUID.fromString("0000abcd-0000-1000-8000-00805f9b34fb")
-    private val WIFI_CHARACTERISTIC_UUID = java.util.UUID.fromString("0000abce-0000-1000-8000-00805f9b34fb")
+    private val WIFI_SERVICE_UUID =
+        java.util.UUID.fromString("0000abcd-0000-1000-8000-00805f9b34fb")
+    private val WIFI_CHARACTERISTIC_UUID =
+        java.util.UUID.fromString("0000abce-0000-1000-8000-00805f9b34fb")
+
+    private var wifiCheckHandler: Handler? = null
+    private var wifiCheckRunnable: Runnable? = null
 
 
     override fun onCreateView(
@@ -174,15 +185,19 @@ class NewIrrigationZoneFragment : Fragment() {
     private fun checkBluetoothPermissions() {
         val permissions = mutableListOf<String>()
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             permissions.add(Manifest.permission.BLUETOOTH_SCAN)
             permissions.add(Manifest.permission.BLUETOOTH_CONNECT)
+            permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
         } else {
             permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
         val missing = permissions.filter {
-            ContextCompat.checkSelfPermission(requireContext(), it) != PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                it
+            ) != PackageManager.PERMISSION_GRANTED
         }
 
         if (missing.isEmpty()) {
@@ -198,15 +213,17 @@ class NewIrrigationZoneFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun startBleScan() {
-        Toast.makeText(requireContext(), "Iniciando escaneo BLE…", Toast.LENGTH_SHORT).show()
+        DialogUtils.showWifiInfoDialog(requireContext()) {
+            Toast.makeText(requireContext(), "Buscando dispositivo…", Toast.LENGTH_SHORT).show()
 
-        val bluetoothAdapter =
-            (requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as android.bluetooth.BluetoothManager)
-                .adapter
+            val bluetoothAdapter =
+                (requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as android.bluetooth.BluetoothManager)
+                    .adapter
 
-        val scanner = bluetoothAdapter.bluetoothLeScanner
+            val scanner = bluetoothAdapter.bluetoothLeScanner
 
-        scanner.startScan(scanCallback)
+            scanner.startScan(scanCallback)
+        }
     }
 
     private val scanCallback = object : android.bluetooth.le.ScanCallback() {
@@ -245,6 +262,7 @@ class NewIrrigationZoneFragment : Fragment() {
             }
         }
 
+        @SuppressLint("MissingPermission")
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
             Log.d("GASTON", "Servicios descubiertos")
 
@@ -256,6 +274,7 @@ class NewIrrigationZoneFragment : Fragment() {
                 Log.e("GASTON", "Servicio WiFi no encontrado")
                 return
             }
+            wifiCharacteristic = wifiService.getCharacteristic(WIFI_CHARACTERISTIC_UUID)
 
             Log.d("GASTON", "wifiCharacteristic LISTA")
 
@@ -267,6 +286,71 @@ class NewIrrigationZoneFragment : Fragment() {
                     }
                 )
             }
+        }
+
+        override fun onCharacteristicRead(
+            gatt: BluetoothGatt,
+            characteristic: BluetoothGattCharacteristic,
+            value: ByteArray,
+            status: Int
+        ) {
+            if (characteristic.uuid == WIFI_CHARACTERISTIC_UUID) {
+                val text = value.toString(Charsets.UTF_8)
+                Log.d("GASTON", "READ (API33+) -> $text")
+                handleWifiStatus(text)
+            }
+        }
+
+        @Deprecated("Deprecated in Java")
+        override fun onCharacteristicRead(
+            gatt: BluetoothGatt,
+            characteristic: BluetoothGattCharacteristic,
+            status: Int
+        ) {
+            if (characteristic.uuid == WIFI_CHARACTERISTIC_UUID) {
+                val text = characteristic.value.toString(Charsets.UTF_8)
+                Log.d("GASTON", "READ (LEGACY) -> $text")
+                handleWifiStatus(text)
+            }
+        }
+
+    }
+
+    private fun handleWifiStatus(text: String) {
+        requireActivity().runOnUiThread {
+            when (text) {
+                "WIFI_OK" -> {
+                    Toast.makeText(requireContext(), "WiFi conectada ✔", Toast.LENGTH_LONG).show()
+                    setWifiStatus(isConnected = true)
+                    wifiCheckHandler?.removeCallbacks(wifiCheckRunnable!!)
+                }
+
+                "WIFI_FAIL" -> {
+                    Toast.makeText(requireContext(), "Error al conectar ❌", Toast.LENGTH_LONG)
+                        .show()
+                    setWifiStatus(isConnected = false)
+                    wifiCheckHandler?.removeCallbacks(wifiCheckRunnable!!)
+                }
+            }
+        }
+    }
+
+    private fun setWifiStatus(isConnected: Boolean) {
+        setWifiLoading(false)
+        if (isConnected) {
+            binding.btnWifi.setBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.green)
+            )
+            binding.btnWifi.isEnabled = false
+            binding.btnWifi.text = getString(R.string.fragment_new_irrigation_connected)
+            binding.btnWifi.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        } else {
+            binding.btnWifi.setBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.orange)
+            )
+            binding.btnWifi.isEnabled = true
+            binding.btnWifi.text = getString(R.string.fragment_new_irrigation_retry)
+            binding.btnWifi.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         }
     }
 
@@ -280,9 +364,53 @@ class NewIrrigationZoneFragment : Fragment() {
 
         if (success == false) {
             showErrorMessage("Error enviando credenciales al dispositivo")
-        } else {
-            Toast.makeText(requireContext(), "Enviando datos…", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        Toast.makeText(requireContext(), "Enviando datos...", Toast.LENGTH_SHORT).show()
+        setWifiLoading(true)
+        checkWifiStatus()
+
+    }
+
+    private fun setWifiLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.btnWifi.isEnabled = false
+            binding.btnWifi.text = ""
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.btnWifi.isEnabled = true
+        }
+    }
+
+    private fun checkWifiStatus() {
+        wifiCheckHandler = Handler(Looper.getMainLooper())
+        var attempts = 0
+        val maxAttempts = 10  // 10 intentos → ~15s total
+
+        wifiCheckRunnable = object : Runnable {
+            @SuppressLint("MissingPermission")
+            override fun run() {
+                attempts++
+
+                Log.d("GASTON", "Leyendo WiFi status (intento $attempts)")
+                bluetoothGatt?.readCharacteristic(wifiCharacteristic)
+
+                if (attempts < maxAttempts) {
+                    wifiCheckHandler?.postDelayed(this, 1500)
+                } else {
+                    Log.d("GASTON", "Timeout esperando WIFI_OK / WIFI_FAIL")
+                    Toast.makeText(
+                        requireContext(),
+                        "Sin respuesta del dispositivo",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+
+        wifiCheckHandler?.postDelayed(wifiCheckRunnable!!, 3000)
     }
 
 
@@ -295,7 +423,11 @@ class NewIrrigationZoneFragment : Fragment() {
             if (isGranted) {
                 getUserLocation()
             } else {
-                Toast.makeText(requireContext(), "Permisos de Geolocalizador denegados.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Permisos de Geolocalizador denegados.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -307,10 +439,14 @@ class NewIrrigationZoneFragment : Fragment() {
 
     private fun checkLocationPermissionAndFetch() {
         when {
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
                     == PackageManager.PERMISSION_GRANTED -> {
                 getUserLocation()
             }
+
             else -> {
                 locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
@@ -323,8 +459,8 @@ class NewIrrigationZoneFragment : Fragment() {
             location?.let {
                 val lat = location.latitude
                 val lon = location.longitude
-                Log.d("GASTON","lat=$lat")
-                Log.d("GASTON","lon=$lon")
+                Log.d("GASTON", "lat=$lat")
+                Log.d("GASTON", "lon=$lon")
                 getAddressFromCoordinates(lat, lon)
             } ?: run {
                 showErrorMessage(getString(R.string.fragment_new_irrigation_zone_location_not_found_error))
@@ -379,7 +515,8 @@ class NewIrrigationZoneFragment : Fragment() {
 
     private fun setErrorID(isError: Boolean) {
         if (isError)
-            binding.etInputId.error = getString(R.string.fragment_new_irrigation_zone_copy_message_error)
+            binding.etInputId.error =
+                getString(R.string.fragment_new_irrigation_zone_copy_message_error)
         else
             binding.etInputId.error = null
     }
@@ -422,5 +559,9 @@ class NewIrrigationZoneFragment : Fragment() {
         )
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        wifiCheckHandler?.removeCallbacks(wifiCheckRunnable ?: return)
+    }
 
 }

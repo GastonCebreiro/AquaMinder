@@ -42,7 +42,9 @@
     <string name="fragment_new_irrigation_zone_subtitle">Cree una nueva zona de riego</string>
     <string name="fragment_new_irrigation_zone_select_id">ID del dispositivo</string>
     <string name="fragment_new_irrigation_zone_select_id_info">El ID del dispositivo se encuentra en la etiqueta</string>
-    <string name="fragment_new_irrigation_ask_bt">ENVIAR DATOS DE RED</string>
+    <string name="fragment_new_irrigation_ask_bt">CONECTAR DISPOSITIVO A WIFI</string>
+    <string name="fragment_new_irrigation_connected">CONECTADO</string>
+    <string name="fragment_new_irrigation_retry">REENVIAR DATOS</string>
     <string name="fragment_new_irrigation_zone_input_id">ID del dispostivo</string>
     <string name="fragment_new_irrigation_zone_copy_message">¡Has pegado el ID!</string>
     <string name="fragment_new_irrigation_zone_copy_message_error">Formato de ID inválido</string>
@@ -169,7 +171,9 @@
     <string name="bottom_bar_weather">CLIMA</string>
     <string name="fragment_valve_config_min_hum">Humedad mínima:</string>
     <string name="fragment_valve_config_max_hum">Humedad máxima:</string>
-    <string name="home_fragment_last_water_skipped">SALTADO</string>
+    <string name="home_fragment_last_water_skipped">SALTEADO</string>
     <string name="home_fragment_last_water_irrigated">REGADO</string>
+    <string name="dialog_wifi_info_message">Para conectar el dispositivo a su red WiFi, asegúrese de que esté encendido y tenga a mano las credenciales de la red</string>
+    <string name="dialog_wifi_info_title">Conectar WiFi</string>
 
 </resources>

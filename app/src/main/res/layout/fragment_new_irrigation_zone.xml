@@ -43,8 +43,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="16dp"
             android:paddingHorizontal="16dp">
 
             <TextView
@@ -124,11 +123,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:indeterminateTint="@color/white"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@+id/btnWifi"
+                app:layout_constraintBottom_toBottomOf="@+id/btnWifi"
+                app:layout_constraintEnd_toEndOf="@+id/btnWifi"
+                app:layout_constraintStart_toStartOf="@+id/btnWifi" />
             <View
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:background="@color/light_blue_finish"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -182,7 +193,7 @@
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:background="@color/light_blue_finish"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -192,7 +203,7 @@
                     android:id="@+id/tvDescriptionLogo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/fragment_new_irrigation_zone_select_logo"
                     android:textColor="@color/light_blue"
                     android:textSize="18sp"
@@ -261,7 +272,7 @@
                     android:id="@+id/tvLocationLabel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:text="@string/fragment_new_irrigation_zone_input_location"
                     android:textColor="@color/light_blue"
                     android:textSize="18sp"
@@ -315,6 +326,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/button_gradient"
         android:padding="10dp"

@@ -10,6 +10,7 @@ import androidx.annotation.DrawableRes
 import com.example.aquaminder.databinding.DialogLogoutBinding
 import com.example.aquaminder.databinding.DialogModifyHumidityBinding
 import com.example.aquaminder.databinding.DialogWifiCredentialsBinding
+import com.example.aquaminder.databinding.DialogWifiInfoBinding
 import com.example.aquaminder.databinding.ErrorGenericDialogBinding
 import com.example.aquaminder.feature_configuration.utils.ValveUtils.getHumidityDescription
 
@@ -84,6 +85,27 @@ object DialogUtils {
         }
         binding.tvCancel.setOnClickListener {
             onCancelAction?.invoke()
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    }
+
+    fun showWifiInfoDialog(
+        context: Context,
+        onAcceptAction: () -> Unit,
+    ) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+
+        val binding = DialogWifiInfoBinding
+            .inflate(LayoutInflater.from(context), null, false)
+        dialog.setContentView(binding.root)
+
+        binding.btnAccept.setOnClickListener {
+            onAcceptAction.invoke()
             dialog.dismiss()
         }
 
