@@ -17,7 +17,8 @@
     <color name="light_gray_transparent">#BBEBEBEB</color>
     <color name="light_gray_transparent_2">#80EBEBEB</color>
     <color name="yellow">#FFEB3B</color>
-    <color name="green">#8BC34A</color>
+    <color name="green">#5AAB5D</color>
+    <color name="light_green">#91D541</color>
     <color name="yellow_transparent">#FBE3C0</color>
     <color name="blue">#1C37ED</color>
     <color name="light_blue">#00A6DA</color>

@@ -338,16 +338,14 @@ class NewIrrigationZoneFragment : Fragment() {
     private fun setWifiStatus(isConnected: Boolean) {
         setWifiLoading(false)
         if (isConnected) {
-            binding.btnWifi.setBackgroundColor(
-                ContextCompat.getColor(requireContext(), R.color.green)
-            )
+            binding.btnWifi.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.background_gradient_green)
             binding.btnWifi.isEnabled = false
             binding.btnWifi.text = getString(R.string.fragment_new_irrigation_connected)
             binding.btnWifi.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         } else {
-            binding.btnWifi.setBackgroundColor(
-                ContextCompat.getColor(requireContext(), R.color.orange)
-            )
+            binding.btnWifi.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.button_error)
             binding.btnWifi.isEnabled = true
             binding.btnWifi.text = getString(R.string.fragment_new_irrigation_retry)
             binding.btnWifi.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))

@@ -111,13 +111,15 @@
                 app:layout_constraintStart_toStartOf="@id/lInputId"
                 app:layout_constraintTop_toBottomOf="@+id/lInputId" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnWifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/fragment_new_irrigation_ask_bt"
                 android:textSize="18sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_gradient"
                 app:layout_constraintTop_toBottomOf="@+id/tvDescriptionIdInfo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
