@@ -39,4 +39,8 @@
     <color name="checkbox_tick">#FFFFFFFF</color>
     <color name="autofill">#2500A6DA</color>
     <color name="disable">#80BFD8DE</color>
+    <color name="weather_sunny_yellow">#F6C452</color>
+    <color name="weather_cloud_gray">#C8C8C8</color>
+    <color name="weather_light_blue">#7EC7FF</color>
+    <color name="weather_dark_blue">#3D5AFE</color>
 </resources>

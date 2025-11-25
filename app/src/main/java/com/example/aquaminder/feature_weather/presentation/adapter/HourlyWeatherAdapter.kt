@@ -2,9 +2,16 @@ package com.example.aquaminder.feature_weather.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aquaminder.R
 import com.example.aquaminder.databinding.ItemHourlyWeatherBinding
 import com.example.aquaminder.feature_weather.domain.model.HourlyWeather
+import com.example.aquaminder.feature_weather.domain.model.IconWeather
+import com.example.aquaminder.feature_weather.domain.model.getColorByIcon
+import com.example.aquaminder.feature_weather.domain.model.getHumidityFormatted
+import com.example.aquaminder.feature_weather.domain.model.getTemperatureFormatted
+import com.example.aquaminder.feature_weather.domain.model.getTimeFormatted
 import com.example.aquaminder.feature_weather.utils.WeatherUtils.setWeatherIcon
 
 class HourlyWeatherAdapter(
@@ -27,12 +34,21 @@ class HourlyWeatherAdapter(
         notifyDataSetChanged()
     }
 
-    inner class HourlyWeatherViewHolder(private val binding: ItemHourlyWeatherBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class HourlyWeatherViewHolder(private val binding: ItemHourlyWeatherBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: HourlyWeather) {
-            binding.tvHour.text = item.hour
-            binding.tvTemperature.text = item.temperature
-            binding.tvHumidity.text = item.humidity
-            binding.wbIcon.setWeatherIcon(item.icon, isSmall = true)
+
+            binding.tvTime.text = item.getTimeFormatted()
+            binding.tvTemp.text = item.getTemperatureFormatted()
+            binding.tvHumidity.text = item.getHumidityFormatted()
+            binding.wvIcon.setWeatherIcon(item.icon, isSmall = true)
+
+            val colorRes = item.getColorByIcon()
+
+            binding.viewAccent.setBackgroundColor(
+                ContextCompat.getColor(binding.root.context, colorRes)
+            )
         }
     }
 }
