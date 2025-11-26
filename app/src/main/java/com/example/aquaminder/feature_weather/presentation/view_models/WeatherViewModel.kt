@@ -12,8 +12,11 @@ import com.example.aquaminder.feature_configuration.data.model.request.GetIrriga
 import com.example.aquaminder.feature_configuration.domain.model.IrrigationZoneConfigDomainModel
 import com.example.aquaminder.feature_configuration.domain.use_case.GetIrrigationZoneConfigUseCase
 import com.example.aquaminder.feature_configuration.utils.ConfigurationState
+import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequest
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
+import com.example.aquaminder.feature_home.utils.HomeState
 import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZoneIdSelectedUseCase
+import com.example.aquaminder.feature_weather.use_case.GetWeatherUseCase
 import com.example.aquaminder.feature_weather.utils.WeatherState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     private val resources: Resources,
-    private val getIrrigationZoneConfigUseCase: GetIrrigationZoneConfigUseCase
+    private val getIrrigationZoneIdSelectedUseCase: GetIrrigationZoneIdSelectedUseCase,
+    private val getWeatherUseCase: GetWeatherUseCase
 ) : ViewModel() {
 
     private val _weatherState =
@@ -35,36 +39,47 @@ class WeatherViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    fun getIrrigationZoneWeather() {
-//        _isLoading.value = true
-//
-//        viewModelScope.launch {
-//            getIrrigationZoneConfigUseCase.invoke(GetIrrigationZoneConfigRequest(""))
-//                .collect { result ->
-//                    when (result) {
-//                        is ResultEvent.Success -> {
-//                            _weatherState.value =
-//                                WeatherState.Success(result.data)
-//                        }
-//
-//                        is ResultEvent.Error -> {
-//                            when (result.error) {
-//                                is AppError.GenericError -> {
-//                                    _weatherState.value = WeatherState.Error(
-//                                        resources.getString(R.string.error_msg_invalid_id_selected)
-//                                    )
-//                                }
-//
-//                                else -> {
-//                                    _weatherState.value = WeatherState.Error("")
-//                                }
-//                            }
-//
-//                        }
-//                    }
-//                    _isLoading.value = false
-//                }
-//
-//        }
+    fun getWeather() {
+        _isLoading.value = true
+        _weatherState.value = WeatherState.Idle
+
+        viewModelScope.launch {
+            when (val res = getIrrigationZoneIdSelectedUseCase.invoke()) {
+                is ResultEvent.Success -> {
+                    val idSelected = res.data
+
+                    when (val result = getWeatherUseCase.invoke(idSelected)) {
+                        is ResultEvent.Success -> {
+                            _weatherState.value =
+                                WeatherState.Success(result.data)
+                        }
+
+                        is ResultEvent.Error -> {
+                            when (result.error) {
+                                is AppError.WeatherUnavailable -> {
+                                    _weatherState.value = WeatherState.Error(
+                                        resources.getString(R.string.error_msg_invalid_weather),
+                                        R.drawable.ic_cloud_error
+                                    )
+                                }
+                                else -> {
+                                    _weatherState.value = WeatherState.Error("")
+                                }
+                            }
+
+                        }
+                    }
+                    _isLoading.value = false
+                }
+
+                is ResultEvent.Error -> {
+                    _isLoading.value = false
+                    _weatherState.value = WeatherState.Error(
+                        resources.getString(R.string.error_msg_invalid_id_selected)
+                    )
+                }
+            }
+        }
+
     }
 }

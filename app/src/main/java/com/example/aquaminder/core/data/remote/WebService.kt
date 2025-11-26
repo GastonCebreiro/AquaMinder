@@ -13,6 +13,7 @@ import com.example.aquaminder.feature_login.data.remote.model.response.NewUserRe
 import com.example.aquaminder.feature_main.data.remote.model.IrrigationZoneNetworkEntity
 import com.example.aquaminder.feature_main.data.remote.model.response.GetIrrigationZonesResponse
 import com.example.aquaminder.feature_new_irrigation_zone.data.remote.model.response.SaveIrrigationZoneResponseNetworkEntity
+import com.example.aquaminder.feature_weather.data.model.response.GetWeatherResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -47,6 +48,9 @@ interface WebService {
     @POST(SAVE_VALVES_CONFIG)
     suspend fun saveValvesConfig(@Body request: IrrigationZoneConfigNetworkEntity): SaveIrrigationZoneConfigResponse
 
+    @POST(GET_WEATHER)
+    suspend fun getWeather(@QueryMap request: Map<String, String>): GetWeatherResponse
+
     companion object {
         private const val REGISTER_USER = "register"
         private const val LOGIN_USER = "login"
@@ -57,5 +61,6 @@ interface WebService {
         private const val GET_IRRIGATION_ZONE_CONFIGURATION = "configuracionEquipo"
         private const val SAVE_VALVES_CONFIG = "guardarConfig"
         private const val GET_VALVE_WATERING_STATUS = "wateringStatus"
+        private const val GET_WEATHER = "weather"
     }
 }

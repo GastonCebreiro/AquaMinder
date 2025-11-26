@@ -9,7 +9,7 @@ data class WeatherDomainModel(
     val description: String,
     val humidity: Int,
     val address: Address,
-    val hourlyWeather: List<HourlyWeather>,
+    val hourlyWeather: List<HourlyWeatherDomainModel>,
 )
 
 fun WeatherDomainModel.getTemperatureFormatted(): String =

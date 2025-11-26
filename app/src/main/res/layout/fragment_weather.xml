@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout3"
+    android:id="@+id/clWeatherScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -55,8 +55,8 @@
 
             <ImageView
                 android:id="@+id/ivLocation"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:layout_marginEnd="6dp"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/tvLocation"
@@ -67,15 +67,18 @@
 
             <TextView
                 android:id="@+id/tvLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray"
-                android:textSize="16sp"
+                android:layout_marginStart="4dp"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivLocation"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Av Alberdi 1045, Ciudad de Buenos Aires" />
+                android:maxLines="1"
+                android:ellipsize="end"
+                tools:text="Av Juan Bautista Alberdi 1045, Cdad Autonoma de Buenos Aires" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clIconWeather"

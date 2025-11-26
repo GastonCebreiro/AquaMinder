@@ -73,6 +73,7 @@
             android:background="@drawable/background_address_selector"
             android:paddingHorizontal="10dp"
             android:paddingVertical="8dp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -262,7 +263,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/fragment_home_last_waters"
                     android:textColor="@color/light_blue"
                     android:textSize="16sp"

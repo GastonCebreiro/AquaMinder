@@ -17,4 +17,7 @@ sealed class AppError {
     object MailUnavailable : AppError()
     object UsernameUnavailable : AppError()
 
+    // Weather Error
+    object WeatherUnavailable: AppError()
+
 }

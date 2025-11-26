@@ -3,14 +3,14 @@ package com.example.aquaminder.feature_weather.domain.model
 import com.example.aquaminder.R
 import java.time.LocalTime
 
-data class HourlyWeather(
+data class HourlyWeatherDomainModel(
     val hour: String, // 16:40
     val icon: IconWeather,
     val temperature: Int,
     val humidity: Int
 )
 
-fun HourlyWeather.getColorByIcon(): Int {
+fun HourlyWeatherDomainModel.getColorByIcon(): Int {
     return when (this.icon) {
         IconWeather.SUNNY  -> R.color.weather_sunny_yellow
         IconWeather.CLOUDY -> R.color.weather_cloud_gray
@@ -19,7 +19,7 @@ fun HourlyWeather.getColorByIcon(): Int {
     }
 }
 
-fun HourlyWeather.getTimeFormatted(): String {
+fun HourlyWeatherDomainModel.getTimeFormatted(): String {
     val currentHour = LocalTime.now().hour
 
     val itemHour = try {
@@ -35,8 +35,8 @@ fun HourlyWeather.getTimeFormatted(): String {
     }
 }
 
-fun HourlyWeather.getTemperatureFormatted(): String =
+fun HourlyWeatherDomainModel.getTemperatureFormatted(): String =
     "${this.temperature}°C"
 
-fun HourlyWeather.getHumidityFormatted(): String =
+fun HourlyWeatherDomainModel.getHumidityFormatted(): String =
     "${this.humidity}%"

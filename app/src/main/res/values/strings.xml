@@ -143,6 +143,7 @@
     <string name="error_msg_new_irrigation_zone_invalid_name">Ingrese un nombre</string>
     <string name="error_msg_new_irrigation_zone_invalid_address">Ingrese una dirección</string>
     <string name="error_msg_invalid_id_selected">No se encuentra la Zona de Riego seleccionada</string>
+    <string name="error_msg_invalid_weather">No hay información del clima en este momento</string>
     <string name="error_msg_save_config">No se puedo guardar la configuracion</string>
     <string name="error_msg_network">Ha ocurrido un problema de conexión</string>
     <string name="error_msg_catch">Ha ocurrido un error: %s</string>
