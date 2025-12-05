@@ -7,7 +7,8 @@ data class HourlyWeatherDomainModel(
     val hour: String, // 16:40
     val icon: IconWeather,
     val temperature: Int,
-    val humidity: Int
+    val humidity: Int,
+    val rainProb: Int,
 )
 
 fun HourlyWeatherDomainModel.getColorByIcon(): Int {
@@ -40,3 +41,6 @@ fun HourlyWeatherDomainModel.getTemperatureFormatted(): String =
 
 fun HourlyWeatherDomainModel.getHumidityFormatted(): String =
     "${this.humidity}%"
+
+fun HourlyWeatherDomainModel.getRainProbFormatted(): String =
+    "${this.rainProb}%"

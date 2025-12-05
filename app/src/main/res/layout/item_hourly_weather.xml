@@ -59,6 +59,38 @@
             tools:text="22°C" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clRainProb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp">
+
+            <TextView
+                android:id="@+id/tvRainProb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/light_blue"
+                android:textSize="14sp"
+                tools:text="30%"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivRainProb"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:id="@+id/ivRainProb"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="2dp"
+                android:contentDescription="@null"
+                app:tint="@color/light_blue"
+                app:srcCompat="@drawable/ic_weather"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clHumidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -67,7 +99,7 @@
             android:id="@+id/tvHumidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="4dp"
             android:textColor="@color/light_blue"
             android:textSize="14sp"
             tools:text="60%"

@@ -4,8 +4,10 @@ import com.example.aquaminder.feature_new_irrigation_zone.domain.model.response.
 
 data class SaveIrrigationZoneResponseNetworkEntity(
     val status: Int? = null,
+    val message: String? = null,
 )
 
 fun SaveIrrigationZoneResponseNetworkEntity.toDomainModel() = SaveIrrigationZoneResponseDomainModel(
-    status = status ?: -1
+    status = status ?: -1,
+    message = message.orEmpty()
 )

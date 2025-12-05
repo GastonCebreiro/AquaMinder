@@ -38,7 +38,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvWeather"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/light_blue_card"
@@ -129,14 +129,53 @@
                 tools:text="Soleado" />
 
             <TextView
-                android:id="@+id/tvHumidityLabel"
+                android:id="@+id/tvRainProbLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_weather_humidity_label"
+                android:layout_marginTop="16dp"
+                android:text="@string/fragment_weather_rain_label"
                 android:textColor="@color/gray"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clIconWeather"/>
+
+            <ImageView
+                android:id="@+id/ivRainProb"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="2dp"
+                android:contentDescription="@null"
+                android:layout_marginEnd="6dp"
+                app:tint="@color/light_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/tvRainProbLabel"
+                app:layout_constraintEnd_toStartOf="@+id/tvRainProbLabel"
+                app:layout_constraintTop_toTopOf="@id/tvRainProbLabel"
+                app:srcCompat="@drawable/ic_weather" />
+
+            <TextView
+                android:id="@+id/tvRainProb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/light_blue"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/tvRainProbLabel"
+                app:layout_constraintTop_toTopOf="@id/tvRainProbLabel"
+                app:layout_constraintBottom_toBottomOf="@id/tvRainProbLabel"
+                tools:text="30%"/>
+
+            <TextView
+                android:id="@+id/tvHumidityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="@string/fragment_weather_humidity_label"
+                android:textColor="@color/gray"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/ivHumidity"
+                app:layout_constraintTop_toBottomOf="@+id/tvRainProbLabel"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <ImageView
@@ -144,11 +183,10 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:contentDescription="@null"
-                android:layout_marginEnd="6dp"
                 app:tint="@color/light_blue"
                 app:layout_constraintBottom_toBottomOf="@+id/tvHumidityLabel"
-                app:layout_constraintEnd_toStartOf="@+id/tvHumidityLabel"
                 app:layout_constraintTop_toTopOf="@id/tvHumidityLabel"
+                app:layout_constraintStart_toStartOf="@+id/ivRainProb"
                 app:srcCompat="@drawable/ic_drop" />
 
             <TextView
@@ -185,7 +223,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHourly"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/tvNextHours"

@@ -60,8 +60,8 @@ class NewIrrigationZoneViewModel @Inject constructor(
         _irrigationZoneState.value = NewIrrigationZoneState.Idle
         val id = inputId.trim()
         val name = inputName.trim()
-        val logo = IrrigationZoneUtils.getLogos()[inputLogo]
-        val color = IrrigationZoneUtils.getColors()[inputLogo]
+        val logo = inputLogo
+        val color = inputLogo
 
         when {
             id.isBlank() -> {
@@ -112,9 +112,9 @@ class NewIrrigationZoneViewModel @Inject constructor(
                     is ResultEvent.Error -> {
                         when (result.error) {
                             is AppError.GenericError -> {
-                                _irrigationZoneState.value = NewIrrigationZoneState.Error(
-                                    resources.getString(R.string.error_msg_new_iz)
-                                )
+                                val errorMessage = result.error.errorMsg.takeIf { it.isNotBlank() }
+                                    ?: resources.getString(R.string.error_msg_new_iz)
+                                _irrigationZoneState.value = NewIrrigationZoneState.Error(errorMessage)
                             }
 
                             is AppError.NetworkError -> {

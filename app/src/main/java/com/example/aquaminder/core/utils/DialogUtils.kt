@@ -152,46 +152,4 @@ object DialogUtils {
     }
 
 
-    // TODO GC DELETE
-    fun showModifyHumidityDialog(
-        context: Context,
-        humidity: Int,
-        onAcceptAction: ((Int) -> Unit)
-    ) {
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-
-        val binding = DialogModifyHumidityBinding
-            .inflate(LayoutInflater.from(context), null, false)
-        dialog.setContentView(binding.root)
-
-        val humidityText = getHumidityDescription(humidity)
-        binding.tvHumidity.text = humidityText
-
-        var selectedHumidity = humidity
-
-        binding.sliderHumidity.valueFrom = 0f
-        binding.sliderHumidity.valueTo = 100f
-        binding.sliderHumidity.stepSize = 1f
-        binding.sliderHumidity.value = humidity.toFloat()
-
-        binding.sliderHumidity.addOnChangeListener { _, value, _ ->
-            binding.tvHumidity.text = getHumidityDescription(value.toInt())
-            selectedHumidity = value.toInt()
-        }
-
-        binding.btnSave.setOnClickListener {
-            onAcceptAction.invoke(selectedHumidity)
-            dialog.dismiss()
-        }
-        binding.tvCancel.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-    }
-
-
 }

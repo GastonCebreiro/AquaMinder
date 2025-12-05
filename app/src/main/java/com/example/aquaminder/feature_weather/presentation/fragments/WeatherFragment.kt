@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentWeatherBinding
 import com.example.aquaminder.feature_weather.domain.model.HourlyWeatherDomainModel
@@ -20,7 +21,9 @@ import com.example.aquaminder.feature_weather.domain.model.WeatherDomainModel
 import com.example.aquaminder.feature_weather.domain.model.getAddressFormatted
 import com.example.aquaminder.feature_weather.domain.model.getColorByIcon
 import com.example.aquaminder.feature_weather.domain.model.getHumidityFormatted
+import com.example.aquaminder.feature_weather.domain.model.getRainProbFormatted
 import com.example.aquaminder.feature_weather.domain.model.getTemperatureFormatted
+import com.example.aquaminder.feature_weather.domain.model.getTimeFormatted
 import com.example.aquaminder.feature_weather.presentation.adapter.HourlyWeatherAdapter
 import com.example.aquaminder.feature_weather.presentation.view_models.WeatherViewModel
 import com.example.aquaminder.feature_weather.utils.WeatherState
@@ -86,16 +89,36 @@ class WeatherFragment : Fragment() {
         binding.tvDescription.text = weather.description
         binding.tvDescription.setTextColor(ContextCompat.getColor(requireContext(), weather.getColorByIcon()))
         binding.tvHumidity.text = weather.getHumidityFormatted()
+        binding.tvRainProb.text = weather.getRainProbFormatted()
 
         setAdapter(weather.hourlyWeather)
     }
 
     private fun setAdapter(hourlyWeather: List<HourlyWeatherDomainModel>) {
         adapter = HourlyWeatherAdapter(hourlyWeather)
-        binding.rvHourly.layoutManager =
+        val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvHourly.layoutManager = layoutManager
         binding.rvHourly.adapter = adapter
+
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.rvHourly)
+        scrollToCurrentHour(hourlyWeather, layoutManager)
     }
+
+    private fun scrollToCurrentHour(
+        hourlyWeather: List<HourlyWeatherDomainModel>,
+        layoutManager: LinearLayoutManager
+    ) {
+        val position = hourlyWeather.indexOfFirst { it.getTimeFormatted() == "Ahora" }
+
+        if (position != -1) {
+            binding.rvHourly.post {
+                layoutManager.scrollToPositionWithOffset(position, 0)
+            }
+        }
+    }
+
 
 
     private fun showErrorMessage(message: String, logoId: Int? = null) {

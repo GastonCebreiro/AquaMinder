@@ -8,6 +8,7 @@ import com.example.aquaminder.databinding.ItemHourlyWeatherBinding
 import com.example.aquaminder.feature_weather.domain.model.HourlyWeatherDomainModel
 import com.example.aquaminder.feature_weather.domain.model.getColorByIcon
 import com.example.aquaminder.feature_weather.domain.model.getHumidityFormatted
+import com.example.aquaminder.feature_weather.domain.model.getRainProbFormatted
 import com.example.aquaminder.feature_weather.domain.model.getTemperatureFormatted
 import com.example.aquaminder.feature_weather.domain.model.getTimeFormatted
 import com.example.aquaminder.feature_weather.utils.WeatherUtils.setWeatherIcon
@@ -40,6 +41,7 @@ class HourlyWeatherAdapter(
             binding.tvTime.text = item.getTimeFormatted()
             binding.tvTemp.text = item.getTemperatureFormatted()
             binding.tvHumidity.text = item.getHumidityFormatted()
+            binding.tvRainProb.text = item.getRainProbFormatted()
             binding.wvIcon.setWeatherIcon(item.icon, isSmall = true)
 
             val colorRes = item.getColorByIcon()

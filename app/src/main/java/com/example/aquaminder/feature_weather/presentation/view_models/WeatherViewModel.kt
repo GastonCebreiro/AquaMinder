@@ -16,6 +16,7 @@ import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneD
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
 import com.example.aquaminder.feature_home.utils.HomeState
 import com.example.aquaminder.feature_main.domain.use_case.GetIrrigationZoneIdSelectedUseCase
+import com.example.aquaminder.feature_new_irrigation_zone.utils.NewIrrigationZoneState
 import com.example.aquaminder.feature_weather.use_case.GetWeatherUseCase
 import com.example.aquaminder.feature_weather.utils.WeatherState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -61,6 +62,13 @@ class WeatherViewModel @Inject constructor(
                                         resources.getString(R.string.error_msg_invalid_weather),
                                         R.drawable.ic_cloud_error
                                     )
+                                }
+                                is AppError.NetworkError -> {
+                                    _weatherState.value =
+                                        WeatherState.Error(
+                                            resources.getString(R.string.error_msg_network),
+                                            R.drawable.ic_error_network
+                                        )
                                 }
                                 else -> {
                                     _weatherState.value = WeatherState.Error("")

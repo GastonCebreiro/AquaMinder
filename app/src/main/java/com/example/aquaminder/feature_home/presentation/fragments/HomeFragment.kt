@@ -21,11 +21,13 @@ import com.example.aquaminder.core.utils.DialogUtils
 import com.example.aquaminder.databinding.FragmentHomeBinding
 import com.example.aquaminder.databinding.ItemSpinnerDropdownBinding
 import com.example.aquaminder.databinding.ItemSpinnerSelectedBinding
-import com.example.aquaminder.feature_configuration.presentation.fragments.LastWatersDomainModel
+import com.example.aquaminder.feature_configuration.domain.model.LastWatersDomainModel
+import com.example.aquaminder.feature_configuration.domain.model.NextWatersDomainModel
 import com.example.aquaminder.feature_home.domain.model.ControlMode
 import com.example.aquaminder.feature_home.domain.model.IrrigationZoneDetailsDomainModel
 import com.example.aquaminder.feature_home.domain.model.ValveDomainModel
 import com.example.aquaminder.feature_home.presentation.adapter.LastWatersAdapter
+import com.example.aquaminder.feature_home.presentation.adapter.NextWatersAdapter
 import com.example.aquaminder.feature_home.presentation.view_models.HomeViewModel
 import com.example.aquaminder.feature_home.utils.GraphUtils
 import com.example.aquaminder.feature_home.utils.HomeState
@@ -49,7 +51,8 @@ class HomeFragment : Fragment() {
 
     private val humidityCache = mutableMapOf<Int, LineData>()
 
-    private lateinit var adapter: LastWatersAdapter
+    private lateinit var lastWatersAdapter: LastWatersAdapter
+    private lateinit var nextWatersAdapter: NextWatersAdapter
 
     private var selectedValve: ValveDomainModel? = null
 
@@ -160,11 +163,42 @@ class HomeFragment : Fragment() {
     }
 
     private fun setLastWatersAdapter(lastWaters: List<LastWatersDomainModel>?) {
-        lastWaters?.let {
-            adapter = LastWatersAdapter(it)
+        if (!lastWaters.isNullOrEmpty()) {
+            binding.tvEmptyLast.visibility = View.GONE
+            binding.rvLastWaters.visibility = View.VISIBLE
+            lastWatersAdapter = LastWatersAdapter(lastWaters)
             binding.rvLastWaters.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.rvLastWaters.adapter = adapter
+            binding.rvLastWaters.adapter = lastWatersAdapter
+        } else {
+            binding.tvEmptyLast.visibility = View.VISIBLE
+            binding.rvLastWaters.visibility = View.GONE
+        }
+    }
+
+    private fun setNextWatersAdapter(
+        nextWaters: List<NextWatersDomainModel>?,
+        controlMode: ControlMode?
+    ) {
+        if (controlMode != ControlMode.SCHEDULED) {
+            binding.tvNextWaters.visibility = View.GONE
+            binding.rvNextWaters.visibility = View.GONE
+            binding.tvEmptyNext.visibility = View.GONE
+            return
+        }
+
+        binding.tvNextWaters.visibility = View.VISIBLE
+
+        if (!nextWaters.isNullOrEmpty()) {
+            binding.tvEmptyNext.visibility = View.GONE
+            binding.rvNextWaters.visibility = View.VISIBLE
+            nextWatersAdapter = NextWatersAdapter(nextWaters)
+            binding.rvNextWaters.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            binding.rvNextWaters.adapter = nextWatersAdapter
+        } else {
+            binding.tvEmptyNext.visibility = View.VISIBLE
+            binding.rvNextWaters.visibility = View.GONE
         }
     }
 
@@ -243,6 +277,8 @@ class HomeFragment : Fragment() {
         setupChart(valve.id, valve.lastHumidity, valve.controlMode)
 
         setLastWatersAdapter(valve.lastWaters)
+
+        setNextWatersAdapter(valve.nextWaters, valve.controlMode)
     }
 
     private fun setupStatus(isActive: Boolean) {
@@ -272,11 +308,14 @@ class HomeFragment : Fragment() {
         if (controlMode != ControlMode.SENSOR) {
             binding.humidityChart.visibility = View.GONE
             binding.tvLastHumidity.visibility = View.GONE
+            binding.tvEmptyHumidity.visibility = View.GONE
             return
         }
 
-        binding.humidityChart.visibility = View.VISIBLE
         binding.tvLastHumidity.visibility = View.VISIBLE
+        binding.humidityChart.visibility = View.VISIBLE
+
+        binding.tvEmptyHumidity.isVisible = lastHumidity.isEmpty()
 
         val cached = humidityCache[valveId]
 

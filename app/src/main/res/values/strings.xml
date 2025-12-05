@@ -75,7 +75,11 @@
     <string name="fragment_home_valve_empty_valves_title">No hay válvulas configuradas</string>
     <string name="fragment_home_valve_empty_valves_description">Configura válvulas para poder visualizarlas aquí.</string>
     <string name="fragment_home_last_waters">Ultimos riegos:</string>
+    <string name="fragment_home_next_waters">Próximos riegos:</string>
     <string name="fragment_home_last_humidity">Humedad medida:</string>
+    <string name="fragment_home_empty_humidity">No hay datos de humedad</string>
+    <string name="fragment_home_empty_last">No hay datos de riegos anteriores</string>
+    <string name="fragment_home_empty_next">No hay datos de riegos posteriores</string>
 
     <string name="fragment_configuration_title">Configuración</string>
     <string name="fragment_configuration_general">Configuración general</string>
@@ -122,8 +126,8 @@
 
     <string name="fragment_weather_title">Clima</string>
     <string name="fragment_weather_humidity_label">Humedad: </string>
-    <string name="fragment_weather_next_hours">Pronóstico próximas 24 horas: </string>
-    <string name="fragment_weather_rain_label">Probabilidad de Lluvia</string>
+    <string name="fragment_weather_next_hours">Pronóstico últimas 24 horas: </string>
+    <string name="fragment_weather_rain_label">Probabilidad de Lluvia:</string>
     <string name="fragment_weather_wind_label">Viento</string>
 
     <string name="error_msg_invalid_password">Clave Incorrecta</string>

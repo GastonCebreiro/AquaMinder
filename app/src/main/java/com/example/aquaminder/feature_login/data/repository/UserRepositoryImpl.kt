@@ -69,9 +69,9 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun askNewPassword(request: NewPasswordRequestDomainModel): NewPasswordResponseDomainModel {
         // TODO GC ADD SERVICE CALL FOR NEW PASSWORD
 //        val response: NewPasswordResponseNetworkEntity = loginService.askNewPassword(request)
-        val response = NewPasswordResponseNetworkEntity()
-        return response.toDomainModel()
-        //return NewPasswordResponseDomainModel(status = 0, message = "Se envio el mail")
+//        val response = NewPasswordResponseNetworkEntity()
+//        return response.toDomainModel()
+        return NewPasswordResponseDomainModel(status = 0, message = "Se envio el mail")
     }
 }
 

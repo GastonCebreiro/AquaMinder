@@ -242,7 +242,7 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/fragment_home_last_humidity"
                     android:textColor="@color/light_blue"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -259,6 +259,21 @@
                     tools:visibility="visible" />
 
                 <TextView
+                    android:id="@+id/tvEmptyHumidity"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_home_empty_humidity"
+                    android:textColor="@color/light_gray"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/humidityChart"
+                    app:layout_constraintStart_toStartOf="@+id/humidityChart"
+                    app:layout_constraintTop_toTopOf="@+id/humidityChart"
+                    app:layout_constraintBottom_toBottomOf="@+id/humidityChart"/>
+
+                <TextView
                     android:id="@+id/tvLastWaters"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -266,7 +281,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/fragment_home_last_waters"
                     android:textColor="@color/light_blue"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -283,6 +298,62 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvLastWaters"
                     tools:listitem="@layout/item_last_water" />
+
+                <TextView
+                    android:id="@+id/tvEmptyLast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/fragment_home_empty_last"
+                    android:textColor="@color/light_gray"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLastWaters"/>
+
+                <TextView
+                    android:id="@+id/tvNextWaters"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="60dp"
+                    android:text="@string/fragment_home_next_waters"
+                    android:textColor="@color/light_blue"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvLastWaters" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvNextWaters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNextWaters"
+                    tools:listitem="@layout/item_next_water" />
+
+                <TextView
+                    android:id="@+id/tvEmptyNext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/fragment_home_empty_next"
+                    android:textColor="@color/light_gray"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNextWaters"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

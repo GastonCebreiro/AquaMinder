@@ -5,6 +5,7 @@ import com.example.aquaminder.feature_home.data.model.ValveNetworkEntity
 import com.example.aquaminder.feature_home.data.model.toDomainModel
 import com.example.aquaminder.feature_home.domain.model.IrrigationZoneDetailsDomainModel
 import com.example.aquaminder.feature_main.domain.model.stringToAddress
+import com.example.aquaminder.feature_new_irrigation_zone.utils.IrrigationZoneUtils
 import com.google.gson.annotations.SerializedName
 
 data class GetIrrigationZoneDetailsResponse(
@@ -24,7 +25,7 @@ data class GetIrrigationZoneDetailsResponse(
 fun GetIrrigationZoneDetailsResponse.toDomainModel() = IrrigationZoneDetailsDomainModel(
     uuid = uuid.orEmpty(),
     name = name ?: AppConstants.DEFAULT_IZ_NAME,
-    logoId = logoId ?: AppConstants.DEFAULT_LOGO_ID,
+    logoId = IrrigationZoneUtils.getLogoById(logoId ?: AppConstants.DEFAULT_LOGO_ID),
     address = stringToAddress(address.orEmpty()),
     valves = valves?.map {
         it.toDomainModel()

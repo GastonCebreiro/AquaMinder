@@ -6,7 +6,6 @@ import com.example.aquaminder.R
 
 object IdentifierUtils {
 
-    // TODO GC DEFINE VALID ID
     fun isValidID(id: String) = id.length == ID_LENGTH
 
     fun shareId(context: Context, id: String) {

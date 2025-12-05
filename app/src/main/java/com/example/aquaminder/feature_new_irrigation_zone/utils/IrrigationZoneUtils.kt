@@ -18,8 +18,19 @@ object IrrigationZoneUtils {
         R.color.card_gray
     )
 
-    fun getColorByLogo(logoId: Int): Int {
-        val index = getLogos().indexOf(logoId)
-        return getColors()[index]
+    fun getLogoById(logoId: Int): Int {
+        return try {
+            getLogos()[logoId]
+        } catch(e: Exception) {
+            getLogos()[0]
+        }
+    }
+
+    fun getColorById(logoId: Int): Int {
+        return try {
+            getColors()[logoId]
+        } catch(e: Exception) {
+            getColors()[0]
+        }
     }
 }

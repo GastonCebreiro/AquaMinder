@@ -1,4 +1,4 @@
-package com.example.aquaminder.feature_configuration.presentation.fragments
+package com.example.aquaminder.feature_configuration.domain.model
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
@@ -17,7 +17,7 @@ data class LastWatersDomainModel(
 fun LastWatersDomainModel.toNetworkEntity() = LastWatersNetworkEntity(
     date = date,
     time = time,
-    isSkipped = isSkipped
+    isSkipped = if(isSkipped) 1 else 0
 )
 
 @SuppressLint("NewApi")

@@ -181,6 +181,7 @@ class ValveConfigViewModel @Inject constructor(
             false,
             isWatering = false,
             lastWaters = emptyList(),
+            nextWaters = emptyList(),
             lastHumidity = emptyList()
         )
 

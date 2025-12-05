@@ -20,8 +20,8 @@ data class IrrigationZoneNetworkEntity(
 fun IrrigationZoneNetworkEntity.toDomainModel() = IrrigationZoneDomainModel(
     uuid = id ?: DEFAULT_IZ_ID,
     name = name ?: DEFAULT_IZ_NAME,
-    logoId = logoId ?: DEFAULT_LOGO_ID,
-    colorId = IrrigationZoneUtils.getColorByLogo(logoId ?: DEFAULT_LOGO_ID),
+    logoId = IrrigationZoneUtils.getLogoById(logoId ?: DEFAULT_LOGO_ID),
+    colorId =  IrrigationZoneUtils.getColorById(logoId ?: DEFAULT_LOGO_ID),
     location = Location(
         latitude = latitude ?: 0.0,
         longitude = longitude ?: 0.0,

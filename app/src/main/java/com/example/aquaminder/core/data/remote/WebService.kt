@@ -48,7 +48,7 @@ interface WebService {
     @POST(SAVE_VALVES_CONFIG)
     suspend fun saveValvesConfig(@Body request: IrrigationZoneConfigNetworkEntity): SaveIrrigationZoneConfigResponse
 
-    @POST(GET_WEATHER)
+    @GET(GET_WEATHER)
     suspend fun getWeather(@QueryMap request: Map<String, String>): GetWeatherResponse
 
     companion object {

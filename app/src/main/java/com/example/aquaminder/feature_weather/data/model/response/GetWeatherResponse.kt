@@ -12,11 +12,13 @@ data class GetWeatherResponse(
     @SerializedName("icon_code")
     val iconCode: Int? = null,
     @SerializedName("temperature")
-    val temperature: Int? = null,
+    val temperature: Double? = null,
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("humidity")
     val humidity: Int? = null,
+    @SerializedName("rain_prob")
+    val rainProb: Int? = null,
     @SerializedName("address")
     val address: String? = null,
     @SerializedName("hourly_weather")
@@ -25,9 +27,10 @@ data class GetWeatherResponse(
 
 fun GetWeatherResponse.toDomainModel() = WeatherDomainModel(
     icon = WeatherUtils.codeToIconWeather(iconCode),
-    temperature = temperature ?: 0,
+    temperature = temperature?.toInt() ?: 0,
     description = description.orEmpty(),
     humidity = humidity ?: 0,
+    rainProb = rainProb ?: 0,
     address = stringToAddress(address.orEmpty()),
     hourlyWeather = hourlyWeather?.map { it.toDomainModel() }.orEmpty()
 )

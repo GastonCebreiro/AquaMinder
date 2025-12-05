@@ -14,15 +14,17 @@ data class ValveNetworkEntity(
     @SerializedName("humidity_max")
     val humidityMax: Int? = null,
     @SerializedName("weather_enable")
-    val isWeatherChecked: Boolean? = null,
+    val isWeatherChecked: Int? = null,
     @SerializedName("schedule")
     val schedule: ScheduleNetworkEntity? = null,
     @SerializedName("is_active")
-    val isActive: Boolean? = null,
+    val isActive: Int? = null,
     @SerializedName("is_watering")
-    val isWatering: Boolean? = null,
+    val isWatering: Int? = null,
     @SerializedName("last_waters")
     val lastWaters: List<LastWatersNetworkEntity>? = null,
+    @SerializedName("next_waters")
+    val nextWaters: List<NextWatersNetworkEntity>? = null,
     @SerializedName("last_humidity")
     val lastHumidity: List<Int>? = null,
 )
@@ -32,11 +34,14 @@ fun ValveNetworkEntity.toDomainModel() = ValveDomainModel(
     controlMode = controlMode ?: ControlMode.SCHEDULED,
     humidityMin = humidityMin ?: 0,
     humidityMax = humidityMax ?: 100,
-    isWeatherChecked = isWeatherChecked ?: false,
+    isWeatherChecked = isWeatherChecked == 1,
     schedule = schedule?.toDomainModel(),
-    isActive = isActive ?: false,
-    isWatering = isWatering ?: false,
+    isActive = isActive == 1,
+    isWatering = isWatering == 1,
     lastWaters = lastWaters?.map {
+        it.toDomainModel()
+    }.orEmpty(),
+    nextWaters = nextWaters?.map {
         it.toDomainModel()
     }.orEmpty(),
     lastHumidity = lastHumidity ?: emptyList()

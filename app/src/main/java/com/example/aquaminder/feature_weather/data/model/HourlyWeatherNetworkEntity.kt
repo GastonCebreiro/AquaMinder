@@ -10,14 +10,17 @@ data class HourlyWeatherNetworkEntity(
     @SerializedName("icon_code")
     val iconCode: Int? = null,
     @SerializedName("temperature")
-    val temperature: Int? = null,
+    val temperature: Double? = null,
     @SerializedName("humidity")
-    val humidity: Int? = null
+    val humidity: Int? = null,
+    @SerializedName("rain_prob")
+    val rainProb: Int? = null,
 )
 
 fun HourlyWeatherNetworkEntity.toDomainModel() = HourlyWeatherDomainModel(
     hour = hour.orEmpty(),
     icon = WeatherUtils.codeToIconWeather(iconCode),
-    temperature = temperature ?: 0,
-    humidity = humidity ?: 0
+    temperature = temperature?.toInt() ?: 0,
+    humidity = humidity ?: 0,
+    rainProb = rainProb ?: 0,
 )

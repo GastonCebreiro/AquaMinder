@@ -67,7 +67,7 @@ class HomeViewModel @Inject constructor(
                                     when (result.error) {
                                         is AppError.GenericError -> {
                                             _homeState.value = HomeState.Error(
-                                                resources.getString(R.string.error_msg_invalid_id_selected)
+                                                resources.getString(R.string.error_msg_catch, result.error.errorMsg)
                                             )
                                         }
 

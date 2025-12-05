@@ -24,7 +24,7 @@ class SaveIrrigationZoneUseCase @Inject constructor(
                     emit(ResultEvent.Success(true))
                 }
                 else -> {
-                    emit(ResultEvent.Error(AppError.GenericError()))
+                    emit(ResultEvent.Error(AppError.GenericError(errorMsg = response.message)))
                 }
             }
         } catch (e: IOException) {

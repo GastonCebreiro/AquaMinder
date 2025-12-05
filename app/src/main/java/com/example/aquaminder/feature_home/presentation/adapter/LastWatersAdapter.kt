@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aquaminder.R
 import com.example.aquaminder.databinding.ItemLastWaterBinding
-import com.example.aquaminder.feature_configuration.presentation.fragments.LastWatersDomainModel
+import com.example.aquaminder.feature_configuration.domain.model.LastWatersDomainModel
 import android.view.ViewGroup
-import com.example.aquaminder.feature_configuration.presentation.fragments.getFormattedDate
+import com.example.aquaminder.feature_configuration.domain.model.getFormattedDate
 
 class LastWatersAdapter(
     private val items: List<LastWatersDomainModel>

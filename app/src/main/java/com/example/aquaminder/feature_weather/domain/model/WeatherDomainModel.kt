@@ -8,6 +8,7 @@ data class WeatherDomainModel(
     val temperature: Int,
     val description: String,
     val humidity: Int,
+    val rainProb: Int,
     val address: Address,
     val hourlyWeather: List<HourlyWeatherDomainModel>,
 )
@@ -20,6 +21,9 @@ fun WeatherDomainModel.getAddressFormatted(): String =
 
 fun WeatherDomainModel.getHumidityFormatted(): String =
     "${this.humidity}%"
+
+fun WeatherDomainModel.getRainProbFormatted(): String =
+    "${this.rainProb}%"
 
 fun WeatherDomainModel.getColorByIcon(): Int {
     return when (this.icon) {
