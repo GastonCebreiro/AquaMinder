@@ -5,6 +5,8 @@ import com.example.aquaminder.feature_configuration.data.model.response.SaveIrri
 import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequest
 import com.example.aquaminder.feature_home.data.model.request.GetValveWateringStatusRequest
 import com.example.aquaminder.feature_home.data.model.request.GetValveWateringStatusResponse
+import com.example.aquaminder.feature_home.data.model.request.ManualWateringRequest
+import com.example.aquaminder.feature_home.data.model.request.ManualWateringResponse
 import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponse
 import com.example.aquaminder.feature_main.data.remote.model.response.GetIrrigationZonesResponse
 import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainModel
@@ -26,4 +28,6 @@ interface IrrigationZonesRepository {
     suspend fun saveConfig(request: IrrigationZoneConfigNetworkEntity): SaveIrrigationZoneConfigResponse
 
     suspend fun getValveWateringStatus(request: GetValveWateringStatusRequest): GetValveWateringStatusResponse
+
+    suspend fun manualWatering(request: ManualWateringRequest): ManualWateringResponse
 }

@@ -7,10 +7,12 @@ import com.example.aquaminder.feature_main.domain.model.IrrigationZoneDomainMode
 import com.example.aquaminder.feature_main.domain.model.Location
 import com.example.aquaminder.feature_main.domain.model.stringToAddress
 import com.example.aquaminder.feature_new_irrigation_zone.utils.IrrigationZoneUtils
+import com.google.gson.annotations.SerializedName
 
 data class IrrigationZoneNetworkEntity(
     val id: String? = null,
     val name: String? = null,
+    @SerializedName("logo_id")
     val logoId: Int? = null,
     val latitude: Double? = null,
     val longitude: Double? = null,

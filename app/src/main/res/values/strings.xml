@@ -181,5 +181,7 @@
     <string name="home_fragment_last_water_irrigated">REGADO</string>
     <string name="dialog_wifi_info_message">Para conectar el dispositivo a su red WiFi, asegúrese de que esté encendido y tenga a mano las credenciales de la red</string>
     <string name="dialog_wifi_info_title">Conectar WiFi</string>
+    <string name="fragment_home_btn_manual_watering">REGAR</string>
+    <string name="fragment_home_btn_manual_watering_stop">PARAR</string>
 
 </resources>

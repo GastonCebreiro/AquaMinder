@@ -175,7 +175,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -291,6 +291,7 @@
                     android:id="@+id/rvLastWaters"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="50dp"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -303,7 +304,7 @@
                     android:id="@+id/tvEmptyLast"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="40dp"
                     android:text="@string/fragment_home_empty_last"
                     android:textColor="@color/light_gray"
                     android:textSize="22sp"
@@ -319,7 +320,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/fragment_home_next_waters"
                     android:textColor="@color/light_blue"
                     android:textSize="20sp"
@@ -332,6 +333,7 @@
                     android:id="@+id/rvNextWaters"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="50dp"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -344,7 +346,7 @@
                     android:id="@+id/tvEmptyNext"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="40dp"
                     android:text="@string/fragment_home_empty_next"
                     android:textColor="@color/light_gray"
                     android:textSize="22sp"
@@ -358,6 +360,35 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabManualWatering"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/fragment_home_btn_manual_watering"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:backgroundTint="@color/light_blue"
+            android:contentDescription="@null"
+            app:elevation="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@color/light_blue_finish" />
+
+        <ProgressBar
+            android:id="@+id/pbManualWatering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/white"
+            android:translationZ="10dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/fabManualWatering"
+            app:layout_constraintBottom_toBottomOf="@id/fabManualWatering"
+            app:layout_constraintStart_toStartOf="@id/fabManualWatering"
+            app:layout_constraintEnd_toEndOf="@id/fabManualWatering"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

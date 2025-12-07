@@ -670,7 +670,7 @@
                 android:id="@+id/tilDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="20dp"
                 android:paddingBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/tvDuration"
                 app:layout_constraintStart_toEndOf="@+id/tvDuration"
@@ -691,18 +691,39 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/tvDurationLabel"
+            <RadioGroup
+                android:id="@+id/rgTimeUnit"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:text="@string/fragment_valve_config_minutes"
-                android:textColor="@color/gray"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/tilDuration"
                 app:layout_constraintStart_toEndOf="@id/tilDuration"
-                app:layout_constraintTop_toTopOf="@id/tilDuration" />
+                app:layout_constraintTop_toTopOf="@id/tilDuration">
+
+                <RadioButton
+                    android:id="@+id/rbMin"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_left"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="Min"
+                    android:textColor="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/rbSeg"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_selector_right"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="Seg"
+                    android:textColor="@color/black" />
+
+            </RadioGroup>
 
             <!-- Sección: Por Humedad -->
             <TextView
@@ -781,7 +802,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:constraint_referenced_ids="tvFrequency,rgFrequencyType,tvTime, tvNewTime, btnPickTime, rvTimes, tvDuration,tilDuration, tvDurationLabel, view1, view2, view3 " />
+                app:constraint_referenced_ids="tvFrequency,rgFrequencyType,tvTime, tvNewTime, btnPickTime, rvTimes, tvDuration,tilDuration, rgTimeUnit, view1, view2, view3 " />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupSensor"

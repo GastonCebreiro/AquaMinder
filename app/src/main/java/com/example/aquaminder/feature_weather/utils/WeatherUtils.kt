@@ -16,15 +16,13 @@ object WeatherUtils {
         loadUrl("file:///android_asset/$small${icon.fileName}.html")
     }
 
-
-    // TODO GC DEFINE THIS WHIT PICTO CODE
     fun codeToIconWeather(code: Int?): IconWeather {
         return when (code) {
             0 -> IconWeather.SUNNY
             1 -> IconWeather.CLOUDY
             2 -> IconWeather.RAINY
             3 -> IconWeather.STORMY
-            else -> IconWeather.SUNNY
+            else -> IconWeather.CLOUDY
         }
     }
 }

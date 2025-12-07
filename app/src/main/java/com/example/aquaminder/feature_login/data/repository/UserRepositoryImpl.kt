@@ -27,13 +27,13 @@ class UserRepositoryImpl @Inject constructor(
         user: LoginUserRequestDomainModel,
     ): LoginUserResponseDomainModel {
         //  TODO GC DELETE MOCK
-//        val response = webService.loginUser(user.toNetworkEntity())
-        val response = LoginUserResponseNetworkEntity(
-            status = 200,
-            username = "pepe",
-            mail = "asd@mail.com",
-            password = "1234"
-        )
+        val response = webService.loginUser(user.toNetworkEntity())
+//        val response = LoginUserResponseNetworkEntity(
+//            status = 200,
+//            username = "pepe",
+//            mail = "asd@mail.com",
+//            password = "1234"
+//        )
 //        delay(2000)
         return response.toDomainModel()
     }

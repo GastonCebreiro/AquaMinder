@@ -1,5 +1,6 @@
 package com.example.aquaminder.feature_home.presentation.fragments
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -58,6 +59,8 @@ class HomeFragment : Fragment() {
 
     private var wateringJob: Job? = null
 
+    private var manualWater = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,6 +73,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getIrrigationZoneDetails()
+
+        setManualWatering()
 
         lifecycleScope.launchWhenStarted {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -92,6 +97,9 @@ class HomeFragment : Fragment() {
                             }
 
                             is HomeState.Idle -> {}
+                            is HomeState.ManualWatering -> {
+                                setManualWateringState(isLoading = homeState.isLoading, false)
+                            }
                         }
                     }
                 }
@@ -99,9 +107,37 @@ class HomeFragment : Fragment() {
                 launch {
                     viewModel.wateringState.collect { isWatering ->
                         showWatering(isWatering)
+                        setManualWateringState(isLoading = false, isWatering = isWatering)
                     }
                 }
             }
+        }
+    }
+
+    private fun setManualWateringState(isLoading: Boolean, isWatering: Boolean) {
+        val buttonText = if (isLoading) "" else {
+            if (isWatering) getString(R.string.fragment_home_btn_manual_watering_stop)
+            else getString(R.string.fragment_home_btn_manual_watering)
+        }
+        val color = ContextCompat.getColor(
+            requireContext(),
+            if (isWatering)
+                R.color.red
+            else
+                R.color.light_blue
+        )
+        binding.fabManualWatering.backgroundTintList = ColorStateList.valueOf(color)
+        binding.fabManualWatering.text = buttonText
+        binding.fabManualWatering.isEnabled = !isLoading
+        binding.pbManualWatering.isVisible = isLoading
+    }
+
+    private fun setManualWatering() {
+        binding.fabManualWatering.setOnClickListener {
+            manualWater =
+                binding.fabManualWatering.text == getString(R.string.fragment_home_btn_manual_watering)
+
+            viewModel.manualWatering(manualWater)
         }
     }
 
@@ -172,7 +208,7 @@ class HomeFragment : Fragment() {
             binding.rvLastWaters.adapter = lastWatersAdapter
         } else {
             binding.tvEmptyLast.visibility = View.VISIBLE
-            binding.rvLastWaters.visibility = View.GONE
+            binding.rvLastWaters.visibility = View.INVISIBLE
         }
     }
 

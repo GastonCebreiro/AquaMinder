@@ -6,4 +6,5 @@ sealed class HomeState {
     object Idle : HomeState()
     data class Success(val details: IrrigationZoneDetailsDomainModel) : HomeState()
     data class Error(val errorMsg: String) : HomeState()
+    data class ManualWatering(val isLoading: Boolean) : HomeState()
 }

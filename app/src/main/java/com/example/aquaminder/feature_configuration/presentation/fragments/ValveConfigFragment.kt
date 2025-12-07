@@ -55,6 +55,12 @@ class ValveConfigFragment : Fragment() {
     // Para evitar loops de checkbox All
     private var isBulkUpdating = false
 
+    private var isDurationInternalUpdate = false
+    private var durationType: DurationType = DurationType.SECONDS
+
+    private enum class DurationType { MINUTES, SECONDS }
+
+    private var isIntervalInternalUpdate = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,7 +84,8 @@ class ValveConfigFragment : Fragment() {
         setIntervalDays()
         setSelectedDays()
         setTimeAdapter()
-        setDuration()
+        setDurationInput()
+        setDurationTypeSelector()
         setHumidity()
 
         lifecycleScope.launchWhenStarted {
@@ -206,47 +213,54 @@ class ValveConfigFragment : Fragment() {
         }
     }
 
-    private fun setDuration() {
+    private fun setDurationInput() {
         binding.etDuration.addTextChangedListener { editable ->
-            val value = editable?.toString()?.trim()?.toIntOrNull() ?: 0
-            when {
-                value < MIN_DURATION_MINUTES -> {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.fragment_valve_config_min_duration, MIN_DURATION_MINUTES.toString()),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    viewModel.setDuration(MIN_DURATION_MINUTES)
-                }
-                value > MAX_DURATION_MINUTES -> {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.fragment_valve_config_max_duration, MAX_DURATION_MINUTES.toString()),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    viewModel.setDuration(MAX_DURATION_MINUTES)
-                }
-                else -> viewModel.setDuration(value)
+            if (isDurationInternalUpdate) return@addTextChangedListener
+
+            val value = editable?.toString()?.trim()?.toIntOrNull() ?: return@addTextChangedListener
+            val fixedValue = value.coerceIn(MIN_DURATION_MINUTES, MAX_DURATION_MINUTES)
+
+            if (fixedValue != value) {
+                isDurationInternalUpdate = true
+                binding.etDuration.setText(fixedValue.toString())
+                binding.etDuration.setSelection(fixedValue.toString().length)
+                isDurationInternalUpdate = false
             }
+
+            val durationInSeconds = when (durationType) {
+                DurationType.MINUTES -> fixedValue * 60
+                DurationType.SECONDS -> fixedValue
+            }
+
+            viewModel.setDuration(durationInSeconds)
+        }
+    }
+
+
+    private fun setDurationTypeSelector() {
+        binding.rgTimeUnit.setOnCheckedChangeListener { _, checkedId ->
+
+            if (isDurationInternalUpdate) return@setOnCheckedChangeListener
+
+            val currentValue = binding.etDuration.text.toString().toIntOrNull() ?: return@setOnCheckedChangeListener
+
+            durationType = when (checkedId) {
+                R.id.rbMin -> DurationType.MINUTES
+                R.id.rbSeg -> DurationType.SECONDS
+                else -> DurationType.SECONDS
+            }
+
+            val durationInSeconds = when (durationType) {
+                DurationType.MINUTES -> currentValue * 60
+                DurationType.SECONDS -> currentValue
+            }
+
+            viewModel.setDuration(durationInSeconds)
         }
     }
 
     @SuppressLint("NewApi")
     private fun setSelectedDays() {
-//        checkBoxes.forEach { (checkBox, day) ->
-//            checkBox.setOnCheckedChangeListener(null)
-//            checkBox.setOnCheckedChangeListener { _, isChecked ->
-//                if (isBulkUpdating) return@setOnCheckedChangeListener
-//
-//                if (isChecked) {
-//                    viewModel.addDayOfWeek(day)
-//                } else {
-//                    viewModel.removeDayOfWeek(day)
-//                    binding.cbAll.isChecked = false
-//                }
-//                updateAllCheck()
-//            }
-//        }
 
         binding.cbAll.setOnCheckedChangeListener(null)
 
@@ -281,12 +295,32 @@ class ValveConfigFragment : Fragment() {
     }
 
 
+//    private fun setIntervalDays() {
+//        binding.etEveryNDays.addTextChangedListener { editable ->
+//            val value = editable?.toString()?.trim()?.toIntOrNull() ?: 0
+//            if (value in MIN_DAYS..MAX_DAYS) {
+//                viewModel.setIntervalDays(value)
+//            }
+//        }
+//    }
+
     private fun setIntervalDays() {
         binding.etEveryNDays.addTextChangedListener { editable ->
-            val value = editable?.toString()?.trim()?.toIntOrNull() ?: 0
-            if (value in MIN_DAYS..MAX_DAYS) {
-                viewModel.setIntervalDays(value)
+            if (isIntervalInternalUpdate) return@addTextChangedListener
+
+            val input = editable?.toString()?.trim()
+            val value = input?.toIntOrNull() ?: return@addTextChangedListener
+
+            val clamped = value.coerceIn(MIN_DAYS, MAX_DAYS)
+
+            if (clamped.toString() != input) {
+                isIntervalInternalUpdate = true
+                binding.etEveryNDays.setText(clamped.toString())
+                binding.etEveryNDays.setSelection(clamped.toString().length)
+                isIntervalInternalUpdate = false
             }
+
+            viewModel.setIntervalDays(clamped)
         }
     }
 
@@ -478,7 +512,15 @@ class ValveConfigFragment : Fragment() {
         }
 
         binding.switchWeather.isChecked = valve.isWeatherChecked
+        binding.clWeather.background = ContextCompat.getDrawable(requireContext(),
+            if (valve.isWeatherChecked) R.drawable.background_switch_selector
+            else R.drawable.background_switch_selector_off
+        )
         binding.switchActive.isChecked = valve.isActive
+        binding.clActive.background = ContextCompat.getDrawable(requireContext(),
+            if (valve.isActive) R.drawable.background_switch_selector
+            else R.drawable.background_switch_selector_off
+        )
 
         binding.etEveryNDays.setText((valve.schedule?.intervalDays ?: 2).toString())
 
@@ -505,7 +547,30 @@ class ValveConfigFragment : Fragment() {
             adapter.addTime(getTimeDescription(time))
         }
 
-        binding.etDuration.setText((valve.schedule?.duration ?: 3).toString())
+//        binding.etDuration.setText((valve.schedule?.duration ?: 3).toString())
+        val durationSec = valve.schedule?.duration ?: MAX_DURATION_MINUTES
+
+        if (durationSec >= 60) {
+            durationType = DurationType.MINUTES
+            binding.rbMin.isChecked = true
+
+            val minutes = (durationSec / 60).coerceIn(MIN_DURATION_MINUTES, MAX_DURATION_MINUTES)
+
+            isDurationInternalUpdate = true
+            binding.etDuration.setText(minutes.toString())
+            isDurationInternalUpdate = false
+
+        } else {
+            durationType = DurationType.SECONDS
+            binding.rbSeg.isChecked = true
+
+            val seconds = durationSec.coerceIn(1, 60)
+
+            isDurationInternalUpdate = true
+            binding.etDuration.setText(seconds.toString())
+            isDurationInternalUpdate = false
+        }
+
 
         val minHum = valve.humidityMin
         binding.sliderHumMin.value = minHum.toFloat()
@@ -552,7 +617,7 @@ class ValveConfigFragment : Fragment() {
         private const val MAX_DURATION_MINUTES = 60
 
         private const val MIN_DAYS = 1
-        private const val MAX_DAYS = 31
+        private const val MAX_DAYS = 30
     }
 
 }

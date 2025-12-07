@@ -5,6 +5,8 @@ import com.example.aquaminder.feature_configuration.data.model.response.GetIrrig
 import com.example.aquaminder.feature_configuration.data.model.response.SaveIrrigationZoneConfigResponse
 import com.example.aquaminder.feature_configuration.domain.model.IrrigationZoneConfigDomainModel
 import com.example.aquaminder.feature_home.data.model.request.GetValveWateringStatusResponse
+import com.example.aquaminder.feature_home.data.model.request.ManualWateringRequest
+import com.example.aquaminder.feature_home.data.model.request.ManualWateringResponse
 import com.example.aquaminder.feature_home.data.model.response.GetIrrigationZoneDetailsResponse
 import com.example.aquaminder.feature_login.data.remote.model.request.LoginUserRequestNetworkEntity
 import com.example.aquaminder.feature_login.data.remote.model.request.NewUserRequestNetworkEntity
@@ -51,6 +53,10 @@ interface WebService {
     @GET(GET_WEATHER)
     suspend fun getWeather(@QueryMap request: Map<String, String>): GetWeatherResponse
 
+    @POST(MANUAL_WATERING)
+    suspend fun manualWatering(@Body request: ManualWateringRequest): ManualWateringResponse
+
+
     companion object {
         private const val REGISTER_USER = "register"
         private const val LOGIN_USER = "login"
@@ -62,5 +68,6 @@ interface WebService {
         private const val SAVE_VALVES_CONFIG = "guardarConfig"
         private const val GET_VALVE_WATERING_STATUS = "wateringStatus"
         private const val GET_WEATHER = "weather"
+        private const val MANUAL_WATERING = "manualWatering"
     }
 }

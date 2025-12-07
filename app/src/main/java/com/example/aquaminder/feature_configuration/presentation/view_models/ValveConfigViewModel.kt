@@ -266,6 +266,7 @@ class ValveConfigViewModel @Inject constructor(
     }
 
     fun setDuration(duration: Int) {
+        println("GASTON DURATION=$duration")
         actualValve = actualValve.copy(
             schedule = actualValve.schedule?.copy(
                 duration = duration
