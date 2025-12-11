@@ -3,10 +3,7 @@ package com.example.aquaminder.feature_home.domain.use_case
 import com.example.aquaminder.core.utils.AppConstants.STATUS_OK
 import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.ResultEvent
-import com.example.aquaminder.feature_home.data.model.request.GetValveWateringStatusRequest
 import com.example.aquaminder.feature_home.data.model.request.ManualWateringRequest
-import com.example.aquaminder.feature_home.data.model.request.toDomainModel
-import com.example.aquaminder.feature_home.domain.model.ValveWateringStatusDomainModel
 import com.example.aquaminder.feature_main.domain.repository.IrrigationZonesRepository
 import java.io.IOException
 import javax.inject.Inject
@@ -17,9 +14,10 @@ class ManualWateringUseCase @Inject constructor(
 
     suspend operator fun invoke(
         zoneUuid: String,
-        water: Boolean
+        water: Boolean,
+        valveId: Int
     ): ResultEvent<Boolean> {
-        val request = ManualWateringRequest(zoneUuid, water)
+        val request = ManualWateringRequest(zoneUuid, valveId, water)
         return try {
             val response = irrigationZonesRepository.manualWatering(request)
 

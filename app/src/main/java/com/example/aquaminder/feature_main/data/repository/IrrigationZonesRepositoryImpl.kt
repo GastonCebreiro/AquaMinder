@@ -277,10 +277,10 @@ class IrrigationZonesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun manualWatering(request: ManualWateringRequest): ManualWateringResponse {
-        // TODO GC DELETE MOCK
-//        val response: ManualWateringResponse = webService.manualWatering(request)
-        delay(3000)
-        val response = ManualWateringResponse(200)
+        val response: ManualWateringResponse = webService.manualWatering(request)
+//        // TODO GC DELETE MOCK
+//        delay(3000)
+//        val response = ManualWateringResponse(200)
         return response
     }
 }

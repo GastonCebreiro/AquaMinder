@@ -123,13 +123,14 @@ class HomeViewModel @Inject constructor(
         pollingJob?.cancel()
     }
 
-    fun manualWatering(water: Boolean) {
+    fun manualWatering(water: Boolean, valveId: Int) {
         _homeState.value = HomeState.Idle
         _homeState.value = HomeState.ManualWatering(true)
         viewModelScope.launch {
             val result = manualWateringUseCase.invoke(
                 zoneUuid = idSelected,
-                water = water
+                water = water,
+                valveId = valveId
             )
              when(result) {
                  is ResultEvent.Success -> {

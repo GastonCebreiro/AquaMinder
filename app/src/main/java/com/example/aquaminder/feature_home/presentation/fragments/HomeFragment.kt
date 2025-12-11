@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val humidityCache = mutableMapOf<Int, LineData>()
+//    private val humidityCache = mutableMapOf<Int, LineData>()
 
     private lateinit var lastWatersAdapter: LastWatersAdapter
     private lateinit var nextWatersAdapter: NextWatersAdapter
@@ -137,7 +137,7 @@ class HomeFragment : Fragment() {
             manualWater =
                 binding.fabManualWatering.text == getString(R.string.fragment_home_btn_manual_watering)
 
-            viewModel.manualWatering(manualWater)
+            viewModel.manualWatering(manualWater, selectedValve?.id ?: 0)
         }
     }
 
@@ -351,21 +351,36 @@ class HomeFragment : Fragment() {
         binding.tvLastHumidity.visibility = View.VISIBLE
         binding.humidityChart.visibility = View.VISIBLE
 
-        binding.tvEmptyHumidity.isVisible = lastHumidity.isEmpty()
+        if (lastHumidity.isEmpty()) {
+            binding.tvEmptyHumidity.isVisible = true
 
-        val cached = humidityCache[valveId]
-
-        if (cached != null) {
-            binding.humidityChart.data = cached
-            applyChartConfig()
+            // limpiar completamente el chart
+            binding.humidityChart.clear()
+            binding.humidityChart.data = null
             binding.humidityChart.invalidate()
-
-            binding.humidityChart.post {
-                binding.humidityChart.moveViewToX(cached.getEntryCount().toFloat())
-            }
-
             return
         }
+
+        binding.tvEmptyHumidity.isVisible = false
+
+        binding.humidityChart.clear()
+        binding.humidityChart.data = null
+        binding.humidityChart.fitScreen()
+
+
+//        val cached = humidityCache[valveId]
+//
+//        if (cached != null) {
+//            binding.humidityChart.data = cached
+//            applyChartConfig()
+//            binding.humidityChart.invalidate()
+//
+//            binding.humidityChart.post {
+//                binding.humidityChart.moveViewToX(cached.getEntryCount().toFloat())
+//            }
+//
+//            return
+//        }
 
         val entries = lastHumidity.mapIndexed { index, value ->
             Entry(index.toFloat(), value.toFloat())
@@ -384,23 +399,27 @@ class HomeFragment : Fragment() {
 
         val lineData = LineData(dataSet)
 
-        // guardar en cache
-        humidityCache[valveId] = lineData
+//        // guardar en cache
+//        humidityCache[valveId] = lineData
 
         binding.humidityChart.data = lineData
 
-        // reusar config
         applyChartConfig()
 
         binding.humidityChart.invalidate()
 
-        binding.humidityChart.post {
-            binding.humidityChart.moveViewToX(entries.size.toFloat())
-        }
+        binding.humidityChart.moveViewToX(entries.size.toFloat())
+
+//        binding.humidityChart.post {
+//            binding.humidityChart.moveViewToX(entries.size.toFloat())
+//        }
     }
 
     private fun applyChartConfig() {
         binding.humidityChart.description.isEnabled = false
+
+        binding.humidityChart.setNoDataText("")
+        binding.humidityChart.setNoDataTextColor(Color.TRANSPARENT)
 
         // Eje Y
         binding.humidityChart.axisLeft.apply {
