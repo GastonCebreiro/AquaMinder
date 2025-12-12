@@ -341,6 +341,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupChart(valveId: Int, lastHumidity: List<Int>, controlMode: ControlMode?) {
+        binding.humidityChart.setNoDataText("")
+        binding.humidityChart.setNoDataTextColor(Color.TRANSPARENT)
+
         if (controlMode != ControlMode.SENSOR) {
             binding.humidityChart.visibility = View.GONE
             binding.tvLastHumidity.visibility = View.GONE

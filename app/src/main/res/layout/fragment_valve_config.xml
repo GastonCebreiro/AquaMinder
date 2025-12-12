@@ -579,7 +579,7 @@
                 android:layout_marginTop="16dp"
                 android:visibility="invisible"
                 app:constraint_referenced_ids="cbL,cbM,cbX,cbJ,cbV,cbS,cbD"
-                app:flow_horizontalGap="4dp"
+                app:flow_horizontalGap="1dp"
                 app:flow_wrapMode="aligned"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -710,6 +710,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="Min"
+                    android:textStyle="bold"
                     android:textColor="@color/black" />
 
                 <RadioButton
@@ -721,6 +722,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="Seg"
+                    android:textStyle="bold"
                     android:textColor="@color/black" />
 
             </RadioGroup>

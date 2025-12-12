@@ -35,15 +35,17 @@
     <ScrollView
         android:id="@id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnSave"
         app:layout_constraintTop_toBottomOf="@+id/vSemiDrop">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:paddingHorizontal="16dp">
 
             <TextView
@@ -63,7 +65,7 @@
                 android:id="@+id/lInputId"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="4dp"
                 android:hint="@string/fragment_new_irrigation_zone_input_id"
                 android:paddingBottom="5dp"
                 android:textColorHint="@color/light_blue"
@@ -151,7 +153,7 @@
                     android:id="@+id/tvDescriptionName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/fragment_new_irrigation_zone_select_name"
                     android:textColor="@color/light_blue"
                     android:textSize="18sp"
@@ -205,7 +207,7 @@
                     android:id="@+id/tvDescriptionLogo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/fragment_new_irrigation_zone_select_logo"
                     android:textColor="@color/light_blue"
                     android:textSize="18sp"
@@ -220,7 +222,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="60dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="60dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -268,49 +270,53 @@
                 android:id="@+id/clLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view3">
 
                 <TextView
                     android:id="@+id/tvLocationLabel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/fragment_new_irrigation_zone_input_location"
                     android:textColor="@color/light_blue"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/ivLocation"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:contentDescription="@null"
-                    app:tint="@color/card_light_blue"
                     app:layout_constraintBottom_toBottomOf="@+id/tvLocation"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tvLocation"
-                    app:srcCompat="@drawable/ic_location" />
+                    app:srcCompat="@drawable/ic_location"
+                    app:tint="@color/card_light_blue" />
 
                 <TextView
                     android:id="@+id/tvLocation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="@string/fragment_new_irrigation_zone_location"
-                    android:textSize="14sp"
-                    android:textColor="@color/light_blue"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/background_address_selector"
-                    android:padding="12dp"
-                    android:drawablePadding="8dp"
                     android:clickable="false"
+                    android:drawablePadding="8dp"
                     android:focusable="false"
-                    app:layout_constraintTop_toBottomOf="@id/tvLocationLabel"
-                    app:layout_constraintStart_toEndOf="@id/ivLocation"
+                    android:padding="12dp"
+                    android:text="@string/fragment_new_irrigation_zone_location"
+                    android:textColor="@color/light_blue"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="8dp"/>
+                    app:layout_constraintStart_toEndOf="@id/ivLocation"
+                    app:layout_constraintTop_toBottomOf="@id/tvLocationLabel" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -328,7 +334,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/button_gradient"
         android:padding="10dp"
@@ -337,7 +343,6 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

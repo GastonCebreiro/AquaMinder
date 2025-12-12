@@ -3,12 +3,8 @@ package com.example.aquaminder.feature_configuration.domain.use_case
 import com.example.aquaminder.core.utils.AppConstants.STATUS_OK
 import com.example.aquaminder.core.utils.AppError
 import com.example.aquaminder.core.utils.ResultEvent
-import com.example.aquaminder.feature_configuration.data.model.request.GetIrrigationZoneConfigRequest
-import com.example.aquaminder.feature_configuration.data.model.response.toDomainModel
-import com.example.aquaminder.feature_configuration.domain.model.IrrigationZoneConfigDomainModel
 import com.example.aquaminder.feature_home.data.model.request.GetIrrigationZoneDetailsRequest
 import com.example.aquaminder.feature_home.data.model.response.toDomainModel
-import com.example.aquaminder.feature_home.data.model.toDomainModel
 import com.example.aquaminder.feature_home.domain.model.IrrigationZoneDetailsDomainModel
 import com.example.aquaminder.feature_main.domain.repository.IrrigationZonesRepository
 import kotlinx.coroutines.flow.Flow

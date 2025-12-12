@@ -1,9 +1,7 @@
 package com.example.aquaminder.core.data.remote
 
 import com.example.aquaminder.feature_configuration.data.model.request.IrrigationZoneConfigNetworkEntity
-import com.example.aquaminder.feature_configuration.data.model.response.GetIrrigationZoneConfigResponse
 import com.example.aquaminder.feature_configuration.data.model.response.SaveIrrigationZoneConfigResponse
-import com.example.aquaminder.feature_configuration.domain.model.IrrigationZoneConfigDomainModel
 import com.example.aquaminder.feature_home.data.model.request.GetValveWateringStatusResponse
 import com.example.aquaminder.feature_home.data.model.request.ManualWateringRequest
 import com.example.aquaminder.feature_home.data.model.request.ManualWateringResponse
