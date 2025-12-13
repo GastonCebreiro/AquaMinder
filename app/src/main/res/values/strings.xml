@@ -60,7 +60,7 @@
     <string name="fragment_new_irrigation_zone_btn_save">GUARDAR</string>
 
     <string name="fragment_home_title">Nombre de la Zona de Riego</string>
-    <string name="fragment_home_valve_description">Valvula %1$s</string>
+    <string name="fragment_home_valve_description">Zona %1$s</string>
     <string name="fragment_home_valve_status_active">ACTIVADA</string>
     <string name="fragment_home_valve_status_watering">REGANDO</string>
     <string name="fragment_home_valve_status_inactive">DESACTIVADA</string>

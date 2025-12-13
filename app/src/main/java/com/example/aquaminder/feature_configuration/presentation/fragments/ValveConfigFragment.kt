@@ -133,8 +133,11 @@ class ValveConfigFragment : Fragment() {
             return
         }
 
-        val valvesDescription = valves.map { valve ->
-            getString(R.string.fragment_home_valve_description, valve.id.toString())
+        val valvesDescription = List(valves.size) { index ->
+            getString(
+                R.string.fragment_home_valve_description,
+                (index + 1).toString()
+            )
         }
 
         val adapter = object : ArrayAdapter<String>(

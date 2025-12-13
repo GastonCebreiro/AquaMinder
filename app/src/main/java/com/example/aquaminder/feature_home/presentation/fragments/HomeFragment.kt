@@ -100,6 +100,9 @@ class HomeFragment : Fragment() {
                             is HomeState.ManualWatering -> {
                                 setManualWateringState(isLoading = homeState.isLoading, false)
                             }
+                            is HomeState.BlockManual -> {
+                                setManualBlocked(homeState.isBlocked)
+                            }
                         }
                     }
                 }
@@ -112,6 +115,10 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setManualBlocked(isBlocked: Boolean) {
+        binding.fabManualWatering.isVisible = !isBlocked
     }
 
     private fun setManualWateringState(isLoading: Boolean, isWatering: Boolean) {
@@ -244,8 +251,11 @@ class HomeFragment : Fragment() {
             return
         }
 
-        val valvesDescription = valves.map { valve ->
-            getString(R.string.fragment_home_valve_description, valve.id.toString())
+        val valvesDescription = List(valves.size) { index ->
+            getString(
+                R.string.fragment_home_valve_description,
+                (index + 1).toString()
+            )
         }
 
         val adapter = object : ArrayAdapter<String>(

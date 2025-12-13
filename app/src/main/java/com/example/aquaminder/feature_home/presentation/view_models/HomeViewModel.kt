@@ -105,18 +105,22 @@ class HomeViewModel @Inject constructor(
 
                 if (result is ResultEvent.Success) {
                     Log.d("GASTON", "isWatering=${result.data.isWatering}")
+                    Log.d("GASTON", "isManual=${result.data.isManual}")
+                    val isBlocked = result.data.isWatering && !(result.data.isManual)
+                    _homeState.value = HomeState.BlockManual(isBlocked)
                     if (_wateringState.value != result.data.isWatering) {
                         _wateringState.value = result.data.isWatering
                     }
                 }
 
                 delay(POLLING_TIME)
+                _homeState.value = HomeState.Idle
             }
         }
     }
 
     companion object {
-        private const val POLLING_TIME = 3000L
+        private const val POLLING_TIME = 1000L
     }
 
     fun stopPolling() {
