@@ -109,8 +109,10 @@ class HomeFragment : Fragment() {
 
                 launch {
                     viewModel.wateringState.collect { isWatering ->
-                        showWatering(isWatering)
-                        setManualWateringState(isLoading = false, isWatering = isWatering)
+                        isWatering?.let {
+                            showWatering(it)
+                            setManualWateringState(isLoading = false, isWatering = it)
+                        }
                     }
                 }
             }

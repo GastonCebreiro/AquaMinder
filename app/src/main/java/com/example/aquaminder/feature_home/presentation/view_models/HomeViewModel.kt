@@ -39,8 +39,8 @@ class HomeViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
-    private val _wateringState = MutableStateFlow(false)
-    val wateringState: StateFlow<Boolean> = _wateringState
+    private val _wateringState = MutableStateFlow<Boolean?>(null)
+    val wateringState: StateFlow<Boolean?> = _wateringState
 
     private var pollingJob: Job? = null
 
@@ -98,7 +98,7 @@ class HomeViewModel @Inject constructor(
 
     fun startPolling(valveId: Int) {
         pollingJob?.cancel()
-
+        _wateringState.value = null
         pollingJob = viewModelScope.launch {
             while (isActive) {
                 val result = getValveWateringStatusUseCase.invoke(idSelected, valveId)
@@ -108,9 +108,9 @@ class HomeViewModel @Inject constructor(
                     Log.d("GASTON", "isManual=${result.data.isManual}")
                     val isBlocked = result.data.isWatering && !(result.data.isManual)
                     _homeState.value = HomeState.BlockManual(isBlocked)
-                    if (_wateringState.value != result.data.isWatering) {
-                        _wateringState.value = result.data.isWatering
-                    }
+//                    if (_wateringState.value != result.data.isWatering) {
+                    _wateringState.value = result.data.isWatering
+//                    }
                 }
 
                 delay(POLLING_TIME)

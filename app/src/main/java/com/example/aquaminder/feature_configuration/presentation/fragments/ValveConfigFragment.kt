@@ -440,6 +440,9 @@ class ValveConfigFragment : Fragment() {
             onEdit = { time ->
                 setTimePicker(time) { pickedTime ->
                     adapter.updateTime(time, getTimeDescription(pickedTime))
+                    parseTimeFromString(time)?.let { oldLocalTime ->
+                        viewModel.updateTime(oldLocalTime, pickedTime)
+                    }
                 }
             }
         )

@@ -5,7 +5,7 @@ import com.example.aquaminder.R
 object AppConstants {
 
     // todo gc if change go to network_security_config.xml
-    const val BASE_URL = "http://192.168.1.40:3000/"
+    const val BASE_URL = "http://192.168.1.44:3000/"
 
     const val STATUS_OK = 200
 

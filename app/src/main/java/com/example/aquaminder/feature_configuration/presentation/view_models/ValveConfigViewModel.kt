@@ -265,6 +265,17 @@ class ValveConfigViewModel @Inject constructor(
         valves[valveSelectedPosition] = actualValve
     }
 
+    fun updateTime(oldTime: LocalTime, newTime: LocalTime) {
+        actualValve = actualValve.copy(
+            schedule = actualValve.schedule?.copy(
+                waterTimes = actualValve.schedule?.waterTimes
+                    ?.map { if (it == oldTime) newTime else it }
+                    ?: emptyList()
+            )
+        )
+        valves[valveSelectedPosition] = actualValve
+    }
+
     fun setDuration(duration: Int) {
         println("GASTON DURATION=$duration")
         actualValve = actualValve.copy(
